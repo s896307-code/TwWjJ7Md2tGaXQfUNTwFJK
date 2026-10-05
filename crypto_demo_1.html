@@ -1,0 +1,1970 @@
+<meta name="robots" content="noindex,nofollow,noarchive"><title></title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#0052FF; --navy:#0B1E4D; --navy2:#132C6B; --green:#16A34A; --green-bg:#F0FDF4; --red:#DC2626;
+  --processing:#2563EB; --tron:#B45309; --tron-bg:rgba(217,119,6,.1);
+  --avatar:#7741C8; --inactive:#8A8FA8; --border:#E5E7EB; --warnbg:#FFFBEB;
+  --graytext:#8A8FA8; --lightgray:#F3F4F6; --navborder:#F0F0F0; --fieldborder:#E8E8E8; --text:#0F172A; --text2:#0A0A0A;
+}
+*{box-sizing:border-box;}
+body{background:#E5E7EB !important;}
+[hidden]{display:none !important;}
+.app-wrap{
+  background:#E5E7EB; min-height:100vh; padding:20px 16px 60px; display:flex; flex-direction:column;
+  align-items:center; gap:20px; font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+/* ---------- Phone frame ---------- */
+.phone-shell{
+  width:430px; max-width:94vw; height:932px; max-height:90vh; background:#0B0B0F; border-radius:46px;
+  padding:12px; box-shadow:0 20px 60px rgba(0,0,0,.35); position:relative; flex:none;
+}
+.phone-screen{
+  width:100%; height:100%; background:#fff; border-radius:34px; overflow:hidden; position:relative;
+  display:flex; flex-direction:column;
+}
+.statusbar{
+  flex:none; height:30px; display:flex; align-items:center; justify-content:space-between; padding:0 22px;
+  font-size:12px; font-weight:700; color:#111; background:#fff;
+}
+.notch{position:absolute; top:10px; left:50%; transform:translateX(-50%); width:110px; height:22px; background:#0B0B0F; border-radius:14px; z-index:5;}
+.screen-stack{flex:1 1 auto; position:relative; overflow:hidden;}
+.screen{position:absolute; inset:0; display:flex; flex-direction:column; background:#fff;}
+
+/* header */
+.hd{flex:none; height:56px; display:flex; align-items:center; padding:0 12px; background:#fff; border-bottom:none; position:relative; gap:8px;}
+.hd h1{font-size:16px; font-weight:600; margin:0; color:var(--text);}
+.hd .hd-title-center{position:absolute; left:0; right:0; text-align:center; pointer-events:none; font-size:16px; font-weight:600; color:var(--text);}
+.hd .hd-title-center small{display:block; font-size:11px; font-weight:400; color:#9CA3AF; margin-top:1px;}
+.iconbtn{background:none; border:none; padding:6px; display:flex; align-items:center; justify-content:center; color:#111827; cursor:pointer; border-radius:50%;}
+.iconbtn:active{background:#F3F4F6;}
+.hd .iconbtn{background:var(--lightgray); border-radius:10px; width:36px; height:36px; padding:0; flex:none;}
+.hd .iconbtn:active{background:#E5E7EB;}
+.hd .iconbtn.outline{background:#fff; border:1.5px solid var(--blue); color:var(--blue);}
+.txtbtn{background:none;border:none;color:var(--blue);font-size:14px;font-weight:600;cursor:pointer;padding:6px 2px;}
+.hd .grow{flex:1;}
+.hd-root{justify-content:center; font-weight:600; font-size:16px;}
+.hd.hd-home{height:68px; padding:12px 20px 16px; align-items:flex-start;}
+
+/* body */
+.bd{flex:1 1 auto; overflow-y:auto; padding:16px 16px 100px; -webkit-overflow-scrolling:touch;}
+.bd.no-nav-pad{padding-bottom:24px;}
+.bd.bd-home{padding-left:20px; padding-right:20px;}
+.bd::-webkit-scrollbar{width:0;}
+
+/* cards / rows */
+.card{background:#fff; border:1px solid var(--border); border-radius:16px; padding:16px; margin-bottom:12px; box-shadow:0 1px 2px rgba(0,0,0,.05);}
+.card.menu{background:#F4F5F7; border:none; box-shadow:none; border-radius:20px; padding:0 16px; overflow:hidden;}
+.card.menu .row{border-bottom:none;}
+.row{display:flex; align-items:center; gap:12px; padding:14px 0; border-bottom:1px solid var(--border); cursor:pointer;}
+.row:last-child{border-bottom:none;}
+.row-ic{width:38px; height:38px; border-radius:11px; background:var(--lightgray); display:flex; align-items:center; justify-content:center; flex:none; color:#374151;}
+.row-ic.c-blue{background:#DBEAFE; color:#2563EB;}
+.row-ic.c-green{background:#DCFCE7; color:#16A34A;}
+.row-ic.c-purple{background:#EDE9FE; color:#7C3AED;}
+.row-ic.c-orange{background:#FFEDD5; color:#C2410C;}
+.row-ic.c-yellow{background:#FEF9C3; color:#A16207;}
+.row-ic.sm{width:32px; height:32px; border-radius:9px;}
+.row-main{flex:1; min-width:0;}
+.row-title{font-size:14px; font-weight:600; color:var(--text2);}
+.row-sub{font-size:12px; color:var(--graytext); margin-top:2px;}
+.row-trail{display:flex; align-items:center; gap:6px; color:#9CA3AF;}
+.row-val{font-size:14px; font-weight:700;}
+.row-val.pos{color:var(--green);}
+.row-val.neg{color:var(--red);}
+
+/* buttons */
+.btn{display:flex; align-items:center; justify-content:center; gap:8px; width:100%; border:none; cursor:pointer; font-family:inherit; font-weight:700; font-size:16px;}
+.btn-pill{border-radius:999px; height:56px; background:var(--blue); color:#fff;}
+.btn-2xl{border-radius:16px; height:56px; background:var(--blue); color:#fff;}
+.btn-gray{border-radius:16px; height:48px; background:var(--lightgray); color:#111827; font-weight:600;}
+.btn-outline{border-radius:999px; height:56px; background:#fff; color:var(--blue); border:1.5px solid var(--blue);}
+.btn-text{background:none;border:none;color:var(--graytext);font-size:14px;font-weight:600;cursor:pointer;width:100%;padding:12px 0;}
+.btn-danger-text{background:none;border:none;color:var(--red);font-size:15px;font-weight:700;width:100%;padding:14px 0;cursor:pointer; border-radius:16px; background:#FEF2F2;}
+.btn:disabled{opacity:.4; cursor:not-allowed;}
+.btn-sm{border-radius:10px; height:34px; padding:0 12px; font-size:12px; background:var(--blue); color:#fff; font-weight:600; border:none; cursor:pointer; width:auto;}
+.btn-outline-sm{border-radius:999px; height:28px; padding:0 13px; font-size:12px; font-weight:700; background:#fff; color:var(--blue); border:1.5px solid var(--blue); cursor:pointer; width:auto; display:inline-flex; align-items:center; justify-content:center; gap:4px;}
+.btn-pill-outline{border-radius:999px; height:38px; padding:0 16px; font-size:14px; font-weight:700; background:#fff; color:var(--blue); border:1.5px solid var(--blue); cursor:pointer; width:auto; display:inline-flex; align-items:center; justify-content:center; gap:4px;}
+
+/* quick actions */
+.qrow{display:flex; gap:10px; margin:14px 0 18px;}
+.qtile{flex:1; display:flex; flex-direction:column; align-items:center; gap:7px; padding:14px 4px; border-radius:14px; background:var(--lightgray); border:none; cursor:pointer; font-family:inherit;}
+.qtile.primary{background:var(--blue); color:#fff;}
+.qtile span{font-size:12px; font-weight:600; color:inherit;}
+
+/* pills / badges */
+.pilldd{display:inline-flex; align-items:center; gap:5px; background:var(--lightgray); border:none; border-radius:999px; padding:7px 12px; font-size:13px; font-weight:600; color:#111827; cursor:pointer;}
+.badge-success{background:var(--green-bg); color:var(--green); font-size:12px; font-weight:700; padding:3px 10px; border-radius:999px; display:inline-flex; align-items:center; gap:4px;}
+.badge-success::before{content:"✓";}
+.badge-processing{color:var(--processing); font-size:12px; font-weight:700; display:inline-flex; align-items:center; gap:4px;}
+.badge-processing::before{content:"↻"; display:inline-block; animation:spin 1.6s linear infinite;}
+@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.badge-fail{color:var(--red); font-size:12px; font-weight:700;}
+.badge-tron{background:var(--tron-bg); color:var(--tron); font-size:12px; font-weight:700; padding:4px 10px; border-radius:999px;}
+.badge-new{background:#DBEAFE; color:#1D4ED8; font-size:11px; font-weight:700; padding:2px 8px; border-radius:999px;}
+.badge-verified{background:var(--green-bg); color:var(--green); font-size:12px; font-weight:700; padding:3px 10px; border-radius:999px;}
+.badge-rec{background:#DBEAFE; color:#1D4ED8; font-size:10px; font-weight:700; padding:2px 7px; border-radius:6px;}
+
+/* tabs */
+.tabs-underline{display:flex; gap:22px; border-bottom:1px solid var(--border); margin-bottom:14px;}
+.tabs-underline button{background:none; border:none; font-family:inherit; font-size:14px; font-weight:700; color:#9CA3AF; padding:10px 0; cursor:pointer; border-bottom:2px solid transparent;}
+.tabs-underline button.active{color:var(--blue); border-bottom-color:var(--blue);}
+.tabs-pill{display:flex; background:var(--lightgray); border-radius:12px; padding:4px; gap:4px; margin-bottom:14px;}
+.tabs-pill button{flex:1; background:none; border:none; font-family:inherit; font-size:13px; font-weight:700; color:#6B7280; padding:9px 0; border-radius:9px; cursor:pointer;}
+.tabs-pill button.active{background:#fff; color:var(--blue); box-shadow:0 1px 3px rgba(0,0,0,.12);}
+.tabs-pill.solid{background:#F3F4F6; border-radius:999px; padding:4px;}
+.tabs-pill.solid button{border-radius:999px;}
+.tabs-pill.solid button.active{background:var(--blue); color:#fff; box-shadow:none;}
+.tabs-text{display:flex; gap:22px; margin-bottom:10px;}
+.tabs-text button{background:none; border:none; font-family:inherit; font-size:14px; font-weight:700; color:#9CA3AF; padding:4px 0; cursor:pointer;}
+.tabs-text button.active{color:var(--blue);}
+.filter-tabs{display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;}
+.filter-tabs button{background:var(--lightgray); border:none; border-radius:999px; padding:7px 13px; font-size:12px; font-weight:600; color:#374151; cursor:pointer;}
+.filter-tabs button.active{background:var(--blue); color:#fff;}
+.filter-tabs.pill-outline button{background:#fff; border:1.5px solid var(--border); color:#111827; padding:7px 16px;}
+.filter-tabs.pill-outline button.active{background:#EFF6FF; border-color:var(--blue); color:var(--blue);}
+.filter-chip{display:inline-flex; align-items:center; gap:5px; background:#fff; border:1px solid var(--border); border-radius:999px; padding:8px 13px; font-size:12.5px; font-weight:600; color:#111827; cursor:pointer;}
+.filter-chip.wide{flex:1; justify-content:space-between;}
+.filter-chip-row{display:flex; gap:8px; margin-bottom:12px;}
+
+/* inputs */
+.field-label{font-size:14px; font-weight:400; color:#374151; margin:14px 0 6px;}
+.field-label:first-child{margin-top:0;}
+.input{width:100%; border:1px solid var(--fieldborder); border-radius:16px; padding:14px 16px; font-size:14px; font-family:inherit; background:#fff; color:#111827;}
+.input::placeholder{color:#9CA3AF;}
+.input[readonly]{cursor:default;}
+.input-icon-wrap{position:relative;}
+.input-icon-wrap .input{padding-left:40px;}
+.input-icon-wrap .lic{position:absolute; left:12px; top:50%; transform:translateY(-50%); color:#9CA3AF;}
+.input-icon-wrap .ric{position:absolute; right:8px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#9CA3AF; padding:6px;}
+.input-inline-btn{position:relative;}
+.input-inline-btn .input{padding-right:60px;}
+.input-inline-btn button{position:absolute; right:10px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--blue); font-weight:700; font-size:13px; cursor:pointer; padding:6px;}
+.input-inline-btn button.chip{background:var(--blue); color:#fff; border-radius:999px; padding:5px 12px; font-size:12px;}
+.input-inline-btn button.chip-outline{background:#fff; color:var(--blue); border:1.5px solid var(--blue); border-radius:999px; padding:4px 12px; font-size:12px;}
+.input-inline-btn .suffix{position:absolute; right:14px; top:50%; transform:translateY(-50%); color:#9CA3AF; font-size:13px; pointer-events:none;}
+textarea.input{resize:none; min-height:90px; font-family:inherit;}
+.select-box{width:100%; border:1px solid var(--fieldborder); border-radius:16px; padding:14px 16px; font-size:14px; font-family:inherit; background:#fff; color:#111827; display:flex; align-items:center; justify-content:space-between; cursor:pointer;}
+
+/* warning */
+.warn-box{background:var(--warnbg); border:1px solid #FDE68A; border-radius:14px; padding:14px; font-size:12.5px; color:#92400E; line-height:1.6;}
+.info-banner{background:#EFF6FF; border-radius:12px; padding:12px 14px; font-size:12.5px; color:#1E40AF; line-height:1.6; display:flex; gap:8px; margin-bottom:14px;}
+.info-banner.green{background:var(--green-bg); color:#065F46;}
+
+/* avatar / coin icons */
+.avatar{width:44px; height:44px; border-radius:50%; background:var(--avatar); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; flex:none;}
+.avatar.sm{width:40px; height:40px; font-size:16px;}
+.avatar.lg{width:64px; height:64px; font-size:20px;}
+.coin-ic{width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:14px; flex:none;}
+.coin-usdt{background:#16A34A;}
+.coin-krw{background:#2563EB;}
+
+/* bottom nav (main 5-item) */
+.bnav{flex:none; display:flex; align-items:flex-end; justify-content:space-around; background:#fff; border-top:1px solid var(--navborder); height:68px; padding-bottom:10px; position:relative;}
+.bnav button{background:none; border:none; display:flex; flex-direction:column; align-items:center; gap:2px; font-size:10px; font-weight:600; color:var(--inactive); cursor:pointer; font-family:inherit; padding:6px 2px 0;}
+.bnav button.active{color:var(--blue);}
+/* bottom nav c2c (flat 4-item) */
+.bnav-c2c{flex:none; display:flex; align-items:center; justify-content:space-around; background:#fff; border-top:1px solid var(--navborder); height:58px;}
+.bnav-c2c button{background:none; border:none; display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10.5px; font-weight:600; color:var(--inactive); cursor:pointer; font-family:inherit; position:relative;}
+.bnav-c2c button.active{color:var(--blue);}
+.bnav-c2c button.active::after{content:""; position:absolute; bottom:-7px; width:4px; height:4px; border-radius:50%; background:var(--blue);}
+
+/* empty state */
+.empty{display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 20px; text-align:center; color:#9CA3AF; font-size:13.5px; gap:14px;}
+
+/* section title */
+.sec-title{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
+.sec-title h2{font-size:15px; font-weight:700; margin:0; color:var(--text);}
+
+/* modals */
+.modal-overlay{position:absolute; inset:0; background:rgba(17,24,39,.5); z-index:40; display:flex; align-items:flex-end;}
+.modal-overlay.center{align-items:center; justify-content:center;}
+.modal-sheet{width:100%; background:#fff; border-radius:22px 22px 0 0; padding:20px; max-height:85%; overflow-y:auto; position:relative;}
+.modal-sheet.centered{border-radius:20px; width:88%; margin:0 auto;}
+.modal-hd{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;}
+.modal-hd h3{font-size:16px; font-weight:700; margin:0; color:var(--text);}
+
+/* toast */
+#toastHost{position:fixed; bottom:24px; left:50%; transform:translateX(-50%); z-index:9999; display:flex; flex-direction:column; gap:8px; align-items:center; pointer-events:none;}
+.toast{background:#111827E6; color:#fff; font-size:12.5px; padding:9px 16px; border-radius:999px; box-shadow:0 4px 14px rgba(0,0,0,.25); opacity:0; transform:translateY(8px); transition:opacity .2s, transform .2s;}
+.toast.show{opacity:1; transform:translateY(0);}
+
+/* QA panel */
+.qa-backdrop{position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:990; display:none;}
+.qa-backdrop.open{display:block;}
+.qa-panel{position:fixed; top:0; right:0; height:100vh; width:min(380px,92vw); background:#fff; z-index:991; transform:translateX(100%); transition:transform .25s ease; overflow-y:auto; box-shadow:-8px 0 24px rgba(0,0,0,.2);}
+.qa-panel.open{transform:translateX(0);}
+.qa-panel-hd{position:sticky; top:0; background:#111827; color:#fff; padding:16px 18px; display:flex; justify-content:space-between; align-items:center; z-index:2;}
+.qa-panel-hd h2{font-size:15px; margin:0;}
+.qa-panel-hd button{background:none;border:none;color:#fff;font-size:18px;cursor:pointer;}
+.qa-list{padding:14px 16px 40px;}
+.qa-item{border:1px solid var(--border); border-radius:12px; padding:12px 14px; margin-bottom:10px;}
+.qa-item-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:6px;}
+.qa-item-area{font-size:11.5px; font-weight:700; color:#374151; text-transform:uppercase; letter-spacing:.02em;}
+.sev{font-size:10.5px; font-weight:800; padding:2px 8px; border-radius:999px; white-space:nowrap; text-transform:uppercase;}
+.sev-blocker{background:#FEE2E2; color:#B91C1C;}
+.sev-major{background:#FFEDD5; color:#C2410C;}
+.sev-minor{background:#FEF9C3; color:#854D0E;}
+.sev-cosmetic{background:#F3F4F6; color:#4B5563;}
+.qa-item-issue{font-size:13px; color:#111827; line-height:1.5; margin-bottom:6px;}
+.qa-item-repro{font-size:11.5px; color:#6B7280; line-height:1.5; border-top:1px dashed var(--border); padding-top:6px;}
+
+/* misc */
+.brand-lockup{display:flex; align-items:center; justify-content:center; gap:10px; margin:0 auto 24px;}
+.brand-lockup .brand-icon{display:block; flex:none;}
+.brand-lockup .brand-word{font-family:'Poppins',sans-serif; font-weight:800; color:var(--blue); letter-spacing:.01em; line-height:1;}
+.hexlogo{width:96px; height:110px; position:relative; margin:0 auto 24px;}
+.hexlogo .hex{width:96px; height:110px; background:linear-gradient(160deg,#0B1E4D,#132C6B); clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%); display:flex; align-items:center; justify-content:center;}
+.hexlogo .coin{width:44px; height:44px; border-radius:50%; border:3px solid #E0A93A; position:relative; display:flex; align-items:center; justify-content:center;}
+.hexlogo .coin::after{content:"e"; color:#E0A93A; font-weight:900; font-size:22px; font-family:Georgia,serif;}
+.donut-wrap{display:flex; align-items:center; gap:18px; margin-top:10px;}
+.donut{width:120px; height:120px; border-radius:50%; background:conic-gradient(var(--blue) 0% 100%); position:relative; flex:none;}
+.donut::after{content:""; position:absolute; inset:18px; background:#fff; border-radius:50%;}
+.legend-item{display:flex; align-items:center; gap:8px; font-size:12.5px; color:#374151; margin-bottom:8px;}
+.legend-dot{width:10px; height:10px; border-radius:50%; flex:none;}
+.qr-grid{width:180px; height:180px; margin:0 auto; display:grid; grid-template-columns:repeat(14,1fr); grid-template-rows:repeat(14,1fr); background:#fff; border:1px solid var(--border); border-radius:12px; padding:10px; position:relative;}
+.qr-grid .cell{background:#111;}
+.qr-tlogo{position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:34px; height:34px; border-radius:50%; background:#16A34A; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:16px; border:3px solid #fff;}
+.addr-box{background:var(--lightgray); border-radius:10px; padding:10px 12px; font-family:'Courier New',monospace; font-size:12px; font-weight:700; color:#111827; word-break:break-all; margin-top:8px;}
+.vcard{width:100%; aspect-ratio:1.58/1; border-radius:18px; background:linear-gradient(135deg,#1B1F3B,#0B1E4D 55%,#132C6B); color:#fff; padding:18px 20px; display:flex; flex-direction:column; justify-content:space-between; position:relative; overflow:hidden; margin-bottom:16px;}
+.vcard::before{content:""; position:absolute; right:-40px; top:-40px; width:160px; height:160px; border-radius:50%; background:rgba(224,169,58,.15);}
+.vcard .brand{font-weight:900; font-size:16px; letter-spacing:.5px;}
+.vcard .visa{font-weight:900; font-style:italic; font-size:18px; letter-spacing:1px;}
+.vcard .num{font-size:18px; letter-spacing:3px; font-weight:600;}
+.vcard .row2{display:flex; justify-content:space-between; font-size:11px; color:#C7D2FE;}
+/* portrait card-type preview (card-apply screen) */
+.vcard-portrait{width:62%; max-width:230px; aspect-ratio:0.63/1; border-radius:20px; background:linear-gradient(160deg,#1B1F3B,#0B1E4D 45%,#0052FF); position:relative; margin:4px auto 18px; overflow:hidden; box-shadow:0 10px 30px rgba(11,30,77,.25);}
+.vcard-portrait::before{content:""; position:absolute; top:16px; right:16px; width:20px; height:20px; border-radius:6px; background:#38BDF8;}
+.vcard-portrait .brand-v{position:absolute; top:16px; right:16px; margin-top:32px; writing-mode:vertical-rl; color:#fff; font-weight:800; font-size:13px; letter-spacing:2px;}
+.vcard-portrait .visa-v{position:absolute; bottom:16px; left:16px; writing-mode:vertical-rl; transform:rotate(180deg); color:#fff; font-weight:900; font-style:italic; font-size:15px; letter-spacing:1px;}
+/* balance hidden dots */
+.balance-dots{display:inline-flex; align-items:center; gap:7px; height:44px;}
+.balance-dots span{width:13px; height:13px; border-radius:50%; background:#111827;}
+/* nested breakdown box (wallet cards) */
+.nest-box{background:var(--lightgray); border-radius:12px; padding:4px 14px; margin-top:12px;}
+.nest-box .row{border-bottom:1px solid #E5E7EB;}
+.nest-box .row:last-of-type{border-bottom:none;}
+/* profile hero header */
+.hero-header{background:linear-gradient(135deg,var(--navy),var(--navy2)); padding:44px 20px 32px; position:relative; color:#fff;}
+.hero-stats{background:rgba(255,255,255,.15); border-radius:16px; display:flex; margin:20px 0 0; padding:14px 0; position:relative; z-index:2; backdrop-filter:blur(2px);}
+/* icon grid (coupon usage notes) */
+.icon-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; text-align:center;}
+.icon-grid .ig-ic{width:36px; height:36px; border-radius:50%; background:#EFF6FF; color:var(--blue); display:flex; align-items:center; justify-content:center; margin:0 auto 6px;}
+.icon-grid span{font-size:11px; color:var(--graytext); line-height:1.4; display:block;}
+/* notification rows */
+.notif-row{display:flex; align-items:flex-start; gap:10px; background:#F0F5FF; border-radius:14px; padding:14px 16px; margin-bottom:10px; position:relative; flex-wrap:wrap;}
+.notif-row .notif-chev{transition:transform .2s;}
+.notif-row.open .notif-chev{transform:rotate(180deg);}
+.notif-detail{display:none; width:100%; margin-top:10px; padding-top:10px; border-top:1px solid rgba(37,99,235,.15); font-size:12px; color:#374151; line-height:1.8;}
+.notif-row.open .notif-detail{display:block;}
+.notif-detail b{color:#111827;}
+.notif-row .row-ic{background:#DBEAFE; color:#2563EB;}
+.notif-dot{position:absolute; top:10px; left:40px; width:6px; height:6px; border-radius:50%; background:var(--red);}
+/* app channel icons (customer service) */
+.chan-ic{width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#fff; flex:none;}
+.banner-viewport{overflow-x:auto; overflow-y:hidden; scrollbar-width:none; -ms-overflow-style:none;}
+.banner-viewport::-webkit-scrollbar{display:none;}
+#bannerTrack{display:flex; gap:10px; transition:transform .45s ease;}
+.banner-slide{flex:0 0 62%; scroll-snap-align:start;}
+.banner-slide.wide{flex-basis:72%;}
+.banner{border-radius:16px; padding:16px; color:#fff; min-height:110px; display:flex; flex-direction:column; justify-content:center; gap:6px; position:relative; overflow:hidden;}
+.banner .bt1{font-weight:800; font-size:14px;}
+.banner .bt2{font-size:11.5px; opacity:.9; line-height:1.5;}
+.banner .bbtn{align-self:flex-start; background:#fff; color:#111; font-size:11px; font-weight:700; padding:5px 12px; border-radius:999px; margin-top:4px;}
+.dots{display:flex; justify-content:center; gap:5px; margin-top:8px;}
+.dots span{width:6px; height:6px; border-radius:50%; background:#D1D5DB;}
+.dots span.active{background:var(--blue); width:16px; border-radius:4px;}
+.legal h3{font-size:14px; margin:18px 0 6px; color:#111827;}
+.legal p{font-size:12.5px; color:#4B5563; line-height:1.8; margin:0 0 4px;}
+hr.sep{border:none; border-top:1px solid var(--border); margin:16px 0;}
+.checkbox-row{display:flex; align-items:center; justify-content:space-between; margin:14px 0;}
+.checkbox-row label{display:flex; align-items:center; gap:8px; font-size:13.5px; color:#374151;}
+.link-center{text-align:center; font-size:13px; color:var(--blue); font-weight:600; margin-top:16px; cursor:pointer;}
+.center-note{text-align:center; color:var(--graytext); font-size:12.5px; margin-top:10px;}
+.splash-wrap{display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; padding:32px 28px; text-align:center;}
+.splash-wrap h1{font-size:23px; font-weight:800; color:#111827; margin:0 0 8px;}
+.splash-wrap .sub{color:var(--blue); font-weight:700; font-size:15px; margin-bottom:10px;}
+.splash-wrap p.desc{color:var(--graytext); font-size:13px; line-height:1.7; margin:0 0 30px;}
+.splash-actions{width:100%; display:flex; flex-direction:column; gap:12px;}
+.top-globe{position:absolute; top:14px; right:14px; width:36px; height:36px; border-radius:50%; background:var(--lightgray); display:flex; align-items:center; justify-content:center; border:none; cursor:pointer; z-index:2;}
+.field-row-icon{display:flex; align-items:center; gap:10px;}
+</style>
+
+<div class="app-wrap">
+  <div class="phone-shell">
+    <div class="phone-screen">
+      <div class="notch"></div>
+      <div class="statusbar"><span>23:00</span><span>●●● 5G 100%</span></div>
+      <div class="screen-stack" id="screenStack">
+        <!-- ============ 1. SPLASH ============ -->
+        <section class="screen" id="scr-splash">
+          <button class="top-globe" onclick="lowKeyNoop()">${SVG.globe}</button>
+          <div class="splash-wrap">
+            <div class="brand-lockup">
+              <img class="brand-icon" src="logo-redesign.svg" alt="logo" style="width:48px;height:48px;">
+              <span class="brand-word" style="font-size:30px;">demo</span>
+            </div>
+            <h1>歡迎來到XXX加密易</h1>
+            <div class="sub">開啟您的加密貨幣之旅</div>
+            <p class="desc">安全、便捷、專業的數位資產交易平台，掌握市場機會，實現財務增長。</p>
+            <div class="splash-actions">
+              <button class="btn btn-pill" onclick="goTo('login-form',{kyc:false})">登入</button>
+              <button class="btn btn-outline" onclick="goTo('register',{kyc:false})">建立帳戶</button>
+            </div>
+            <div class="link-center" onclick="jumpTo('main',{kyc:false})">探索加密世界，立即開始您的旅程</div>
+          </div>
+        </section>
+
+        <!-- ============ 2. LOGIN FORM ============ -->
+        <section class="screen" id="scr-login-form">
+          <div class="hd">
+            <button class="iconbtn" onclick="goBack()">${SVG.back}</button>
+            <div class="hd-title-center">登入</div>
+            <div class="grow"></div>
+            <button class="iconbtn" onclick="lowKeyNoop()">${SVG.globe}</button>
+          </div>
+          <div class="bd no-nav-pad">
+            <h1 style="font-size:20px;margin:6px 0 4px;">歡迎回來</h1>
+            <p style="color:var(--graytext);font-size:13px;margin:0 0 22px;">在下方輸入您的電子郵件和密碼以登入</p>
+            <div class="field-label">電子郵件</div>
+            <div class="input-icon-wrap"><span class="lic">${SVG.mail}</span><input class="input" id="email-login" placeholder="請輸入您的電子郵件"></div>
+            <div class="field-label">密碼</div>
+            <div class="input-icon-wrap"><span class="lic">${SVG.lock}</span><input class="input" id="pw-login" type="password" placeholder="請輸入您的密碼"><button class="ric" onclick="togglePw(this,'pw-login')">${SVG.eye}</button></div>
+            <div class="checkbox-row">
+              <label><input type="checkbox"> 記住我</label>
+              <button class="txtbtn" style="padding:0;" onclick="lowKeyNoop()">忘記密碼？</button>
+            </div>
+            <button class="btn btn-pill" style="margin-top:10px;" onclick="openCaptcha()">登入</button>
+            <div class="center-note">還沒有帳戶？ <button class="txtbtn" style="padding:0;" onclick="goTo('register',{kyc:false})">註冊</button></div>
+          </div>
+        </section>
+
+        <!-- ============ 2b. REGISTER FORM ============ -->
+        <section class="screen" id="scr-register">
+          <div class="hd">
+            <button class="iconbtn" onclick="goBack()">${SVG.back}</button>
+            <div class="hd-title-center">註冊</div>
+            <div class="grow"></div>
+            <button class="iconbtn" onclick="lowKeyNoop()">${SVG.globe}</button>
+          </div>
+          <div class="bd no-nav-pad">
+            <h1 style="font-size:20px;margin:6px 0 4px;">建立您的帳戶</h1>
+            <p style="color:var(--graytext);font-size:13px;margin:0 0 22px;">歡迎！請輸入您的詳細資料。</p>
+            <div class="field-label">電子郵件</div>
+            <div class="input-icon-wrap"><span class="lic">${SVG.mail}</span><input class="input" id="email-register" placeholder="請輸入您的電子郵件"></div>
+            <div class="field-label">電子郵件驗證碼</div>
+            <div class="input-inline-btn input-icon-wrap"><span class="lic">${SVG.shield}</span><input class="input" placeholder="請輸入驗證碼"><button onclick="toast('驗證碼已發送（Demo）')">獲取驗證碼</button></div>
+            <div class="field-label">密碼</div>
+            <div class="input-icon-wrap"><span class="lic">${SVG.lock}</span><input class="input" id="pw-register" type="password" placeholder="請輸入您的密碼"><button class="ric" onclick="togglePw(this,'pw-register')">${SVG.eye}</button></div>
+            <button class="btn btn-pill" style="margin-top:10px;" onclick="submitRegister()">建立帳戶</button>
+            <div class="center-note">已經有帳戶？ <button class="txtbtn" style="padding:0;" onclick="goTo('login-form',{kyc:false})">登入</button></div>
+          </div>
+        </section>
+
+        <!-- ============ 3. HOME / MAIN ============ -->
+        <section class="screen" id="scr-main">
+          <div class="hd hd-home">
+            <div class="avatar sm" id="homeAvatarBlock">W</div>
+            <div class="grow"></div>
+            <button class="iconbtn" onclick="goTo('customer-service')">${SVG.headset}</button>
+            <button class="iconbtn" onclick="goTo('notification')">${SVG.bell}</button>
+          </div>
+          <div class="bd bd-home">
+            <div id="homeBalanceBlock">
+              <div style="display:flex;align-items:center;gap:6px;color:var(--graytext);font-size:14px;font-weight:500;">
+                預估總資產 <button class="iconbtn" id="eyeBtn" style="padding:2px;" onclick="toggleHideBalance()">${SVG.eye}</button>
+              </div>
+              <div style="display:flex;align-items:flex-end;gap:10px;margin:6px 0 18px;position:relative;">
+                <div id="homeBalanceVal" style="font-size:44px;font-weight:900;color:#0A0A0A;line-height:1;">300.00</div>
+                <div style="position:relative;">
+                  <button class="pilldd" onclick="toggleCurrencyMenu()"><span id="currencyPillLabel">USDT</span>${SVG.chevDown}</button>
+                  <div id="currencyMenu" style="display:none;position:absolute;top:36px;left:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.15);z-index:5;overflow:hidden;">
+                    <div style="padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;" onclick="setHomeCurrency('USDT')">USDT</div>
+                    <div style="padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;border-top:1px solid var(--border);" onclick="setHomeCurrency('KRW')">KRW</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="homeGuestBlock" style="text-align:center;padding:10px 4px 22px;" hidden>
+              <div class="brand-lockup" style="margin-bottom:16px;">
+                <img class="brand-icon" src="logo-redesign.svg" alt="logo" style="width:40px;height:40px;">
+                <span class="brand-word" style="font-size:24px;">demo</span>
+              </div>
+              <div style="font-size:17px;font-weight:700;color:#111827;margin-bottom:6px;">登入即可查看您的資產</div>
+              <div style="font-size:13px;color:var(--graytext);line-height:1.6;">登入或註冊帳戶，即可使用儲值、轉帳與完整交易功能</div>
+            </div>
+            <div class="qrow" id="qrowUser">
+              <button class="qtile primary" onclick="goTo('deposit-entry')">${SVG.deposit}<span>儲值</span></button>
+              <button class="qtile" onclick="goTo('withdrawal')">${SVG.withdraw}<span>提領</span></button>
+              <button class="qtile" onclick="goTo('transfer')">${SVG.transfer}<span>轉帳</span></button>
+              <button class="qtile" onclick="goTo('card-apply')">${SVG.card}<span>卡片</span></button>
+            </div>
+            <div class="qrow" id="qrowGuest" hidden>
+              <button class="qtile primary" onclick="goTo('deposit-entry')">${SVG.deposit}<span>儲值</span></button>
+              <button class="qtile" onclick="goTo('transfer')">${SVG.transfer}<span>轉帳</span></button>
+              <button class="qtile" onclick="goTo('login-form',{kyc:false})">${SVG.login}<span>登入</span></button>
+              <button class="qtile" onclick="goTo('register',{kyc:false})">${SVG.userPlus}<span>註冊</span></button>
+            </div>
+            <div class="banner-viewport">
+              <div id="bannerTrack">
+                <div class="banner-slide banner" style="background:linear-gradient(135deg,#059669,#047857);">
+                  <div class="bt1">新手註冊豪禮</div>
+                  <div class="bt2">完成實名認證即贈手續費折抵金<br>活動期間限量發放</div>
+                </div>
+                <div class="banner-slide banner wide" style="background:linear-gradient(135deg,#4C1D95,#6D28D9);">
+                  <div class="bt1">USDT 即時換匯</div>
+                  <div class="bt2">多幣種一鍵兌換，價格透明<br>24 小時全天候服務<br>手續費低，到帳快速</div>
+                  <button class="bbtn" onclick="goTo('swap')">立即兌換 →</button>
+                </div>
+                <div class="banner-slide banner wide" style="background:linear-gradient(135deg,#FEF3C7,#FFFBEB); color:#111827;">
+                  <span class="badge-tron" style="background:#FDE68A;color:#92400E;align-self:flex-start;">限時優惠</span>
+                  <div class="bt1" style="color:#111827;">虛擬卡開卡禮</div>
+                  <div class="bt2" style="color:#374151;">首張卡免開卡費<br>支援 Apple Pay · Google Pay</div>
+                  <button class="bbtn" style="background:#D97706;color:#fff;" onclick="goTo('card-apply')">立即申辦 →</button>
+                </div>
+                <div class="banner-slide banner" style="background:linear-gradient(135deg,#0F172A,#1E3A5F);">
+                  <div class="bt1">資產安全守護</div>
+                  <div class="bt2">雙重驗證 · 冷錢包保管<br>全方位保障您的資產</div>
+                </div>
+              </div>
+              <div class="dots" id="bannerDots"><span class="active" onclick="goBannerDot(1)"></span><span onclick="goBannerDot(2)"></span><span onclick="goBannerDot(3)"></span><span onclick="goBannerDot(4)"></span></div>
+            </div>
+            <div id="announceBar" style="display:flex;align-items:center;gap:8px;background:#EFF6FF;border-radius:12px;padding:10px 12px;margin-top:14px;cursor:pointer;" onclick="openAnnouncement(75)" hidden>
+              ${SVG.bell}<span style="flex:1;font-size:12.5px;color:#1E3A8A;font-weight:600;">【公告】平台版本更新通知</span>${SVG.chevSm}
+            </div>
+            <div id="txnRecordBlock">
+              <div class="sec-title" style="margin-top:20px;">
+                <h2>交易紀錄</h2>
+                <button class="txtbtn" onclick="goTo('asset-record')">查看全部</button>
+              </div>
+              <div class="card" style="padding:4px 16px;">
+                <div class="row"><div class="row-ic">${SVG.arrowUp}</div><div class="row-main"><div class="row-title">USDT 提領</div><div class="row-sub">2026-09-14 15:13:00</div></div><div class="row-val neg">-300 USDT</div></div>
+                <div class="row"><div class="row-ic">${SVG.arrowDown}</div><div class="row-main"><div class="row-title">鏈上儲值</div><div class="row-sub">2026-09-14 15:03:26</div></div><div class="row-val pos">+150 USDT</div></div>
+                <div class="row"><div class="row-ic">${SVG.arrowDown}</div><div class="row-main"><div class="row-title">鏈上儲值</div><div class="row-sub">2026-09-02 14:34:17</div></div><div class="row-val pos">+150 USDT</div></div>
+              </div>
+            </div>
+            <div id="latestNewsBlock" hidden>
+              <div class="sec-title" style="margin-top:20px;">
+                <h2>最新消息</h2>
+                <button class="txtbtn" onclick="goTo('announcement-list')">查看全部</button>
+              </div>
+              <div class="card" style="padding:4px 16px;">
+                <div class="row" onclick="goTo('announcement-list')"><div class="row-main"><div class="row-title" style="font-weight:600;">【市場】BTC 突破關鍵價位，市場情緒回溫</div></div><div class="row-sub" style="margin:0;">09/14</div></div>
+                <div class="row" onclick="goTo('announcement-list')"><div class="row-main"><div class="row-title" style="font-weight:600;">【新功能】新增 USDT-TRC20 快速儲值</div></div><div class="row-sub" style="margin:0;">09/10</div></div>
+                <div class="row" onclick="goTo('announcement-list')"><div class="row-main"><div class="row-title" style="font-weight:600;">【公告】平台版本更新通知</div></div><div class="row-sub" style="margin:0;">01/07</div></div>
+                <div class="row" onclick="goTo('announcement-list')"><div class="row-main"><div class="row-title" style="font-weight:600;">【卡片優惠】首刷贈 20 USDT 回饋金</div></div><div class="row-sub" style="margin:0;">09/05</div></div>
+                <div class="row" onclick="goTo('announcement-list')"><div class="row-main"><div class="row-title" style="font-weight:600;">【卡片優惠】指定商家消費享 5% 現金回饋</div></div><div class="row-sub" style="margin:0;">09/02</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="bnav">
+            <button data-nav-main="main" onclick="goTo('main')">${SVG.home}<span>首頁</span></button>
+            <button data-nav-main="card-apply" onclick="goTo('card-apply')">${SVG.card}<span>卡片</span></button>
+            <button data-nav-main="swap" onclick="goTo('swap')">${SVG.tag}<span>C2C</span></button>
+            <button data-nav-main="wallet" onclick="gotoOrLogin('wallet')">${SVG.wallet}<span>資產</span></button>
+            <button data-nav-main="user" onclick="goTo('user')">${SVG.user}<span>個人</span></button>
+          </div>
+        </section>
+
+        <!-- ============ 4. DEPOSIT ENTRY ============ -->
+        <section class="screen" id="scr-deposit-entry">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">儲值</div><div class="grow"></div><button class="txtbtn" onclick="goTo('deposit-record')">記錄</button></div>
+          <div class="bd no-nav-pad">
+            <div class="field-label">請選擇儲值方式</div>
+            <div class="row" style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px 16px;" onclick="goTo('deposit-usdt')">
+              <div class="row-ic c-blue">${SVG.deposit}</div>
+              <div class="row-main"><div class="row-title">鏈上儲值</div><div class="row-sub">USDT-TRC20 · 接近即時</div></div>
+              <div class="row-trail">${SVG.chev}</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 5. DEPOSIT USDT / QR ============ -->
+        <section class="screen" id="scr-deposit-usdt">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">儲值<small>USDT-TRC20</small></div><div class="grow"></div></div>
+          <div class="bd no-nav-pad">
+            <div class="field-label">選擇幣別</div>
+            <div class="select-box" onclick="toast('僅有 USDT-TRC20 一種選項')"><span>USDT-TRC20</span>${SVG.chevDown}</div>
+            <div class="card" style="margin-top:16px;">
+              <div style="font-weight:700;font-size:14px;margin-bottom:12px;">儲值地址</div>
+              <div class="qr-grid" id="qrGrid"><div class="qr-tlogo">T</div></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;">
+                <span style="display:flex;align-items:center;gap:8px;"><span class="row-sub" style="margin:0;">儲值地址</span><span class="badge-tron">TRON 網路</span></span>
+                <button class="txtbtn" style="padding:0;display:flex;align-items:center;gap:4px;" onclick="copyText()">${SVG.copy} 複製</button>
+              </div>
+              <div class="addr-box">TXXeiiMo5k1j3nYbeaoRzMYyRRzkq5rY4n</div>
+            </div>
+            <div class="warn-box" style="margin-top:14px;">
+              <div style="display:flex;gap:8px;font-weight:700;margin-bottom:6px;">${SVG.warn} 儲值須知</div>
+              <div>• 僅支援 USDT-TRC20，其他資產或網路儲值將無法尋回。</div>
+              <div>• 確認到帳約需 5 分鐘至 12 小時。</div>
+              <div>• 地址永久有效可重複使用，若變更將透過站內信/Email 通知。</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 6. DEPOSIT RECORD LIST ============ -->
+        <section class="screen" id="scr-deposit-record">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">儲值記錄</div></div>
+          <div class="bd no-nav-pad">
+            <div class="filter-chip-row"><div class="filter-chip wide">全部幣別 ${SVG.chevDown}</div><div class="filter-chip wide">全部狀態 ${SVG.chevDown}</div></div>
+            <div class="card" onclick="goTo('deposit-record-detail')">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span style="font-weight:700;font-size:14px;">鏈上儲值</span><span class="badge-success">成功</span></div>
+              <div class="row" style="border:none;padding:6px 0;"><div class="row-main"><div class="row-sub">儲值金額</div></div><div class="row-val">150.00 USDT</div></div>
+              <div class="row" style="border:none;padding:6px 0;"><div class="row-main"><div class="row-sub">創建時間</div></div><div class="row-val" style="font-weight:600;font-size:13px;">2026-09-14 15:03:26</div></div>
+            </div>
+            <div class="card" onclick="goTo('deposit-record-detail')">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span style="font-weight:700;font-size:14px;">鏈上儲值</span><span class="badge-success">成功</span></div>
+              <div class="row" style="border:none;padding:6px 0;"><div class="row-main"><div class="row-sub">儲值金額</div></div><div class="row-val">150.00 USDT</div></div>
+              <div class="row" style="border:none;padding:6px 0;"><div class="row-main"><div class="row-sub">創建時間</div></div><div class="row-val" style="font-weight:600;font-size:13px;">2026-09-02 14:34:17</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 7. DEPOSIT RECORD DETAIL ============ -->
+        <section class="screen" id="scr-deposit-record-detail">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><h1></h1></div>
+          <div class="bd no-nav-pad">
+            <div style="text-align:center;margin:10px 0 20px;">
+              <div style="font-size:30px;font-weight:900;color:var(--green);">+150.00 USDT</div>
+              <span class="badge-success" style="margin-top:8px;display:inline-block;">成功</span>
+            </div>
+            <div class="card">
+              <div class="sec-title"><h2>交易詳情</h2></div>
+              <div class="row"><div class="row-main"><div class="row-sub">類型</div></div><div class="row-val" style="font-weight:600;">儲值</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">方式</div></div><div class="row-val" style="font-weight:600;">鏈上</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">網絡</div></div><div class="row-val" style="font-weight:600;">TRC20</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">金額</div></div><div class="row-val" style="font-weight:600;">150.00 USDT</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">創建時間</div></div><div class="row-val" style="font-weight:600;font-size:12.5px;">2026-09-14 15:03:26</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">地址</div><div class="row-title" style="font-size:12px;font-weight:600;word-break:break-all;">TQhkpcSskyFWSfyvaYSEeYdUbvk8ijUwyT</div></div><button class="iconbtn" style="color:var(--blue);" onclick="copyText()">${SVG.copy}</button></div>
+              <div class="row"><div class="row-main"><div class="row-sub">交易 ID</div><div class="row-title" style="font-size:11px;font-weight:600;word-break:break-all;">8f63ae82ae201d4b01c4c6dcbf76e62539412af60d430dc4db6f6a9e9eaf51f2</div></div><button class="iconbtn" style="color:var(--blue);" onclick="copyText()">${SVG.copy}</button></div>
+              <div class="row"><div class="row-main"><div class="row-sub">訂單 ID</div><div class="row-title" style="font-size:12px;font-weight:600;">1294563324104540162</div></div><button class="iconbtn" style="color:var(--blue);" onclick="copyText()">${SVG.copy}</button></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 8. WITHDRAW ============ -->
+        <section class="screen" id="scr-withdrawal">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">提領</div><div class="grow"></div><button class="txtbtn" onclick="goTo('withdrawal-record')">記錄</button></div>
+          <div class="bd no-nav-pad">
+            <button class="btn btn-pill" style="pointer-events:none;margin-bottom:16px;">USDT</button>
+            <div class="field-label">選擇鏈</div>
+            <div class="select-box"><span>TRC20 (TRON)</span>${SVG.chevDown}</div>
+            <div style="font-size:12px;color:var(--graytext);margin:10px 0;">手續費: 1 USDT</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;background:#EFF6FF;border-radius:12px;padding:12px 14px;font-size:12.5px;color:#374151;margin-bottom:16px;">
+              <span style="color:var(--blue);font-weight:700;">可用 0.00000 USDT</span><span>手續費 1 USDT</span>
+            </div>
+            <div class="field-label">提領地址</div>
+            <input class="input" readonly placeholder="請輸入 TRC20 (Tron) 地址">
+            <div class="field-label">數量</div>
+            <div class="input-inline-btn"><input class="input" readonly placeholder="最低提領: 1 USDT"><button class="chip-outline" onclick="toast('全部')">全部</button></div>
+            <div style="font-size:12px;color:var(--graytext);margin:6px 0 18px;">可用: 0.00000 USDT</div>
+            <button class="btn btn-pill" onclick="demoSubmit()">提領</button>
+            <div class="field-label">提領說明：</div>
+            <div style="font-size:12.5px;color:var(--graytext);line-height:1.9;">
+              • 請務必填寫正確的提領地址，地址錯誤導致資產遺失需自行負責。<br>
+              • 提領處理時間約 5 分鐘至 12 小時。<br>
+              • 處理期間資金將被凍結。<br>
+              • 帳戶密碼或安全設定變更後，提領將進行人工審核。
+            </div>
+            <div class="info-banner" style="margin-top:16px;margin-bottom:0;">${SVG.lockShield}<span>提領前請先完成郵箱綁定，並通過驗證碼驗證，以確保資金安全。</span></div>
+          </div>
+        </section>
+
+        <!-- ============ 9. WITHDRAW RECORD LIST ============ -->
+        <section class="screen" id="scr-withdrawal-record">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">提領記錄</div><div class="grow"></div><button class="iconbtn outline" onclick="toast('已重新整理')">${SVG.refresh}</button></div>
+          <div class="bd no-nav-pad">
+            <div class="filter-tabs pill-outline" id="wdRecTabs">
+              <button class="active" onclick="switchWdRecTab(this,'all')">全部</button>
+              <button onclick="switchWdRecTab(this,'processing')">處理中</button>
+              <button onclick="switchWdRecTab(this,'done')">已完成</button>
+              <button onclick="switchWdRecTab(this,'failed')">失敗</button>
+            </div>
+            <div class="card" onclick="goTo('withdrawal-record-detail')">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+                <span style="color:var(--graytext);font-weight:600;font-size:13px;">USDT-TRC20 <span style="font-weight:500;">#647</span></span>
+                <span class="badge-processing">處理中</span>
+              </div>
+              <div class="row" style="border:none;padding:5px 0;"><div class="row-main"><div class="row-sub">提領金額</div></div><div class="row-val">299 USDT-TRC20</div></div>
+              <div class="row" style="border:none;padding:5px 0;"><div class="row-main"><div class="row-sub">實際到帳</div></div><div class="row-val" style="color:var(--blue);">299 USDT-TRC20</div></div>
+              <div class="row" style="border:none;padding:5px 0;"><div class="row-main"><div class="row-sub">手續費</div></div><div class="row-val">1 USDT-TRC20</div></div>
+              <div class="row" style="border:none;padding:5px 0;"><div class="row-main"><div class="row-sub">目標地址</div></div><div class="row-val" style="font-size:12px;font-weight:600;">TQhkpc...ijUwyT <span style="color:var(--blue);">${SVG.copy}</span></div></div>
+              <div class="row" style="border:none;padding:5px 0;border-top:1px solid var(--border);margin-top:4px;"><div class="row-main"><div class="row-sub">創建時間</div></div><div class="row-val" style="font-weight:600;font-size:12.5px;">2026-09-14 15:13:00</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 10. WITHDRAW RECORD DETAIL ============ -->
+        <section class="screen" id="scr-withdrawal-record-detail">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">提領詳情</div></div>
+          <div class="bd no-nav-pad">
+            <div style="text-align:center;margin:10px 0 20px;">
+              <div style="font-size:30px;font-weight:900;color:#111827;">299 USDT</div>
+              <span class="badge-processing" style="margin-top:8px;display:inline-block;">處理中</span>
+            </div>
+            <div class="card">
+              <div class="sec-title"><h2>提領詳情</h2></div>
+              <div class="row"><div class="row-main"><div class="row-sub">類型</div></div><div class="row-val" style="font-weight:600;">提領</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">提領金額</div></div><div class="row-val" style="font-weight:600;">299 USDT</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">手續費</div></div><div class="row-val" style="font-weight:600;">1 USDT</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">總扣款（含手續費）</div></div><div class="row-val" style="font-weight:600;">300 USDT</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">實際到帳</div></div><div class="row-val" style="font-weight:600;color:var(--blue);">299 USDT</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">目標地址</div><div class="row-title" style="font-size:12px;font-weight:600;word-break:break-all;">TQhkpcSskyFWSfyvaYSEeYdUbvk8ijUwyT</div></div><button class="iconbtn" style="color:var(--blue);" onclick="copyText()">${SVG.copy}</button></div>
+              <div class="row"><div class="row-main"><div class="row-sub">創建時間</div></div><div class="row-val" style="font-weight:600;font-size:12.5px;">2026-09-14 15:13:00</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 11. TRANSFER ============ -->
+        <section class="screen" id="scr-transfer">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">轉帳</div></div>
+          <div class="bd no-nav-pad">
+            <div style="background:var(--lightgray);border-radius:14px;overflow:hidden;">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;"><span class="row-sub" style="margin:0;">發送</span><span style="font-weight:700;font-size:15px;" id="tfFrom">主錢包</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-top:1px solid #E5E7EB;"><span class="row-sub" style="margin:0;">接收</span><span style="font-weight:700;font-size:15px;" id="tfTo">C2C 錢包</span></div>
+            </div>
+            <div style="display:flex;justify-content:center;margin:-16px 0;position:relative;z-index:1;">
+              <button class="iconbtn" style="background:#EFF6FF;border:4px solid #fff;color:var(--blue);width:38px;height:38px;" onclick="swapTransferDir()">${SVG.swapDir}</button>
+            </div>
+            <button class="btn-pill-outline" style="width:100%;margin:14px 0;">USDT ${SVG.chevDown}</button>
+            <div class="field-label">轉帳數量</div>
+            <div class="input-inline-btn"><input class="input" id="tfAmount" type="text" inputmode="decimal" value="0.00" style="padding-right:96px;"><span class="suffix" style="right:74px;">USDT</span><button class="chip" onclick="tfMax()">全部</button></div>
+            <div style="font-size:12px;color:var(--graytext);margin:8px 0 20px;" id="tfAvail">可用: <span style="color:var(--blue);font-weight:700;">1.00 USDT</span></div>
+            <button class="btn btn-pill" onclick="if(requireLogin())demoSubmit()">確認轉帳</button>
+          </div>
+        </section>
+
+        <!-- ============ 12. CARD APPLY ============ -->
+        <section class="screen" id="scr-card-apply">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">虛擬卡</div></div>
+          <div class="bd no-nav-pad">
+            <div class="vcard" style="margin-top:6px;">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <span class="brand">DEMO</span>
+                <span class="visa">VISA</span>
+              </div>
+              <div class="num">•••• •••• •••• 8421</div>
+              <div class="row2"><span>持卡人 WEWQ</span><span>有效期限 12/29</span></div>
+            </div>
+            <h1 style="font-size:21px;line-height:1.4;margin:16px 0 6px;">全新支付方式<br>即將入駐您的錢包</h1>
+            <p style="color:var(--graytext);font-size:13.5px;line-height:1.6;margin:0 0 22px;">穩定幣直連現實消費，即刻買單</p>
+            <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:20px;">
+              <div class="row-ic c-blue" style="flex:none;">${SVG.globe}</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text2);margin-bottom:3px;">全球暢付，即刻啟程</div><div style="font-size:12.5px;color:var(--graytext);line-height:1.6;">全球任意支持該卡的商戶，均可使用穩定幣帳戶輕鬆支付</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:20px;">
+              <div class="row-ic c-purple" style="flex:none;">${SVG.gift}</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text2);margin-bottom:3px;">邊花邊賺，驚喜回饋</div><div style="font-size:12.5px;color:var(--graytext);line-height:1.6;">指定消費即享數字資產獎勵與返現</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:22px;">
+              <div class="row-ic c-green" style="flex:none;">${SVG.trendUp}</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text2);margin-bottom:3px;">財富增值，毫不費力</div><div style="font-size:12.5px;color:var(--graytext);line-height:1.6;">卡片餘額閒置資金，最高可享 10% 年化收益</div></div>
+            </div>
+            <div class="center-note" style="text-align:left;margin:0 0 16px;">如果繼續操作，即表示您同意 <span style="color:var(--blue);font-weight:600;cursor:pointer;" onclick="lowKeyNoop()">持卡人協議</span>。</div>
+            <button class="btn btn-pill" style="height:52px;font-size:15px;" onclick="if(requireLogin())demoSubmit()">獲取虛擬卡</button>
+          </div>
+        </section>
+
+        <!-- ============ 13. ASSETS / WALLET ============ -->
+        <section class="screen" id="scr-wallet">
+          <div class="hd hd-root">資產中心</div>
+          <div class="bd">
+            <div style="color:var(--graytext);font-size:14px;font-weight:500;display:flex;align-items:center;gap:6px;">預估總資產 (USDT) <button class="iconbtn" style="padding:2px;">${SVG.eye}</button></div>
+            <div style="font-size:32px;font-weight:900;margin:4px 0;color:#0A0A0A;">300.0000 <span style="font-size:15px;font-weight:600;color:var(--graytext);">USDT</span></div>
+            <div style="color:var(--graytext);font-size:12.5px;margin-bottom:14px;">預估總資產 (KRW) 0 KRW</div>
+            <div class="qrow">
+              <button class="qtile" onclick="goTo('deposit-entry')">${SVG.deposit}<span>儲值</span></button>
+              <button class="qtile" onclick="goTo('withdrawal')">${SVG.withdraw}<span>提領</span></button>
+              <button class="qtile" onclick="goTo('asset-record')">${SVG.records}<span>記錄</span></button>
+              <button class="qtile" onclick="goTo('transfer')">${SVG.transfer}<span>轉帳</span></button>
+            </div>
+            <div class="tabs-underline" id="assetsTabs">
+              <button class="active" onclick="switchAssetsTab(this,'main')">主錢包</button>
+              <button onclick="switchAssetsTab(this,'c2c')">C2C 錢包</button>
+            </div>
+            <div id="assetsMainPanel">
+              <div class="card">
+                <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:10px;"><div class="coin-ic coin-usdt">$</div><div style="font-weight:700;">USDT</div></span><div style="font-weight:700;">300.0000</div></div>
+                <div class="nest-box">
+                  <div class="row"><div class="row-main"><div class="row-sub">可用餘額</div></div><div class="row-val" style="font-weight:600;">0.0000 USDT</div></div>
+                  <div class="row"><div class="row-main"><div class="row-sub" style="display:flex;align-items:center;gap:4px;">凍結餘額 <span style="color:#9CA3AF;">ⓘ</span></div></div><div class="row-val" style="font-weight:600;">300.0000 USDT</div></div>
+                  <div class="row"><div class="row-main"><div class="row-sub">總餘額</div></div><div class="row-val" style="font-weight:600;">300.0000 USDT</div></div>
+                  <div style="font-size:11px;color:#9CA3AF;padding:6px 0 8px;">總餘額 = 可用餘額 + 凍結餘額</div>
+                </div>
+              </div>
+              <div class="card">
+                <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:10px;"><div class="coin-ic coin-krw">₩</div><div style="font-weight:700;">KRW</div></span><div style="font-weight:700;">0</div></div>
+                <div class="nest-box">
+                  <div class="row"><div class="row-main"><div class="row-sub">可用餘額</div></div><div class="row-val" style="font-weight:600;">0 KRW</div></div>
+                  <div class="row"><div class="row-main"><div class="row-sub" style="display:flex;align-items:center;gap:4px;">凍結餘額 <span style="color:#9CA3AF;">ⓘ</span></div></div><div class="row-val" style="font-weight:600;">0 KRW</div></div>
+                  <div class="row"><div class="row-main"><div class="row-sub">總餘額</div></div><div class="row-val" style="font-weight:600;">0 KRW</div></div>
+                  <div style="font-size:11px;color:#9CA3AF;padding:6px 0 8px;">總餘額 = 可用餘額 + 凍結餘額</div>
+                </div>
+              </div>
+            </div>
+            <div id="assetsC2cPanel" hidden>
+              <div class="card">
+                <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:10px;"><div class="coin-ic coin-usdt">$</div><div style="font-weight:700;">USDT</div></span><div style="font-weight:700;">0.0000</div></div>
+                <div class="nest-box">
+                  <div class="row"><div class="row-main"><div class="row-sub">可用餘額</div></div><div class="row-val" style="font-weight:600;">0.0000 USDT</div></div>
+                  <div class="row"><div class="row-main"><div class="row-sub" style="display:flex;align-items:center;gap:4px;">凍結餘額 <span style="color:#9CA3AF;">ⓘ</span></div></div><div class="row-val" style="font-weight:600;">0.0000 USDT</div></div>
+                  <div class="row"><div class="row-main"><div class="row-sub">總餘額</div></div><div class="row-val" style="font-weight:600;">0.0000 USDT</div></div>
+                  <div style="font-size:11px;color:#9CA3AF;padding:6px 0 8px;">總餘額 = 可用餘額 + 凍結餘額</div>
+                </div>
+              </div>
+              <div class="card">
+                <div style="display:flex;align-items:center;justify-content:space-between;"><span style="display:flex;align-items:center;gap:10px;"><div class="coin-ic coin-krw">₩</div><div style="font-weight:700;">KRW</div></span><div style="font-weight:700;">0</div></div>
+                <div class="nest-box">
+                  <div class="row"><div class="row-main"><div class="row-sub">可用餘額</div></div><div class="row-val" style="font-weight:600;">0 KRW</div></div>
+                  <div class="row"><div class="row-main"><div class="row-sub" style="display:flex;align-items:center;gap:4px;">凍結餘額 <span style="color:#9CA3AF;">ⓘ</span></div></div><div class="row-val" style="font-weight:600;">0 KRW</div></div>
+                  <div class="row"><div class="row-main"><div class="row-sub">總餘額</div></div><div class="row-val" style="font-weight:600;">0 KRW</div></div>
+                  <div style="font-size:11px;color:#9CA3AF;padding:6px 0 8px;">總餘額 = 可用餘額 + 凍結餘額</div>
+                </div>
+              </div>
+            </div>
+            <div class="card" id="assetDistCard">
+              <div class="sec-title"><h2>資產分布</h2><span style="display:flex;gap:6px;"><button class="btn-sm" style="background:var(--lightgray);color:#111;">USDT</button><button class="btn-sm" style="background:var(--lightgray);color:#111;">KRW</button></span></div>
+              <div class="donut-wrap">
+                <div class="donut"></div>
+                <div>
+                  <div class="legend-item"><span class="legend-dot" style="background:var(--blue);"></span>主錢包 100.00% — 300.0000 USDT</div>
+                  <div class="legend-item"><span class="legend-dot" style="background:#E5E7EB;"></span>C2C 錢包 0.00% — 0.0000 USDT</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bnav">
+            <button data-nav-main="main" onclick="goTo('main')">${SVG.home}<span>首頁</span></button>
+            <button data-nav-main="card-apply" onclick="goTo('card-apply')">${SVG.card}<span>卡片</span></button>
+            <button data-nav-main="swap" onclick="goTo('swap')">${SVG.tag}<span>C2C</span></button>
+            <button data-nav-main="wallet" onclick="gotoOrLogin('wallet')">${SVG.wallet}<span>資產</span></button>
+            <button data-nav-main="user" onclick="goTo('user')">${SVG.user}<span>個人</span></button>
+          </div>
+        </section>
+
+        <!-- ============ 14. ASSET RECORD LIST ============ -->
+        <section class="screen" id="scr-asset-record">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">資產紀錄</div></div>
+          <div class="bd no-nav-pad">
+            <div class="tabs-underline" id="assetRecTabs">
+              <button class="active" onclick="switchAssetRecTab(this,'wallet')">我的錢包</button>
+              <button onclick="switchAssetRecTab(this,'c2c')">C2C</button>
+            </div>
+            <div class="filter-chip-row">
+              <div class="filter-chip">${SVG.coinBullet}USDT ${SVG.chevDown}</div>
+              <div class="filter-chip">${SVG.tagBullet}全部 ${SVG.chevDown}</div>
+              <div class="filter-chip">${SVG.calBullet}近30天 ${SVG.chevDown}</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;background:var(--lightgray);border-radius:10px 10px 0 0;padding:9px 14px;font-size:12px;color:var(--graytext);font-weight:600;">
+              <span>類型 / 資金流向</span><span>數量</span><span>時間</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;" onclick="goTo('withdrawal-record-detail')">
+              <div><div style="font-weight:700;font-size:13.5px;">USDT 提領</div><div class="row-sub" style="margin-top:1px;">提交提領</div></div>
+              <div class="row-val neg">-300 USDT</div>
+              <div style="text-align:right;font-size:11px;color:#9CA3AF;">2026-09-14<br>15:13:00</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border);cursor:pointer;" onclick="goTo('deposit-record-detail')">
+              <div><div style="font-weight:700;font-size:13.5px;">鏈上儲值</div><div class="row-sub" style="margin-top:1px;">充幣到帳</div></div>
+              <div class="row-val pos">+150 USDT</div>
+              <div style="text-align:right;font-size:11px;color:#9CA3AF;">2026-09-14<br>15:03:26</div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;cursor:pointer;" onclick="goTo('deposit-record-detail')">
+              <div><div style="font-weight:700;font-size:13.5px;">鏈上儲值</div><div class="row-sub" style="margin-top:1px;">充幣到帳</div></div>
+              <div class="row-val pos">+150 USDT</div>
+              <div style="text-align:right;font-size:11px;color:#9CA3AF;">2026-09-02<br>14:34:17</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 15. C2C MARKET (swap) ============ -->
+        <section class="screen" id="scr-swap">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">市場掛單</div></div>
+          <div class="bd no-nav-pad">
+            <div class="tabs-pill solid" id="marketTabs">
+              <button class="active" onclick="switchMarketTab(this,'buy')">購買</button>
+              <button onclick="switchMarketTab(this,'sell')">出售</button>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <button class="txtbtn" style="padding:0;display:flex;align-items:center;gap:2px;">金額 ${SVG.chevDown}</button>
+              <div style="display:flex;gap:10px;align-items:center;">
+                <button class="btn-sm" id="postAdShortcutBtn" onclick="gotoOrLogin('post-ad')">${SVG.plus}<span id="postAdBtnLabel">刊登購買</span></button>
+                <button class="btn-outline-sm" onclick="gotoOrLogin('c2c-my-ads')">我的掛單</button>
+              </div>
+            </div>
+            <div class="info-banner">${SVG.info}<span>此處顯示為其他用戶的市場掛單；您自己刊登的掛單請至「我的掛單」查看。</span></div>
+            <div id="marketBuyPanel">
+              <div class="card">
+                <div style="display:flex;gap:10px;align-items:center;">
+                  <button class="avatar sm" style="border:none;cursor:pointer;background:#A855C4;font-size:13px;" onclick="openMerchant('user1')">U1</button>
+                  <div style="flex:1;"><div style="font-weight:700;font-size:14px;cursor:pointer;" onclick="openMerchant('user1')">user1</div><div class="row-sub">交易訂單數 36</div></div>
+                  <div style="text-align:right;"><div style="font-weight:800;color:var(--blue);">1,352</div><div style="font-size:11px;font-weight:500;color:var(--graytext);">KRW/USDT</div></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:10px;">
+                  <div style="display:flex;gap:18px;font-size:11.5px;color:var(--graytext);">
+                    <span>可交易數量<br><b style="color:#111827;font-size:12.5px;">350 USDT</b></span>
+                    <span>單筆限額<br><b style="color:#111827;font-size:12.5px;">70,000 - 1,000,000 KRW</b></span>
+                  </div>
+                  <button class="btn-sm" onclick="gotoOrLogin('swap-c2c-order')">購買</button>
+                </div>
+              </div>
+              <div class="card">
+                <div style="display:flex;gap:10px;align-items:center;">
+                  <button class="avatar sm" style="border:none;cursor:pointer;background:#CA8A04;font-size:13px;" onclick="openMerchant('user2')">U2</button>
+                  <div style="flex:1;"><div style="font-weight:700;font-size:14px;cursor:pointer;" onclick="openMerchant('user2')">user2</div><div class="row-sub">交易訂單數 128</div></div>
+                  <div style="text-align:right;"><div style="font-weight:800;color:var(--blue);">1,345</div><div style="font-size:11px;font-weight:500;color:var(--graytext);">KRW/USDT</div></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:10px;">
+                  <div style="display:flex;gap:18px;font-size:11.5px;color:var(--graytext);">
+                    <span>可交易數量<br><b style="color:#111827;font-size:12.5px;">86.40 USDT</b></span>
+                    <span>單筆限額<br><b style="color:#111827;font-size:12.5px;">30,000 - 400,000 KRW</b></span>
+                  </div>
+                  <button class="btn-sm" onclick="gotoOrLogin('swap-c2c-order')">購買</button>
+                </div>
+              </div>
+            </div>
+            <div id="marketSellPanel" hidden><div class="empty">${SVG.docAlert}暫無訂單</div></div>
+          </div>
+          <div class="bnav-c2c">
+            <button data-nav-c2c="swap" class="active" onclick="goTo('swap')">${SVG.swapLoop}<span>C2C</span></button>
+            <button data-nav-c2c="order-records" onclick="gotoOrLogin('order-records')">${SVG.records}<span>訂單</span></button>
+            <button data-nav-c2c="c2c-my-ads" onclick="gotoOrLogin('c2c-my-ads')">${SVG.megaphone}<span>掛單</span></button>
+            <button data-nav-c2c="fiat-profile" onclick="gotoOrLogin('fiat-profile')">${SVG.user}<span>個人</span></button>
+          </div>
+        </section>
+
+        <!-- ============ 17. BUY ORDER ============ -->
+        <section class="screen" id="scr-swap-c2c-order">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center"><span style="font-size:17px;font-weight:700;">購買USDT</span></div></div>
+          <div class="bd no-nav-pad">
+            <div style="text-align:center;font-size:13px;color:var(--graytext);margin-bottom:12px;">價格 <b style="color:#111827;font-size:14px;">1,350 KRW</b></div>
+            <div style="background:#F9FAFB;border:1px solid var(--border);border-radius:16px;padding:14px;">
+              <div class="tabs-text"><button class="active">按金額</button><button>按數量</button></div>
+              <div class="input-inline-btn"><input class="input" id="boAmount" style="font-size:26px;font-weight:800;height:56px;border:none;background:none;padding-left:0;" value="0.00" oninput="updateBuyOrder()"><span class="suffix" style="right:68px;font-weight:600;color:#111827;">KRW</span><button class="chip-outline" onclick="document.getElementById('boAmount').value='100000';updateBuyOrder();">最大</button></div>
+              <hr class="sep" style="margin:10px 0;">
+              <div style="font-size:11.5px;color:var(--graytext);margin:4px 0;">單筆訂單限額 15,000 - 150,000 KRW</div>
+              <div style="font-size:12.5px;color:#374151;margin:4px 0;">收到金額 <b id="boReceive">0 USDT</b></div>
+              <div style="font-size:12.5px;color:#374151;margin:4px 0;">手續費 0</div>
+            </div>
+            <div class="card" style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;">
+              <div><div class="row-sub">C2C 錢包可用</div><div style="font-weight:700;">0 KRW</div></div>
+              <button class="btn-outline-sm" onclick="goTo('transfer')">轉帳</button>
+            </div>
+            <div class="card">
+              <div class="row" style="border:none;padding:6px 0;cursor:pointer;" onclick="openMerchant('user1')"><div class="row-sub" style="width:50px;">商家</div><div class="row-main" style="display:flex;align-items:center;justify-content:flex-end;gap:8px;"><div class="avatar sm" style="font-size:13px;">U1</div><span style="font-weight:600;">user1</span></div><div class="row-trail">${SVG.chevSm}</div></div>
+              <div class="row" style="border:none;padding:6px 0;"><div class="row-sub">交易說明</div><div class="row-main" style="text-align:right;color:var(--graytext);">—</div></div>
+            </div>
+            <button class="btn btn-pill" style="margin-top:8px;" onclick="demoSubmit()">購買</button>
+          </div>
+        </section>
+
+        <!-- ============ 16. POST AD ============ -->
+        <section class="screen" id="scr-post-ad">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">掛單</div></div>
+          <div class="bd no-nav-pad">
+            <div class="tabs-pill solid"><button class="active">買入</button><button>賣出</button></div>
+            <div style="display:flex;gap:10px;">
+              <div style="flex:1;"><div class="field-label">幣別</div><div class="select-box"><span>USDT</span>${SVG.chevDown}</div></div>
+              <div style="flex:1;"><div class="field-label">法幣</div><div class="select-box"><span>KRW</span>${SVG.chevDown}</div></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0 6px;"><span class="field-label" style="margin:0;">設置價格</span><button class="txtbtn" style="padding:0;font-size:12.5px;" onclick="fillMarketPrice()">市場參考價: 1,355 KRW</button></div>
+            <div class="input-inline-btn"><input class="input" id="paPrice" placeholder="請輸入單價"><span class="suffix">KRW</span></div>
+            <div class="field-label">交易數量</div>
+            <div class="input-inline-btn"><input class="input" id="paQty" placeholder="請輸入數量" oninput="updatePostAdWarning()"><span class="suffix">USDT</span></div>
+            <div style="font-size:12px;color:var(--graytext);margin-top:6px;" id="paEquiv">≈ 0 KRW</div>
+            <div class="field-label">訂單限額</div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <div class="input-inline-btn" style="flex:1;"><input class="input" placeholder="最小"><span class="suffix">KRW</span></div>
+              <span style="color:var(--graytext);">~</span>
+              <div class="input-inline-btn" style="flex:1;"><input class="input" placeholder="最大"><span class="suffix">KRW</span></div>
+            </div>
+            <div class="field-label">交易說明</div>
+            <textarea class="input" placeholder="選填，讓對方了解你的交易條件（最多 500 字）"></textarea>
+            <div class="warn-box" style="margin:16px 0;" id="paWarn">發布後將凍結 C2C 錢包 0 USDT（可用 0 USDT），成交後付給買方。</div>
+            <button class="btn btn-pill" onclick="demoSubmit()">發布掛單</button>
+          </div>
+        </section>
+
+        <!-- ============ 18. MY ADS ============ -->
+        <section class="screen" id="scr-c2c-my-ads">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">我的掛單</div><div class="grow"></div><button class="iconbtn" onclick="goTo('post-ad')">${SVG.plus}</button></div>
+          <div class="bd no-nav-pad">
+            <div class="filter-tabs"><button style="pointer-events:none;">USDT</button><button>全部 ${SVG.chevDown}</button><button>全部 ${SVG.chevDown}</button></div>
+            <div class="empty">
+              ${SVG.docAlert}
+              <div>尚未刊登任何廣告</div>
+              <button class="btn-pill btn" style="width:auto;padding:0 22px;height:42px;font-size:14px;" onclick="goTo('post-ad')">立即刊登</button>
+            </div>
+          </div>
+          <div class="bnav-c2c">
+            <button data-nav-c2c="swap" onclick="goTo('swap')">${SVG.swapLoop}<span>C2C</span></button>
+            <button data-nav-c2c="order-records" onclick="gotoOrLogin('order-records')">${SVG.records}<span>訂單</span></button>
+            <button data-nav-c2c="c2c-my-ads" class="active" onclick="gotoOrLogin('c2c-my-ads')">${SVG.megaphone}<span>掛單</span></button>
+            <button data-nav-c2c="fiat-profile" onclick="gotoOrLogin('fiat-profile')">${SVG.user}<span>個人</span></button>
+          </div>
+        </section>
+
+        <!-- ============ 19. ORDER RECORDS ============ -->
+        <section class="screen" id="scr-order-records">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">交易紀錄</div></div>
+          <div class="bd no-nav-pad">
+            <div class="tabs-pill" id="orderStatusTabs" style="margin-bottom:12px;">
+              <button class="active" onclick="switchOrderStatus(this,'done')">已完成</button>
+              <button onclick="switchOrderStatus(this,'cancel')">已取消</button>
+              <button onclick="switchOrderStatus(this,'processing')">處理中</button>
+            </div>
+            <div class="filter-tabs" id="orderSideTabs">
+              <button class="active" onclick="switchOrderSide(this,'all')">全部</button>
+              <button onclick="switchOrderSide(this,'buy')">購買</button>
+              <button onclick="switchOrderSide(this,'sell')">出售</button>
+            </div>
+            <div class="empty">${SVG.docAlert}尚無成交訂單</div>
+          </div>
+          <div class="bnav-c2c">
+            <button data-nav-c2c="swap" onclick="goTo('swap')">${SVG.swapLoop}<span>C2C</span></button>
+            <button data-nav-c2c="order-records" class="active" onclick="gotoOrLogin('order-records')">${SVG.records}<span>訂單</span></button>
+            <button data-nav-c2c="c2c-my-ads" onclick="gotoOrLogin('c2c-my-ads')">${SVG.megaphone}<span>掛單</span></button>
+            <button data-nav-c2c="fiat-profile" onclick="gotoOrLogin('fiat-profile')">${SVG.user}<span>個人</span></button>
+          </div>
+        </section>
+
+        <!-- ============ 20. C2C PROFILE CENTER ============ -->
+        <section class="screen" id="scr-fiat-profile">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center" style="font-size:15px;">個人中心</div></div>
+          <div class="bd no-nav-pad">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+              <div class="avatar lg">w</div>
+              <div style="flex:1;"><div style="font-weight:800;font-size:16px;">wewq</div><button class="txtbtn" style="padding:2px 0;">${SVG.pencil} 編輯暱稱</button></div>
+            </div>
+            <div style="display:flex;gap:16px;margin-bottom:18px;">
+              <span style="display:flex;align-items:center;gap:4px;font-size:12px;color:#374151;">${SVG.checkBadge} 身份證號</span>
+              <span style="display:flex;align-items:center;gap:4px;font-size:12px;color:#374151;">${SVG.checkBadge} 郵箱</span>
+            </div>
+            <div class="card">
+              <div class="sec-title"><h2>資產總覽</h2><button class="txtbtn" style="padding:0;" onclick="goTo('wallet')">查看更多 ›</button></div>
+              <div style="font-size:22px;font-weight:900;margin-bottom:2px;">300.00 USDT</div>
+              <div style="font-size:12px;color:var(--graytext);margin-bottom:12px;">0 KRW</div>
+              <hr class="sep" style="margin:0 0 8px;">
+              <div class="row" style="border:none;padding:8px 0;"><div class="row-ic sm c-blue">${SVG.wallet}</div><div class="row-main"><div class="row-title">主錢包</div></div><div class="row-val" style="font-weight:600;font-size:13px;text-align:right;line-height:1.5;">300.00 USDT<br>0 KRW</div></div>
+              <div class="row" style="border:none;padding:8px 0;cursor:pointer;" onclick="goTo('wallet')"><div class="row-ic sm c-green">${SVG.swapLoop}</div><div class="row-main"><div class="row-title">C2C 錢包</div></div><div class="row-val" style="font-weight:600;font-size:13px;text-align:right;line-height:1.5;">0.00 USDT<br>0 KRW</div><div class="row-trail">${SVG.chevDown}</div></div>
+            </div>
+            <div class="card">
+              <div class="sec-title"><h2>帳戶詳情</h2><button class="txtbtn" style="padding:0;" onclick="goTo('order-records')">查看更多 ›</button></div>
+              <div class="row"><div class="row-main"><div class="row-sub">30天成單數</div></div><div class="row-val" style="font-weight:600;">0</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">30天成單率</div></div><div class="row-val" style="font-weight:600;">0%</div></div>
+            </div>
+            <div class="row" style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px 16px;" onclick="goTo('help-center')">
+              <div class="row-ic c-blue">${SVG.speech}</div><div class="row-main"><div class="row-title">FAQ</div></div><div class="row-trail">${SVG.chev}</div>
+            </div>
+          </div>
+          <div class="bnav-c2c">
+            <button data-nav-c2c="swap" onclick="goTo('swap')">${SVG.swapLoop}<span>C2C</span></button>
+            <button data-nav-c2c="order-records" onclick="gotoOrLogin('order-records')">${SVG.records}<span>訂單</span></button>
+            <button data-nav-c2c="c2c-my-ads" onclick="gotoOrLogin('c2c-my-ads')">${SVG.megaphone}<span>掛單</span></button>
+            <button data-nav-c2c="fiat-profile" class="active" onclick="gotoOrLogin('fiat-profile')">${SVG.user}<span>個人</span></button>
+          </div>
+        </section>
+
+        <!-- ============ 21. CUSTOMER SERVICE ============ -->
+        <section class="screen" id="scr-customer-service">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">客服中心</div></div>
+          <div class="bd no-nav-pad">
+            <p style="color:var(--graytext);font-size:13px;line-height:1.7;margin:4px 0 18px;">熱門問題中的解決方案也許能快速解決你的問題。如果你沒有找到想要的答案，可以點擊最下方按鈕，聯繫線上客服。</p>
+            <div class="field-label" style="margin-top:0;">常見問題</div>
+            <div class="card menu">
+              <div class="row" onclick="lowKeyNoop()"><div class="row-main"><div class="row-title">解綁谷歌身份驗證器</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="lowKeyNoop()"><div class="row-main"><div class="row-title">忘記密碼且遺失 Google 驗證器</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="lowKeyNoop()"><div class="row-main"><div class="row-title">如何更換已綁定的手機號碼/信箱</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="lowKeyNoop()"><div class="row-main"><div class="row-title">遺失信箱或手機</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="lowKeyNoop()"><div class="row-main"><div class="row-title">Google 驗證碼錯誤</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="lowKeyNoop()"><div class="row-main"><div class="row-title">信箱或簡訊驗證碼錯誤</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="lowKeyNoop()"><div class="row-main"><div class="row-title">未收到簡訊驗證碼</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="lowKeyNoop()"><div class="row-main"><div class="row-title">未收到信箱驗證碼</div></div><div class="row-trail">${SVG.chev}</div></div>
+            </div>
+            <button class="btn btn-pill" style="margin-top:22px;" onclick="goTo('cs-chat')">${SVG.headset}&nbsp;官方客服</button>
+          </div>
+        </section>
+
+        <!-- ============ 21b. LIVE CHAT ============ -->
+        <section class="screen" id="scr-cs-chat">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">客服中心</div></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);flex:none;">
+            <div class="avatar sm" style="background:var(--blue);">${SVG.headset}</div>
+            <div style="font-weight:700;font-size:15px;color:var(--text2);">客服</div>
+          </div>
+          <div id="csChatMessages" style="flex:1 1 auto;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="align-self:flex-start;background:var(--lightgray);color:#111827;padding:10px 14px;border-radius:14px 14px 14px 4px;font-size:13.5px;max-width:78%;line-height:1.6;">您好，歡迎使用線上客服，請問有什麼可以協助您的嗎？</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:10px 14px;border-top:1px solid var(--border);flex:none;">
+            <button class="iconbtn" onclick="toast('（Demo 版本，未提供上傳圖片）')">${SVG.image}</button>
+            <input class="input" id="csChatInput" placeholder="輸入你想諮詢的問題" style="flex:1;border-radius:999px;" onkeydown="if(event.key==='Enter')sendCsChat()">
+            <button class="iconbtn" style="background:var(--blue);color:#fff;" onclick="sendCsChat()">${SVG.send}</button>
+          </div>
+        </section>
+
+        <!-- ============ 22. PROFILE (main) ============ -->
+        <section class="screen" id="scr-user">
+          <div id="userGuestBlock" style="padding:36px 20px 0;text-align:center;" hidden>
+            <div class="brand-lockup" style="margin-bottom:18px;">
+              <img class="brand-icon" src="logo-redesign.svg" alt="logo" style="width:40px;height:40px;">
+              <span class="brand-word" style="font-size:24px;">demo</span>
+            </div>
+            <div class="info-banner" style="text-align:left;margin-bottom:18px;">${SVG.lock}<span>登入後即可查看帳戶資訊、使用儲值、提領、轉帳與卡片等完整功能。</span></div>
+            <div class="splash-actions" style="margin-bottom:18px;">
+              <button class="btn btn-pill" onclick="goTo('login-form',{kyc:false})">登入</button>
+              <button class="btn btn-outline" onclick="goTo('register',{kyc:false})">建立帳戶</button>
+            </div>
+            <div class="card menu" style="text-align:left;">
+              <div class="row" onclick="goTo('about-us')"><div class="row-ic c-purple">${SVG.doc}</div><div class="row-main"><div class="row-title">關於我們</div></div><div class="row-trail" style="gap:6px;"><span style="color:var(--graytext);font-size:13px;">v1.0.0.1</span>${SVG.chev}</div></div>
+              <div class="row" onclick="goTo('help-center')"><div class="row-ic c-blue">${SVG.speech}</div><div class="row-main"><div class="row-title">幫助中心</div></div><div class="row-trail">${SVG.chev}</div></div>
+            </div>
+          </div>
+          <div id="userLoggedInBlock">
+          <div class="hero-header">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div class="avatar lg" style="background:rgba(255,255,255,.22);">W</div>
+              <div style="flex:1;min-width:0;">
+                <div style="display:flex;align-items:center;gap:6px;"><span style="font-weight:800;font-size:18px;">wewq</span><button class="iconbtn" style="padding:2px;background:rgba(255,255,255,.2);color:#fff;">${SVG.pencil}</button></div>
+                <div style="font-size:14px;color:rgba(255,255,255,.7);">sunny.ko+9****1@sfwtechco.com</div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:14px;color:rgba(255,255,255,.7);margin-top:3px;">UID: 869235 <button class="iconbtn" style="padding:1px;background:rgba(255,255,255,.2);color:#fff;" onclick="copyText()">${SVG.copy}</button><span style="display:flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#4ADE80;"></span>已驗證</span></div>
+              </div>
+            </div>
+            <div class="hero-stats">
+              <div style="flex:1;text-align:center;"><div style="font-weight:700;font-size:14px;">300.00</div><div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;">預估總資產 (USDT)</div></div>
+              <div style="flex:1;text-align:center;border-left:1px solid rgba(255,255,255,.3);border-right:1px solid rgba(255,255,255,.3);"><div style="font-weight:700;font-size:14px;">0</div><div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;">預估總資產 (KRW)</div></div>
+              <div style="flex:1;text-align:center;"><div style="font-weight:700;font-size:14px;">0.00</div><div style="font-size:11px;color:rgba(255,255,255,.6);margin-top:2px;">收益</div></div>
+            </div>
+          </div>
+          <div class="bd" style="padding-top:18px;">
+            <div class="card menu">
+              <div class="row" onclick="goTo('account-info')"><div class="row-ic c-purple">${SVG.idcard}</div><div class="row-main"><div class="row-title">帳戶資訊</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="goTo('security-center')"><div class="row-ic c-blue">${SVG.lockShield}</div><div class="row-main"><div class="row-title">密碼設定</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="goTo('verification-info')"><div class="row-ic c-green">${SVG.idcard}</div><div class="row-main"><div class="row-title">身分認證</div></div><div class="row-trail" style="gap:8px;"><span class="badge-verified">已驗證</span>${SVG.chev}</div></div>
+              <div class="row" onclick="goTo('card-apply')"><div class="row-ic c-blue">${SVG.card}</div><div class="row-main"><div class="row-title">卡片管理</div><div class="row-sub">查看與管理您的卡片</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="goTo('coupon-management')"><div class="row-ic c-purple">${SVG.gift}</div><div class="row-main"><div class="row-title">優惠券管理</div><div class="row-sub">查看可用折抵券</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="goTo('bind-payment')"><div class="row-ic c-blue">${SVG.bank}</div><div class="row-main"><div class="row-title">支付方式</div></div><div class="row-trail">${SVG.chev}</div></div>
+            </div>
+            <div class="card menu">
+              <div class="row" onclick="goTo('notification')"><div class="row-ic c-yellow">${SVG.bell}</div><div class="row-main"><div class="row-title">通知</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="openLang()"><div class="row-ic c-blue">${SVG.globe}</div><div class="row-main"><div class="row-title">語言</div></div><div class="row-trail">繁體中文 ${SVG.chev}</div></div>
+            </div>
+            <div class="card menu">
+              <div class="row" onclick="goTo('announcement-list')"><div class="row-ic c-orange">${SVG.bell}</div><div class="row-main"><div class="row-title">最新消息</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="goTo('help-center')"><div class="row-ic c-blue">${SVG.speech}</div><div class="row-main"><div class="row-title">幫助中心</div></div><div class="row-trail">${SVG.chev}</div></div>
+              <div class="row" onclick="goTo('about-us')"><div class="row-ic c-purple">${SVG.doc}</div><div class="row-main"><div class="row-title">關於我們</div></div><div class="row-trail" style="gap:6px;"><span style="color:var(--graytext);font-size:13px;">v1.0.0.1</span>${SVG.chev}</div></div>
+            </div>
+            <button class="btn-danger-text" onclick="logoutDemo()">登出</button>
+          </div>
+          </div>
+          <div class="bnav">
+            <button data-nav-main="main" onclick="goTo('main')">${SVG.home}<span>首頁</span></button>
+            <button data-nav-main="card-apply" onclick="goTo('card-apply')">${SVG.card}<span>卡片</span></button>
+            <button data-nav-main="swap" onclick="goTo('swap')">${SVG.tag}<span>C2C</span></button>
+            <button data-nav-main="wallet" onclick="gotoOrLogin('wallet')">${SVG.wallet}<span>資產</span></button>
+            <button data-nav-main="user" onclick="goTo('user')">${SVG.user}<span>個人</span></button>
+          </div>
+        </section>
+
+        <!-- ============ 23. ACCOUNT INFO ============ -->
+        <section class="screen" id="scr-account-info">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">帳戶資訊</div></div>
+          <div class="bd no-nav-pad">
+            <div class="row"><div class="row-main"><div class="row-title">UID</div></div><div class="row-val" style="font-weight:600;">869235</div><button class="iconbtn" style="color:var(--blue);" onclick="copyText()">${SVG.copy}</button></div>
+            <div class="row" onclick="goTo('set-nickname')"><div class="row-main"><div class="row-title">設定暱稱</div></div><div class="row-val" style="font-weight:600;color:var(--graytext);">wewq</div><div class="row-trail" style="color:var(--blue);">${SVG.pencil}</div></div>
+            <div class="row"><div class="row-main"><div class="row-title">電子郵件</div></div><div class="row-val" style="font-weight:600;font-size:12.5px;">sunny.ko+9021@sfwtechco.com</div></div>
+          </div>
+        </section>
+
+        <!-- ============ 24. SET NICKNAME ============ -->
+        <section class="screen" id="scr-set-nickname">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">設定暱稱</div></div>
+          <div class="bd no-nav-pad">
+            <div class="field-label">商家暱稱</div>
+            <input class="input" value="wewq" placeholder="請輸入商家暱稱">
+            <button class="btn btn-pill" style="margin-top:20px;" onclick="demoSubmit()">確認</button>
+          </div>
+        </section>
+
+        <!-- ============ 25. SECURITY CENTER ============ -->
+        <section class="screen" id="scr-security-center">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">密碼設定</div></div>
+          <div class="bd no-nav-pad">
+            <div class="row" style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px 16px;margin-bottom:10px;" onclick="goTo('modify-password')">
+              <div class="row-ic c-blue">${SVG.lock}</div><div class="row-main"><div class="row-title">登入密碼</div><div class="row-sub">用於登入帳戶與帳戶安全驗證。</div></div>
+              <div class="row-trail" style="color:var(--blue);font-weight:600;">修改 ${SVG.chev}</div>
+            </div>
+            <div class="row" style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px 16px;margin-bottom:16px;" onclick="goTo('transaction-password')">
+              <div class="row-ic c-blue">${SVG.lockShield}</div><div class="row-main"><div class="row-title">交易密碼</div><div class="row-sub">用於提領、資金操作與安全驗證時輸入。</div></div>
+              <div class="row-trail" style="color:var(--blue);font-weight:600;">修改 ${SVG.chev}</div>
+            </div>
+            <div class="card" style="background:var(--lightgray);border:none;">
+              <div style="font-weight:700;font-size:14px;margin-bottom:10px;">安全提醒</div>
+              <div style="font-size:12.5px;color:var(--graytext);line-height:2.1;">
+                🔒 請勿將密碼分享給他人。<br>
+                ↻ 建議定期更換登入密碼與交易密碼。<br>
+                🗂 交易密碼用於提領、資金操作等安全驗證。<br>
+                ⓘ 若發現帳戶異常活動，請立即聯繫客服。
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 26. MODIFY PASSWORD ============ -->
+        <section class="screen" id="scr-modify-password">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">修改密碼</div></div>
+          <div class="bd no-nav-pad">
+            <div class="info-banner green">${SVG.lockShield}<span>請妥善保管您的登入密碼，如遺忘登入密碼請立即修改</span></div>
+            <div class="field-label">電子郵件</div>
+            <div class="input-icon-wrap"><span class="lic">${SVG.mail}</span><input class="input" style="padding-left:40px;" value="sunny.ko+9021@sfwtechco.com" readonly></div>
+            <div class="field-label">電子信箱驗證碼</div>
+            <div class="input-icon-wrap input-inline-btn"><span class="lic">${SVG.lockShield}</span><input class="input" placeholder="請輸入電子信箱驗證碼"><button class="chip" onclick="demoSubmit()">獲取驗證碼</button></div>
+            <div class="field-label">舊密碼</div>
+            <div class="input-icon-wrap"><span class="lic">${SVG.lock}</span><input class="input" type="password" id="mp1" placeholder="請輸入舊密碼"><button class="ric" onclick="togglePw(this,'mp1')">${SVG.eye}</button></div>
+            <div class="field-label">新密碼</div>
+            <div class="input-icon-wrap"><span class="lic">${SVG.lock}</span><input class="input" type="password" id="mp2" placeholder="請輸入新密碼"><button class="ric" onclick="togglePw(this,'mp2')">${SVG.eye}</button></div>
+            <div class="field-label">確認密碼</div>
+            <div class="input-icon-wrap"><span class="lic">${SVG.lock}</span><input class="input" type="password" id="mp3" placeholder="請再次輸入新密碼"><button class="ric" onclick="togglePw(this,'mp3')">${SVG.eye}</button></div>
+            <button class="btn btn-pill" style="margin-top:20px;" onclick="demoSubmit()">重置密碼</button>
+          </div>
+        </section>
+
+        <!-- ============ 27. TRANSACTION PASSWORD ============ -->
+        <section class="screen" id="scr-transaction-password">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">交易密碼</div></div>
+          <div class="bd no-nav-pad">
+            <div class="info-banner green">${SVG.lockShield}<span>請妥善保管您的交易密碼，如遺忘交易密碼請立即修改。</span></div>
+            <div class="field-label">電子郵件</div>
+            <div class="input-icon-wrap"><span class="lic">${SVG.mail}</span><input class="input" style="padding-left:40px;" value="sunny.ko+9021@sfwtechco.com" readonly></div>
+            <div class="field-label">電子信箱驗證碼</div>
+            <div class="input-icon-wrap input-inline-btn"><span class="lic">${SVG.lockShield}</span><input class="input" placeholder="請輸入電子信箱驗證碼"><button class="chip" onclick="demoSubmit()">獲取驗證碼</button></div>
+            <div class="field-label">輸入交易密碼</div>
+            <div class="input-icon-wrap"><span class="lic">${SVG.lock}</span><input class="input" type="password" id="txPw1" placeholder="請輸入交易密碼" oninput="checkTxPwEnable()"><button class="ric" onclick="togglePw(this,'txPw1')">${SVG.eye}</button></div>
+            <div class="field-label">確認交易密碼</div>
+            <div class="input-icon-wrap"><span class="lic">${SVG.lock}</span><input class="input" type="password" id="txPw2" placeholder="請再次輸入交易密碼" oninput="checkTxPwEnable()"><button class="ric" onclick="togglePw(this,'txPw2')">${SVG.eye}</button></div>
+            <button class="btn btn-pill" id="txPwConfirmBtn" style="margin-top:20px;" disabled onclick="demoSubmit()">確認</button>
+          </div>
+        </section>
+
+        <!-- ============ 28. VERIFICATION INFO ============ -->
+        <section class="screen" id="scr-verification-info">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">實名認證</div></div>
+          <div class="bd no-nav-pad" style="text-align:center;">
+            <div style="width:76px;height:76px;border-radius:50%;background:var(--green-bg);display:flex;align-items:center;justify-content:center;margin:14px auto 6px;">${SVG.checkCircle}</div>
+            <h1 style="font-size:18px;margin:6px 0 6px;">認證已通過</h1>
+            <p style="color:var(--graytext);font-size:12.5px;line-height:1.7;margin:0 0 20px;">您的身份認證已完成，現在即可申請卡片及 C2C 交易。</p>
+            <div class="card" style="text-align:left;">
+              <div class="row"><div class="row-main"><div class="row-sub">證件姓名</div></div><div class="row-val" style="font-weight:600;">w＊q</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">英文姓名</div></div><div class="row-val" style="font-weight:600;">WEQ, Q＊＊</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">國籍 / 地區</div></div><div class="row-val" style="font-weight:600;">中國</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">證件類型</div></div><div class="row-val" style="font-weight:600;">居民身份證</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">認證時間</div></div><div class="row-val" style="font-weight:600;font-size:12.5px;">2026-09-02 14:32</div></div>
+              <div class="row"><div class="row-main"><div class="row-sub">狀態</div></div><div class="row-val" style="font-weight:700;color:var(--green);">已通過</div></div>
+            </div>
+            <button class="btn btn-pill" onclick="goTo('user')">返回</button>
+          </div>
+        </section>
+
+        <!-- ============ 29. COUPON MANAGEMENT ============ -->
+        <section class="screen" id="scr-coupon-management">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">優惠券管理</div></div>
+          <div class="bd no-nav-pad">
+            <div class="tabs-underline" id="couponTabs">
+              <button class="active" onclick="switchCouponTab(this,'avail')">可使用</button>
+              <button onclick="switchCouponTab(this,'used')">已使用</button>
+              <button onclick="switchCouponTab(this,'expired')">已過期</button>
+            </div>
+            <div id="couponAvail">
+              <div class="card" style="background:linear-gradient(135deg,#EFF6FF,#fff);border-color:#BFDBFE;position:relative;overflow:hidden;">
+                <span class="badge-success" style="position:absolute;top:14px;right:14px;">可使用</span>
+                <div style="display:flex;align-items:baseline;gap:6px;"><div style="font-size:26px;font-weight:900;color:var(--blue);">5</div><div style="font-weight:800;color:var(--blue);font-style:italic;">USDT</div></div>
+                <span class="badge-new">新戶專屬</span>
+                <div style="font-weight:700;margin:10px 0 2px;">新戶開卡優惠券</div>
+                <div style="font-size:12px;color:var(--graytext);margin-bottom:6px;">可抵虛擬卡開卡費</div>
+                <div style="font-size:11.5px;color:#9CA3AF;margin-bottom:12px;display:flex;align-items:center;gap:4px;">${SVG.calBullet} 有效期限 2026-10-02</div>
+                <button class="btn btn-2xl" style="height:42px;" onclick="goTo('card-apply')">立即申請虛擬卡 →</button>
+              </div>
+            </div>
+            <div id="couponUsed" class="empty" hidden>${SVG.docAlert}尚無已使用的優惠券</div>
+            <div id="couponExpired" class="empty" hidden>${SVG.docAlert}尚無已過期的優惠券</div>
+            <div class="card">
+              <div style="font-weight:700;font-size:14px;margin-bottom:12px;display:flex;align-items:center;gap:6px;">${SVG.doc} 使用說明</div>
+              <div class="icon-grid">
+                <div><div class="ig-ic">${SVG.ban}</div><span>不可提現</span></div>
+                <div><div class="ig-ic">${SVG.noSwap}</div><span>不可轉讓</span></div>
+                <div><div class="ig-ic">${SVG.target}</div><span>僅限指定服務使用</span></div>
+                <div><div class="ig-ic">${SVG.clock}</div><span>逾期自動失效</span></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 30. BIND PAYMENT ============ -->
+        <section class="screen" id="scr-bind-payment">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">綁定支付方式</div></div>
+          <div class="bd no-nav-pad">
+            <div id="bindPayEmpty">
+              <button class="btn btn-pill" onclick="showBindPayOptions()">${SVG.plus} 添加支付方式 ${SVG.chevDown}</button>
+            </div>
+            <div id="bindPayOptions" hidden>
+              <div class="row" style="background:#fff;border:1px solid var(--border);border-radius:16px;padding:14px 16px;">
+                <div class="row-ic c-blue">${SVG.bank}</div><div class="row-main"><div class="row-title">金融卡</div></div>
+                <button class="btn-sm" onclick="goTo('bind-bank-card')">添加</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 31. BIND BANK CARD ============ -->
+        <section class="screen" id="scr-bind-bank-card">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">綁定金融卡</div></div>
+          <div class="bd no-nav-pad">
+            <div class="card" style="padding:0;">
+              <div class="row" style="padding:14px 16px;"><div class="row-title" style="font-weight:600;">開戶銀行</div><input class="input" placeholder="輸入銀行名稱" style="border:none;text-align:right;padding:0;font-size:13.5px;color:#9CA3AF;flex:1;min-width:0;"></div>
+              <div class="row" style="padding:14px 16px;"><div class="row-title" style="font-weight:600;">開戶地址</div><input class="input" placeholder="輸入銀行開戶地址" style="border:none;text-align:right;padding:0;font-size:13.5px;color:#9CA3AF;flex:1;min-width:0;"></div>
+              <div class="row" style="padding:14px 16px;"><div class="row-title" style="font-weight:600;">卡號姓名</div><input class="input" placeholder="輸入姓名" style="border:none;text-align:right;padding:0;font-size:13.5px;color:#9CA3AF;flex:1;min-width:0;"></div>
+              <div class="row" style="padding:14px 16px;"><div class="row-title" style="font-weight:600;">銀行帳號</div><input class="input" placeholder="輸入金融卡帳號" style="border:none;text-align:right;padding:0;font-size:13.5px;color:#9CA3AF;flex:1;min-width:0;"></div>
+            </div>
+            <button class="btn btn-pill" style="margin-top:20px;" onclick="demoSubmit()">確認</button>
+          </div>
+        </section>
+
+        <!-- ============ 32. NOTIFICATIONS ============ -->
+        <section class="screen" id="scr-notification">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">通知</div><div class="grow"></div><button class="txtbtn" onclick="toast('全部已標記為已讀')">全部標記為已讀</button></div>
+          <div class="bd no-nav-pad">
+            <div class="tabs-underline" id="notifTabs">
+              <button class="active" onclick="switchNotifTab(this,'all')">全部</button>
+              <button onclick="switchNotifTab(this,'unread')">未讀</button>
+            </div>
+            <div style="font-size:12px;color:#9CA3AF;font-weight:700;margin:6px 0 8px;">今天</div>
+            <div class="notif-row"><div class="notif-dot"></div><div class="row-ic c-green">${SVG.deposit}</div><div class="row-main"><div class="row-title" style="font-weight:500;line-height:1.6;">【儲值到帳】您的 500.00 USDT 儲值已到帳，可於資產頁查看。</div><div class="row-sub">2026-10-05 10:32</div></div><button class="iconbtn notif-chev" style="color:#9CA3AF;" onclick="toggleNotif(this)">${SVG.chevDown}</button>
+              <div class="notif-detail">網路：TRON (TRC20)<br>到帳金額：500.00 USDT<br>鏈上確認：20 / 20<br>交易 ID：8f63ae82…f51f2</div>
+            </div>
+            <div style="font-size:12px;color:#9CA3AF;font-weight:700;margin:14px 0 8px;">本週</div>
+            <div class="notif-row"><div class="notif-dot"></div><div class="row-ic c-blue">${SVG.withdraw}</div><div class="row-main"><div class="row-title" style="font-weight:500;line-height:1.6;">【提領完成】您的 200.00 USDT 提領已完成，資金已送出。</div><div class="row-sub">2026-10-04 18:05</div></div><button class="iconbtn notif-chev" style="color:#9CA3AF;" onclick="toggleNotif(this)">${SVG.chevDown}</button>
+              <div class="notif-detail">網路：TRON (TRC20)<br>實際到帳：199.00 USDT（手續費 1.00 USDT）<br>目標地址：TQhkpc…ijUwyT</div>
+            </div>
+            <div class="notif-row"><div class="notif-dot"></div><div class="row-ic c-blue">${SVG.card}</div><div class="row-main"><div class="row-title" style="font-weight:500;line-height:1.6;">【卡片儲值】虛擬卡 •• 2882 儲值 50.00 USDT 成功。</div><div class="row-sub">2026-10-02 14:20</div></div><button class="iconbtn notif-chev" style="color:#9CA3AF;" onclick="toggleNotif(this)">${SVG.chevDown}</button>
+              <div class="notif-detail">儲值前餘額：100.00 USDT<br>儲值後餘額：150.00 USDT<br>手續費：0.00 USDT</div>
+            </div>
+            <div class="notif-row"><div class="row-ic">${SVG.lockShield}</div><div class="row-main"><div class="row-title" style="font-weight:500;line-height:1.6;">【安全提醒】您的帳號於 2026-09-30 21:14 在新裝置登入，若非本人操作請聯繫客服。</div><div class="row-sub">2026-09-30 21:14</div></div><button class="iconbtn notif-chev" style="color:#9CA3AF;" onclick="toggleNotif(this)">${SVG.chevDown}</button>
+              <div class="notif-detail">裝置：iPhone 15 Pro（iOS 18.2）<br>登入地點：台北市<br>登入方式：Email ＋ 簡訊驗證碼<br>若非本人操作，建議立即<b onclick="goTo('modify-password')" style="color:var(--blue);cursor:pointer;">修改密碼</b>並聯繫客服。</div>
+            </div>
+            <div style="font-size:12px;color:#9CA3AF;font-weight:700;margin:14px 0 8px;">更早</div>
+            <div class="notif-row" style="cursor:pointer;" onclick="openAnnouncementDetail(2)"><div class="row-ic c-orange">${SVG.bell}</div><div class="row-main"><div class="row-title" style="font-weight:500;line-height:1.6;">【公告】平台版本更新通知</div><div class="row-sub">2026-09-28 13:22</div></div><div class="row-trail">${SVG.chev}</div></div>
+            <div class="notif-row"><div class="row-ic c-green">${SVG.idcard}</div><div class="row-main"><div class="row-title" style="font-weight:500;line-height:1.6;">【審核通知】您的實名認證 (KYC) 已通過，已解鎖提領與虛擬卡申請。</div><div class="row-sub">2026-09-01 11:20</div></div><button class="iconbtn notif-chev" style="color:#9CA3AF;" onclick="toggleNotif(this)">${SVG.chevDown}</button>
+              <div class="notif-detail">驗證等級：Level 2<br>審核方式：系統自動審核<br>姓名：wewq</div>
+            </div>
+            <div class="center-note">這是您過去 30 天的所有通知</div>
+          </div>
+        </section>
+
+        <!-- ============ 33. ANNOUNCEMENT LIST ============ -->
+        <section class="screen" id="scr-announcement-list">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">最新消息</div></div>
+          <div class="bd no-nav-pad">
+            <div class="row" onclick="openAnnouncementDetail(0)"><div class="row-ic">${SVG.bell}</div><div class="row-main"><div class="row-title">【市場】BTC 突破關鍵價位，市場情緒回溫</div><div class="row-sub">2026-09-14 09:30:00</div></div><div class="row-trail">${SVG.chev}</div></div>
+            <div class="row" onclick="openAnnouncementDetail(1)"><div class="row-ic">${SVG.bell}</div><div class="row-main"><div class="row-title">【新功能】新增 USDT-TRC20 快速儲值</div><div class="row-sub">2026-09-10 10:00:00</div></div><div class="row-trail">${SVG.chev}</div></div>
+            <div class="row" onclick="openAnnouncementDetail(2)"><div class="row-ic">${SVG.bell}</div><div class="row-main"><div class="row-title">【公告】平台版本更新通知</div><div class="row-sub">2026-01-07 13:22:11</div></div><div class="row-trail">${SVG.chev}</div></div>
+            <div class="row" onclick="openAnnouncementDetail(3)"><div class="row-ic">${SVG.bell}</div><div class="row-main"><div class="row-title">【卡片優惠】首刷贈 20 USDT 回饋金</div><div class="row-sub">2026-09-05 09:00:00</div></div><div class="row-trail">${SVG.chev}</div></div>
+            <div class="row" onclick="openAnnouncementDetail(4)"><div class="row-ic">${SVG.bell}</div><div class="row-main"><div class="row-title">【卡片優惠】指定商家消費享 5% 現金回饋</div><div class="row-sub">2026-09-02 09:00:00</div></div><div class="row-trail">${SVG.chev}</div></div>
+          </div>
+        </section>
+
+        <!-- ============ 34. ANNOUNCEMENT DETAIL ============ -->
+        <section class="screen" id="scr-announcement-detail">
+          <div class="hd"><div class="hd-title-center" id="annoDetailTitle" style="font-size:15px;"></div></div>
+          <div class="bd no-nav-pad">
+            <div id="annoDetailBody" style="margin-top:4px;"></div>
+            <button class="btn btn-pill" style="margin-top:20px;" onclick="goBack()">我知道了</button>
+          </div>
+        </section>
+
+        <!-- ============ 35. HELP CENTER ============ -->
+        <section class="screen" id="scr-help-center">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">幫助中心</div></div>
+          <div class="bd no-nav-pad">
+            <p style="color:var(--graytext);font-size:13px;line-height:1.7;margin:4px 0 22px;">整理常見的操作說明與規則，協助您更快上手儲值、提領與 C2C 交易功能。</p>
+            <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:20px;">
+              <div class="row-ic c-blue" style="flex:none;">${SVG.headset}</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text2);margin-bottom:3px;">在線客服說明</div><div style="font-size:12.5px;color:var(--graytext);line-height:1.6;">如需人工協助，請前往「客服中心」點擊「官方客服」開始對話。</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:20px;">
+              <div class="row-ic c-purple" style="flex:none;">${SVG.lockShield}</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text2);margin-bottom:3px;">保證金說明</div><div style="font-size:12.5px;color:var(--graytext);line-height:1.6;">C2C 掛單發布時將依交易數量凍結對應保證金於您的 C2C 錢包中。</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:20px;">
+              <div class="row-ic c-orange" style="flex:none;">${SVG.tag}</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text2);margin-bottom:3px;">掛單規則</div><div style="font-size:12.5px;color:var(--graytext);line-height:1.6;">請填寫正確的價格與限額，發布後將公開顯示於市場掛單列表。</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:20px;">
+              <div class="row-ic c-green" style="flex:none;">${SVG.swapLoop}</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text2);margin-bottom:3px;">C2C 交易規則</div><div style="font-size:12.5px;color:var(--graytext);line-height:1.6;">買賣雙方應於平台內完成溝通與付款確認，如遇爭議可聯繫客服協助處理。</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:20px;">
+              <div class="row-ic c-yellow" style="flex:none;">${SVG.deposit}</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text2);margin-bottom:3px;">儲值未入帳</div><div style="font-size:12.5px;color:var(--graytext);line-height:1.6;">請先確認鏈上交易已完成並達到足夠確認數，如仍未入帳請聯繫客服並提供交易 ID。</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:20px;">
+              <div class="row-ic c-blue" style="flex:none;">${SVG.arrowDown}</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text2);margin-bottom:3px;">如何充幣</div><div style="font-size:12.5px;color:var(--graytext);line-height:1.6;">完成身分驗證後，請至「資產」頁面選擇正確幣別與鏈別進行充幣，並注意區分 USDT-TRC20 與 USDT-ERC20 地址，避免因選錯網路造成資產遺失；入帳時間約需數分鐘至區塊鏈網路確認完成。</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div class="row-ic c-purple" style="flex:none;">${SVG.withdraw}</div>
+              <div><div style="font-weight:600;font-size:14px;color:var(--text2);margin-bottom:3px;">如何提幣</div><div style="font-size:12.5px;color:var(--graytext);line-height:1.6;">請於「提領」頁面填寫正確的目標地址與鏈別，並留意手續費與最低提領限制。</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ 36. TERMS OF USE ============ -->
+        <section class="screen" id="scr-terms-of-use">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">服務條款</div></div>
+          <div class="bd no-nav-pad legal">
+            <h1 style="font-size:17px;margin:4px 0 2px;"> 服務條款</h1>
+            <p style="color:#9CA3AF;">最後更新日期：2026-09-22</p>
+            <h3>一、服務內容</h3><p>提供穩定幣儲值、提領、轉帳、C2C 交易及虛擬卡消費等相關服務，虛擬卡餘額直接連結您的穩定幣帳戶。</p>
+            <h3>二、帳戶註冊與安全</h3><p>使用者應妥善保管帳戶密碼、交易密碼及卡片相關驗證資訊，並對帳戶與卡片下的所有操作負責。</p>
+            <h3>三、身份驗證（KYC）</h3><p>為遵守當地法規並保護帳戶安全，使用者須完成身份驗證方可申請虛擬卡及使用部分服務。</p>
+            <h3>四、禁止行為</h3><p>使用者不得利用本平台或虛擬卡從事洗錢、詐欺或其他違法消費行為。</p>
+            <h3>五、C2C 交易規範</h3><p>C2C 交易雙方應誠信交易，平台對交易糾紛提供協助但不承擔保證責任。</p>
+            <h3>六、虛擬卡服務</h3><p>虛擬卡之申請、開卡、消費額度、手續費及回饋計算，均依平台公告之規則為準；平台保留審核申請資格及調整額度之權利。</p>
+            <h3>七、風險揭露</h3><p>數位資產價格波動劇烈，卡片可用額度將隨穩定幣兌換匯率浮動，使用者應自行評估風險。</p>
+            <h3>八、責任限制</h3><p>平台於法律允許範圍內對間接、附帶損失（包含因商戶端交易失敗或授權延遲所生之損失）不承擔責任。</p>
+            <h3>九、服務終止</h3><p>平台保留於使用者違反條款時暫停、凍結或終止帳戶及虛擬卡服務的權利。</p>
+            <h3>十、條款修改</h3><p>平台得不時修改本條款，並以站內公告方式通知使用者。</p>
+            <h3>十一、聯絡方式</h3>
+            <p>官方網站：https://google.com.tw</p>
+            <p>客服信箱：support@mail.com</p>
+            <p>幫助中心：https://google.com.tw/help</p>
+          </div>
+        </section>
+
+        <!-- ============ 37. PRIVACY POLICY ============ -->
+        <section class="screen" id="scr-privacy-policy">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">隱私權政策</div></div>
+          <div class="bd no-nav-pad legal">
+            <h1 style="font-size:17px;margin:4px 0 2px;"> 隱私權政策</h1>
+            <p style="color:#9CA3AF;">最後更新日期：2026-09-22</p>
+            <h3>一、資料蒐集範圍</h3><p>本平台於您註冊、申請虛擬卡及使用服務過程中，蒐集必要之個人資料（含身份證明文件、卡片消費交易紀錄）以提供服務及履行法規義務。</p>
+            <h3>二、資料使用目的</h3><p>蒐集之資料將用於身份驗證、交易處理、卡片風險控管、反詐欺偵測及客服支援等目的。</p>
+            <h3>三、資料保護措施</h3><p>本平台採取合理之技術與管理措施保護使用者個人資料安全。</p>
+            <h3>四、第三方分享</h3><p>除法律要求或取得您同意外，本平台不會將您的個人資料提供予第三方；惟為完成虛擬卡交易授權，必要資料可能提供予合作之卡片組織或收單機構。</p>
+            <h3>五、Cookie 與追蹤技術</h3><p>本平台可能使用 Cookie 以改善服務體驗，您可透過瀏覽器設定管理 Cookie 偏好。</p>
+            <h3>六、使用者權利</h3><p>您得依法要求查詢、更正或刪除您的個人資料。</p>
+            <h3>七、政策修改</h3><p>本政策得不時修改，修改後將於平台公告。</p>
+            <h3>八、聯絡方式</h3>
+            <p>客服信箱：support@mail.com</p>
+          </div>
+        </section>
+
+        <!-- ============ 37b. ABOUT US ============ -->
+        <section class="screen" id="scr-about-us">
+          <div class="hd"><button class="iconbtn" onclick="goBack()">${SVG.back}</button><div class="hd-title-center">關於我們</div></div>
+          <div class="bd no-nav-pad">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin:8px 0 22px;">
+              <div class="brand-lockup" style="margin:0;">
+                <img class="brand-icon" src="logo-redesign.svg" alt="logo" style="width:32px;height:32px;">
+                <span class="brand-word" style="font-size:20px;">demo</span>
+              </div>
+              <div style="font-size:12.5px;color:var(--graytext);">版本 1.0.0.1</div>
+            </div>
+            <div class="card" style="padding:4px 16px;">
+              <div class="row" onclick="checkAppUpdate()">
+                <div class="row-main"><div class="row-title">App 版本升級</div></div>
+                <div class="row-trail" style="gap:6px;"><span style="color:var(--graytext);font-size:13px;">v1.0.0.1</span>${SVG.chev}</div>
+              </div>
+              <div class="row" onclick="goTo('privacy-policy')">
+                <div class="row-main"><div class="row-title">隱私政策</div></div>
+                <div class="row-trail">${SVG.chev}</div>
+              </div>
+              <div class="row" onclick="goTo('terms-of-use')">
+                <div class="row-main"><div class="row-title">服務條款</div></div>
+                <div class="row-trail">${SVG.chev}</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="row"><div class="row-main"><div class="row-title">官方網站</div></div><div class="row-val" style="font-weight:600;font-size:12.5px;color:var(--blue);">google.com.tw</div></div>
+              <div class="row"><div class="row-main"><div class="row-title">客服信箱</div></div><div class="row-val" style="font-weight:600;font-size:12px;">support@mail.com</div></div>
+            </div>
+            <div class="center-note" style="margin-top:20px;">© 2026 . All rights reserved.</div>
+          </div>
+        </section>
+      </div>
+      <div class="modal-overlay center" id="kycOverlay" hidden>
+        <div class="modal-sheet centered">
+          <div class="modal-hd">
+            <span style="font-weight:700;font-size:16px;">驗證您的身份</span>
+            <button class="iconbtn" onclick="closeKyc()">✕</button>
+          </div>
+          <p style="font-size:13px;color:#4B5563;line-height:1.7;margin:0 0 18px;">為遵守當地法律並幫助保護您的帳戶免受詐騙，請完成身份驗證以繼續使用 。</p>
+          <button class="btn btn-2xl" onclick="verifyNowNoop()">立即驗證</button>
+          <button class="btn-text" onclick="closeKyc()">稍後再說</button>
+        </div>
+      </div>
+      <div class="modal-overlay" id="merchantOverlay" hidden>
+        <div class="modal-sheet" id="merchantSheetBody"></div>
+      </div>
+      <div class="modal-overlay" id="langOverlay" hidden>
+        <div class="modal-sheet">
+          <div class="modal-hd">
+            <span style="font-weight:700;font-size:16px;">繁體中文</span>
+            <button class="iconbtn" onclick="closeLang()">✕</button>
+          </div>
+          <div class="row" style="border-radius:12px;padding:12px 14px;margin-bottom:8px;" onclick="pickLang(this)"><div class="row-ic" style="border-radius:50%;">🇬🇧</div><div class="row-main"><div class="row-title">English</div><div class="row-sub">English</div></div></div>
+          <div class="row" style="background:#EFF6FF;border:1.5px solid var(--blue);border-radius:12px;padding:12px 14px;margin-bottom:8px;" onclick="pickLang(this)"><div class="row-ic" style="border-radius:50%;">🇹🇼</div><div class="row-main"><div class="row-title" style="color:var(--blue);">繁體中文</div><div class="row-sub" style="color:var(--blue);opacity:.8;">Traditional Chinese</div></div><div class="row-trail" style="color:var(--blue);font-weight:800;">✓</div></div>
+          <div class="row" style="border-radius:12px;padding:12px 14px;" onclick="pickLang(this)"><div class="row-ic" style="border-radius:50%;">🇨🇳</div><div class="row-main"><div class="row-title">简体中文</div><div class="row-sub">Simplified Chinese</div></div></div>
+        </div>
+      </div>
+      <div class="modal-overlay center" id="captchaOverlay" hidden>
+        <div class="modal-sheet centered">
+          <div class="modal-hd">
+            <span style="font-weight:700;font-size:16px;">安全驗證</span>
+            <button class="iconbtn" onclick="closeCaptcha()">✕</button>
+          </div>
+          <p style="font-size:13px;color:#4B5563;margin:0 0 14px;">請計算下方算式並填入答案</p>
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+            <span id="captchaExpr" style="font-size:17px;font-weight:800;color:#111827;"></span>
+            <button class="iconbtn" onclick="rollCaptcha()" title="重新產生算式">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+            </button>
+          </div>
+          <input class="input" id="captchaAnswer" placeholder="請輸入答案" inputmode="numeric" oninput="onCaptchaInput()">
+          <button class="btn btn-pill" id="captchaConfirmBtn" style="margin-top:16px;" disabled onclick="confirmCaptcha()">確認</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toastHost"></div>
+<div class="qa-backdrop" id="qaBackdrop" onclick="toggleQA(false)"></div>
+<div class="qa-panel" id="qaPanel">
+  <div class="qa-panel-hd"><h2>⚠ 測試發現 QA Findings (25)</h2><button onclick="toggleQA(false)">✕</button></div>
+  <div class="qa-list" id="qaList"></div>
+</div>
+
+<script>
+/* ============================= ICONS ============================= */
+const SVG = {
+  back:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
+  chev:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
+  chevDown:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+  chevSm:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
+  bell:'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 10-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>',
+  headset:'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg>',
+  eye:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>',
+  eyeOff:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0112 19c-7 0-11-7-11-7a21.62 21.62 0 015.06-6.06M9.9 4.24A10.4 10.4 0 0112 4c7 0 11 7 11 7a21.6 21.6 0 01-2.16 3.19M14.12 14.12a3 3 0 11-4.24-4.24"/><path d="M1 1l22 22"/></svg>',
+  copy:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>',
+  mail:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>',
+  lock:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>',
+  globe:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 010 20 15 15 0 010-20z"/></svg>',
+  pencil:'<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>',
+  shield:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>',
+  warn:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>',
+  info:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E40AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
+  home:'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>',
+  wallet:'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2v-5h-4a2 2 0 010-4z"/></svg>',
+  flag:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V4"/><path d="M4 4h14l-2 4 2 4H4"/></svg>',
+  tag:'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41L11 3.83A2 2 0 009.58 3H4a1 1 0 00-1 1v5.58a2 2 0 00.58 1.41l9.59 9.59a2 2 0 002.83 0l4.59-4.59a2 2 0 000-2.83z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg>',
+  user:'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>',
+  deposit:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M6 11l6 6 6-6"/><path d="M4 21h16"/></svg>',
+  withdraw:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9M6 13l6-6 6 6"/><path d="M4 3h16"/></svg>',
+  transfer:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>',
+  card:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>',
+  records:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>',
+  arrowUp:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>',
+  arrowDown:'<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>',
+  swapDir:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#0052FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 014-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 01-4 4H3"/></svg>',
+  plus:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>',
+  dots:'<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>',
+  checkCircle:'<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>',
+  gift:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M12 8v13M3 12h18M12 8c-1.5-3-5-4-6 0s2.5 3.5 6 0zM12 8c1.5-3 5-4 6 0s-2.5 3.5-6 0z"/></svg>',
+  trendUp:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg>',
+  login:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg>',
+  userPlus:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6M23 11h-6"/></svg>',
+  bank:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M3 10h18M5 6l7-4 7 4M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>',
+  speech:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>',
+  doc:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></svg>',
+  lockShield:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6z"/></svg>',
+  idcard:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="8" cy="12" r="2"/><path d="M14 10h6M14 14h4"/></svg>',
+  checkBadge:'<svg width="16" height="16" viewBox="0 0 24 24" fill="#16A34A"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  swapLoop:'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>',
+  refresh:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>',
+  megaphone:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v3a1 1 0 001 1h2l4 5V5L6 10H4a1 1 0 00-1 1z"/><path d="M15 8a4 4 0 010 8M19 5a9 9 0 010 14"/></svg>',
+  image:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>',
+  send:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>',
+  coinBullet:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 15V9l6 6V9" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  tagBullet:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0052FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41L11 3.83A2 2 0 009.58 3H4a1 1 0 00-1 1v5.58a2 2 0 00.58 1.41l9.59 9.59a2 2 0 002.83 0l4.59-4.59a2 2 0 000-2.83z"/></svg>',
+  calBullet:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>',
+  ban:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M6 6l12 12"/></svg>',
+  noSwap:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3l4 4-4 4M3 11V9a4 4 0 014-4h14M7 21l-4-4 4-4M21 13v2a4 4 0 01-4 4H3"/></svg>',
+  target:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.6" fill="currentColor"/></svg>',
+  clock:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>',
+  docAlert:'<svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#7DB3F5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2z"/><path d="M15 2v5h5M8 8l3 3M11 8l-3 3"/><circle cx="16" cy="17" r="3.4" fill="#EFF6FF" stroke="#7DB3F5"/><path d="M16 15.7v1.5M16 18.6h.01" stroke="#7DB3F5"/></svg>'
+};
+
+/* ============================= STATE ============================= */
+let navStack = [];
+let current = null;
+let isLoggedIn = false;
+let hkycEnabled = true;
+let kycShownOnce = false; // real app only nags once per session (first entry after login), not on every navigation
+let kycAutoEnabled = false; // demo request: don't auto-pop the KYC dialog during a live walkthrough; still viewable via the "40. KYC dialog" jump-to item
+let announcementShown = false;
+let toastTimer = null;
+let captchaA = 0, captchaB = 0;
+let hideBalance = false;
+let homeCurrency = 'USDT';
+let transferDirection = 'main-to-c2c'; // main-to-c2c or c2c-to-main
+let notifTab = 'all';
+let couponTab = 'avail';
+let wdRecordTab = 'all';
+let marketTab = 'buy';
+let assetsTab = 'main';
+let assetRecordTab = 'wallet';
+let orderTabStatus = 'done';
+let orderTabSide = 'all';
+
+const NO_KYC = new Set(['splash','login-form','register']);
+const FIXED_BACK = {
+  'deposit-usdt':'deposit-entry',
+  'deposit-record':'deposit-entry',
+  'deposit-record-detail':'deposit-record',
+  'withdrawal-record':'withdrawal',
+  'withdrawal-record-detail':'withdrawal-record',
+  'account-info':'user',
+  'set-nickname':'account-info',
+  'security-center':'user',
+  'modify-password':'security-center',
+  'transaction-password':'security-center',
+  'verification-info':'user',
+  'coupon-management':'user',
+  'bind-payment':'user',
+  'bind-bank-card':'bind-payment',
+  'terms-of-use':'about-us',
+  'privacy-policy':'about-us',
+  'about-us':'user',
+  'customer-service':'main',
+  'swap':'main',
+  'swap-c2c-order':'swap',
+  'post-ad':'swap',
+  'order-records':'main',
+  'c2c-my-ads':'main',
+  'fiat-profile':'main',
+  'withdrawal':'main',
+  'transfer':'main',
+  'deposit-entry':'main',
+  'asset-record':'wallet'
+};
+const NO_BACK = new Set(['splash','main','wallet','user']);
+
+/* ============================= NAV CORE ============================= */
+function showScreenOnly(id){
+  document.querySelectorAll('.screen').forEach(s=>{ s.hidden = (s.id !== 'scr-'+id); });
+  const el = document.getElementById('scr-'+id);
+  if(el){ const bd = el.querySelector('.bd'); if(bd) bd.scrollTop = 0; }
+}
+function goTo(id, opts={}){
+  const {push=true, kyc=true} = opts;
+  if(push && current) navStack.push(current);
+  current = id;
+  showScreenOnly(id);
+  syncActiveNavStates();
+  if(id==='main') onEnterMain();
+  if(id==='user') onEnterUser();
+  if(kycAutoEnabled && kyc && !kycShownOnce && !NO_KYC.has(id)) setTimeout(()=>openKyc(), 260);
+}
+function jumpTo(id, opts={}){
+  navStack = id==='main' ? [] : ['main'];
+  current = id;
+  showScreenOnly(id);
+  syncActiveNavStates();
+  if(id==='main') onEnterMain();
+  if(id==='user') onEnterUser();
+  if(kycAutoEnabled && !kycShownOnce && !NO_KYC.has(id) && opts.kyc!==false) setTimeout(()=>openKyc(), 260);
+}
+function goBack(){
+  if(FIXED_BACK[current]){ goTo(FIXED_BACK[current], {push:false}); return; }
+  if(NO_BACK.has(current)) return;
+  const prev = navStack.pop();
+  if(prev){ current = prev; showScreenOnly(prev); syncActiveNavStates(); if(kycAutoEnabled && !kycShownOnce && !NO_KYC.has(prev)) setTimeout(()=>openKyc(),260); }
+  else { goTo('main', {push:false}); }
+}
+function requireLogin(){
+  if(!isLoggedIn){ toast('請先登入'); goTo('login-form'); return false; }
+  return true;
+}
+function gotoOrLogin(id){ if(requireLogin()) goTo(id); }
+function logoutDemo(){
+  isLoggedIn = false;
+  toast('已登出（Demo）');
+  jumpTo('main', {kyc:false});
+}
+function onEnterUser(){
+  document.getElementById('userGuestBlock').hidden = isLoggedIn;
+  document.getElementById('userLoggedInBlock').hidden = !isLoggedIn;
+}
+function syncActiveNavStates(){
+  document.querySelectorAll('[data-nav-main]').forEach(b=>b.classList.toggle('active', b.dataset.navMain===current));
+  document.querySelectorAll('[data-nav-c2c]').forEach(b=>b.classList.toggle('active', b.dataset.navC2c===current));
+}
+
+/* ============================= TOAST ============================= */
+function toast(msg){
+  const host = document.getElementById('toastHost');
+  const t = document.createElement('div');
+  t.className='toast'; t.textContent = msg;
+  host.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add('show'));
+  setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),250); }, 2200);
+}
+function demoSubmit(label){ toast('（Demo 版本，未實際送出）'); }
+function checkAppUpdate(){ toast('目前已是最新版本 v1.0.0.1'); }
+function sendCsChat(){
+  const inp = document.getElementById('csChatInput');
+  const text = inp.value.trim();
+  if(!text) return;
+  const box = document.getElementById('csChatMessages');
+  const bubble = document.createElement('div');
+  bubble.style.cssText = 'align-self:flex-end;background:var(--blue);color:#fff;padding:10px 14px;border-radius:14px 14px 4px 14px;font-size:13.5px;max-width:78%;line-height:1.6;';
+  bubble.textContent = text;
+  box.appendChild(bubble);
+  inp.value = '';
+  box.scrollTop = box.scrollHeight;
+  setTimeout(()=>{
+    const reply = document.createElement('div');
+    reply.style.cssText = 'align-self:flex-start;background:var(--lightgray);color:#111827;padding:10px 14px;border-radius:14px 14px 14px 4px;font-size:13.5px;max-width:78%;line-height:1.6;';
+    reply.textContent = '感謝您的訊息，客服人員將盡快為您服務。';
+    box.appendChild(reply);
+    box.scrollTop = box.scrollHeight;
+  }, 700);
+}
+function lowKeyNoop(){ toast('此為 Demo，未提供此流程'); }
+
+/* ============================= KYC DIALOG ============================= */
+function openKyc(){ if(!hkycEnabled) return; kycShownOnce = true; document.getElementById('kycOverlay').hidden = false; }
+function closeKyc(){ document.getElementById('kycOverlay').hidden = true; }
+function verifyNowNoop(){ /* intentionally does nothing - reproduces real dead-button bug */ }
+
+/* ============================= MERCHANT MODAL ============================= */
+function openMerchant(name, avatarLetter){
+  const map = {
+    'user1':{av:'U1', regDays:'182 天前', firstTrade:'156 天前', cp:'96', orders:'312 次'},
+    'user2':{av:'U2', regDays:'64 天前', firstTrade:'41 天前', cp:'52', orders:'128 次'}
+  };
+  const m = map[name] || map['user1'];
+  document.getElementById('merchantSheetBody').innerHTML = `
+    <div style="display:flex;justify-content:center;margin:-6px 0 14px;">
+      <span style="width:38px;height:5px;border-radius:3px;background:#E5E7EB;"></span>
+    </div>
+    <button class="iconbtn" style="position:absolute;top:14px;right:14px;background:var(--lightgray);border-radius:50%;width:30px;height:30px;" onclick="closeMerchant()">✕</button>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:16px;">
+      <div class="avatar lg">${m.av}</div>
+      <div style="font-weight:800;font-size:17px;">${name}</div>
+      <div style="display:flex;gap:16px;">
+        <span style="display:flex;align-items:center;gap:4px;font-size:12px;color:#374151;">${SVG.checkBadge} 郵箱</span>
+        <span style="display:flex;align-items:center;gap:4px;font-size:12px;color:#374151;">${SVG.checkBadge} 身份證號</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sec-title"><h2>訂單詳情</h2></div>
+      <div class="row"><div class="row-main"><div class="row-title">30天成單數</div></div><div class="row-val">0</div></div>
+      <div class="row"><div class="row-main"><div class="row-title">30天成單率</div></div><div class="row-val">0%</div></div>
+    </div>
+    <div class="card">
+      <div class="sec-title"><h2>帳戶信息</h2></div>
+      <div class="row"><div class="row-main"><div class="row-title">註冊至今時間</div></div><div class="row-val" style="font-weight:600;">${m.regDays}</div></div>
+      <div class="row"><div class="row-main"><div class="row-title">首次交易至今時間</div></div><div class="row-val" style="font-weight:600;">${m.firstTrade}</div></div>
+      <div class="row"><div class="row-main"><div class="row-title">交易對手</div></div><div class="row-val" style="font-weight:600;">${m.cp}</div></div>
+      <div class="row"><div class="row-main"><div class="row-title">全部交易訂單數</div></div><div class="row-val" style="font-weight:600;">${m.orders}</div></div>
+    </div>`;
+  document.getElementById('merchantOverlay').hidden = false;
+}
+function closeMerchant(){ document.getElementById('merchantOverlay').hidden = true; }
+
+/* ============================= LANGUAGE SHEET ============================= */
+function openLang(){ document.getElementById('langOverlay').hidden = false; }
+function closeLang(){ document.getElementById('langOverlay').hidden = true; }
+function pickLang(el){ closeLang(); toast('語言切換僅供展示'); }
+
+/* ============================= CAPTCHA ============================= */
+function rollCaptcha(){
+  captchaA = Math.floor(Math.random()*15)+1;
+  captchaB = Math.floor(Math.random()*15)+1;
+  document.getElementById('captchaExpr').textContent = `${captchaA} + ${captchaB} = ?`;
+  document.getElementById('captchaAnswer').value='';
+  onCaptchaInput();
+}
+function onCaptchaInput(){
+  const v = document.getElementById('captchaAnswer').value;
+  document.getElementById('captchaConfirmBtn').disabled = (v.trim()==='');
+}
+function openCaptcha(){ rollCaptcha(); document.getElementById('captchaOverlay').hidden=false; }
+function closeCaptcha(){ document.getElementById('captchaOverlay').hidden = true; }
+function confirmCaptcha(){
+  closeCaptcha();
+  isLoggedIn = true;
+  window.location.href = 'crypto_demo_2.html';
+}
+function submitRegister(){
+  isLoggedIn = true;
+  toast('帳戶建立成功（Demo）');
+  window.location.href = 'crypto_demo_2.html';
+}
+
+/* ============================= SPLASH / LOGIN ============================= */
+function togglePw(btn, inputId){
+  const inp = document.getElementById(inputId);
+  const showing = inp.type==='text';
+  inp.type = showing ? 'password':'text';
+  btn.innerHTML = showing ? SVG.eye : SVG.eyeOff;
+}
+
+/* ============================= HOME PAGE ============================= */
+function toggleHideBalance(){
+  hideBalance = !hideBalance;
+  const dots = '<span class="balance-dots">'+'<span></span>'.repeat(6)+'</span>';
+  document.getElementById('homeBalanceVal').innerHTML = hideBalance ? dots : (homeCurrency==='USDT' ? '300.00' : (300*1350).toLocaleString());
+  document.getElementById('eyeBtn').innerHTML = hideBalance ? SVG.eyeOff : SVG.eye;
+}
+function toggleCurrencyMenu(){
+  const m = document.getElementById('currencyMenu');
+  m.style.display = (m.style.display==='block') ? 'none':'block';
+}
+function setHomeCurrency(cur){
+  homeCurrency = cur;
+  document.getElementById('currencyPillLabel').textContent = cur;
+  if(!hideBalance) document.getElementById('homeBalanceVal').textContent = cur==='USDT' ? '300.00' : (300*1350).toLocaleString();
+  document.getElementById('currencyMenu').style.display='none';
+}
+let bannerIdx = 0;
+function rotateBanner(dir){
+  const slides = document.querySelectorAll('#bannerTrack .banner-slide');
+  bannerIdx = (bannerIdx + (dir||1) + slides.length) % slides.length;
+  const track = document.getElementById('bannerTrack');
+  const target = slides[bannerIdx];
+  if(track && target) track.style.transform = `translateX(-${target.offsetLeft}px)`;
+  document.querySelectorAll('#bannerDots span').forEach((d,i)=>d.classList.toggle('active', i===bannerIdx));
+}
+function goBannerDot(i){ bannerIdx = i-1; rotateBanner(1); }
+setInterval(()=>{ if(current==='main') rotateBanner(1); }, 4000);
+
+function onEnterMain(){
+  const bar = document.getElementById('announceBar');
+  if(bar){ bar.hidden = announcementShown; }
+  announcementShown = true;
+  renderHomeAuthState();
+}
+function renderHomeAuthState(){
+  document.getElementById('homeAvatarBlock').hidden = !isLoggedIn;
+  document.getElementById('homeBalanceBlock').hidden = !isLoggedIn;
+  document.getElementById('homeGuestBlock').hidden = isLoggedIn;
+  document.getElementById('qrowUser').hidden = !isLoggedIn;
+  document.getElementById('qrowGuest').hidden = isLoggedIn;
+  document.getElementById('txnRecordBlock').hidden = !isLoggedIn;
+  document.getElementById('latestNewsBlock').hidden = isLoggedIn;
+}
+
+/* ============================= TRANSFER ============================= */
+function swapTransferDir(){
+  transferDirection = transferDirection==='main-to-c2c' ? 'c2c-to-main' : 'main-to-c2c';
+  renderTransferDir();
+}
+function renderTransferDir(){
+  const fromEl = document.getElementById('tfFrom');
+  const toEl = document.getElementById('tfTo');
+  const availEl = document.getElementById('tfAvail');
+  if(transferDirection==='main-to-c2c'){
+    fromEl.textContent='主錢包'; toEl.textContent='C2C 錢包'; availEl.innerHTML='可用: <span style="color:var(--blue);font-weight:700;">1.00 USDT</span>'; window.__tfAvail='1.00';
+  } else {
+    fromEl.textContent='C2C 錢包'; toEl.textContent='主錢包'; availEl.innerHTML='可用: <span style="color:var(--blue);font-weight:700;">0.00 USDT</span>'; window.__tfAvail='0.00';
+  }
+}
+function tfMax(){ document.getElementById('tfAmount').value = window.__tfAvail || '0.00'; }
+
+/* ============================= COPY ============================= */
+function copyText(t){ toast('已複製'); }
+
+/* ============================= TABS / TOGGLES (in-page, no KYC) ============================= */
+function setTabs(container, activeBtn, cls){
+  container.querySelectorAll('button').forEach(b=>b.classList.remove(cls||'active'));
+  activeBtn.classList.add(cls||'active');
+}
+function switchAssetsTab(btn, tab){
+  assetsTab = tab;
+  setTabs(document.getElementById('assetsTabs'), btn);
+  document.getElementById('assetsMainPanel').hidden = tab!=='main';
+  document.getElementById('assetsC2cPanel').hidden = tab!=='c2c';
+  document.getElementById('assetDistCard').hidden = tab!=='main';
+}
+function switchMarketTab(btn, tab){
+  marketTab = tab;
+  setTabs(document.getElementById('marketTabs'), btn);
+  document.getElementById('marketBuyPanel').hidden = tab!=='buy';
+  document.getElementById('marketSellPanel').hidden = tab!=='sell';
+  document.getElementById('postAdBtnLabel').textContent = tab==='buy' ? '刊登購買' : '刊登出售';
+}
+function switchNotifTab(btn, tab){ notifTab=tab; setTabs(document.getElementById('notifTabs'), btn); }
+function toggleNotif(btn){ btn.closest('.notif-row').classList.toggle('open'); }
+function switchCouponTab(btn, tab){
+  couponTab = tab;
+  setTabs(document.getElementById('couponTabs'), btn);
+  document.getElementById('couponAvail').hidden = tab!=='avail';
+  document.getElementById('couponUsed').hidden = tab!=='used';
+  document.getElementById('couponExpired').hidden = tab!=='expired';
+}
+function switchWdRecTab(btn, tab){ wdRecordTab=tab; setTabs(document.getElementById('wdRecTabs'), btn); }
+function switchAssetRecTab(btn, tab){ assetRecordTab=tab; setTabs(document.getElementById('assetRecTabs'), btn); }
+function switchOrderStatus(btn, tab){ orderTabStatus=tab; setTabs(document.getElementById('orderStatusTabs'), btn); }
+function switchOrderSide(btn, tab){ orderTabSide=tab; setTabs(document.getElementById('orderSideTabs'), btn); }
+
+/* ============================= POST AD live calc ============================= */
+function updatePostAdWarning(){
+  const qty = document.getElementById('paQty').value || '0';
+  const n = Number(qty)||0;
+  document.getElementById('paWarn').textContent = `發布後將凍結 C2C 錢包 ${n.toLocaleString()} USDT（可用 0 USDT），成交後付給買方。`;
+  document.getElementById('paEquiv').textContent = `≈ ${(n*1355).toFixed(0)} KRW`;
+}
+function fillMarketPrice(){ document.getElementById('paPrice').value = '1355'; }
+
+/* ============================= BUY ORDER live calc ============================= */
+function updateBuyOrder(){
+  const amt = Number(document.getElementById('boAmount').value)||0;
+  document.getElementById('boReceive').textContent = (amt/1350).toFixed(2)+' USDT';
+}
+
+/* ============================= TX PASSWORD gating (the one well-behaved form) ============================= */
+function checkTxPwEnable(){
+  const a = document.getElementById('txPw1').value;
+  const b = document.getElementById('txPw2').value;
+  document.getElementById('txPwConfirmBtn').disabled = !(a && b);
+}
+
+/* ============================= ANNOUNCEMENT DETAIL ============================= */
+const ANNOUNCEMENTS = [
+  { title:'【市場】BTC 突破關鍵價位，市場情緒回溫', html:`
+    <p style="font-size:13px;line-height:1.9;color:#374151;">親愛的用戶您好：<br>近期比特幣（BTC）價格成功突破重要關鍵價位，帶動市場情緒明顯回溫，24 小時內主要交易對成交量顯著放大。</p>
+    <p style="font-size:13px;line-height:1.9;color:#374151;">提醒您：數位資產價格波動劇烈，進行交易前請審慎評估風險，並善用止盈止損功能控管部位。感謝您的支持與信任。</p>` },
+  { title:'【新功能】新增 USDT-TRC20 快速儲值', html:`
+    <p style="font-size:13px;line-height:1.9;color:#374151;">親愛的用戶您好：<br>本平台已正式支援 USDT-TRC20 快速儲值通道，上鏈確認後最快約 5 分鐘即可入帳，大幅縮短等待時間。</p>
+    <p style="font-size:13px;line-height:1.9;color:#374151;">您可至「資產」>「儲值」頁面選擇 USDT-TRC20 網路進行操作，請務必確認儲值地址與網路選擇正確，避免因選錯網路造成資產遺失。</p>` },
+  { title:'【公告】平台版本更新通知', html:`
+    <p style="font-size:13px;line-height:1.9;color:#374151;">親愛的用戶您好：<br>本平台已完成 <b>v1.0.0.1</b> 版本更新，本次更新內容包含：</p>
+    <div style="font-size:13px;line-height:2;color:#374151;margin:8px 0 14px;">• 新增虛擬卡消費回饋功能<br>• 新增 USDT-TRC20 快速儲值通道<br>• 修復提領記錄偶發延遲顯示問題<br>• 強化帳戶登入與交易安全驗證機制</div>
+    <p style="font-size:13px;line-height:1.9;color:#374151;">建議您將 App 更新至最新版本以獲得最佳使用體驗。感謝您一直以來對本平台的支持與信任，如有任何問題歡迎聯繫客服中心。</p>` },
+  { title:'【卡片優惠】首刷贈 20 USDT 回饋金', html:`
+    <p style="font-size:13px;line-height:1.9;color:#374151;">親愛的用戶您好：<br>即日起申辦本平台虛擬卡並完成首次刷卡消費，即可獲得 <b>20 USDT</b> 回饋金！</p>
+    <div style="font-size:13px;line-height:2;color:#374151;margin:8px 0 14px;">• 活動期間：即日起至另行公告為止<br>• 回饋將於首筆消費核實後 7 個工作天內發放至您的主錢包<br>• 每位用戶限領一次</div>
+    <p style="font-size:13px;line-height:1.9;color:#374151;">立即前往「卡片」頁面申請屬於您的虛擬卡。</p>` },
+  { title:'【卡片優惠】指定商家消費享 5% 現金回饋', html:`
+    <p style="font-size:13px;line-height:1.9;color:#374151;">親愛的用戶您好：<br>使用本平台虛擬卡於指定商家消費，即可享有 <b>5%</b> 現金回饋，回饋金將直接存入您的主錢包。</p>
+    <div style="font-size:13px;line-height:2;color:#374151;margin:8px 0 14px;">• 指定商家類別：線上訂閱服務、外送平台、超商<br>• 單筆回饋上限：10 USDT<br>• 每月回饋總額上限：50 USDT</div>
+    <p style="font-size:13px;line-height:1.9;color:#374151;">感謝您一直以來對本平台的支持與信任。</p>` }
+];
+function openAnnouncementDetail(idx){
+  const a = ANNOUNCEMENTS[idx];
+  document.getElementById('annoDetailTitle').textContent = a.title;
+  document.getElementById('annoDetailBody').innerHTML = a.html;
+  goTo('announcement-detail');
+}
+function openAnnouncement(id){ openAnnouncementDetail(2); }
+
+/* ============================= MISC SCREEN HELPERS ============================= */
+function showBindPayOptions(){ document.getElementById('bindPayEmpty').hidden=true; document.getElementById('bindPayOptions').hidden=false; }
+
+/* ============================= ICON HYDRATION ============================= */
+/* Static markup above uses ${SVG.xxx} text placeholders (kept literal since it's plain HTML,
+   not a JS template literal). We hydrate them into real inline SVG icons here, once, by
+   text-substituting only inside the .app-wrap subtree (never touches this <script> block). */
+function hydrateIcons(){
+  const root = document.querySelector('.app-wrap');
+  root.innerHTML = root.innerHTML.replace(/\$\{SVG\.(\w+)\}/g, (m,p1)=> (SVG[p1] !== undefined ? SVG[p1] : ''));
+}
+
+/* ============================= QR CODE GRID ============================= */
+function buildQrGrid(){
+  const grid = document.getElementById('qrGrid');
+  if(!grid) return;
+  let html = '<div class="qr-tlogo">T</div>';
+  const seedPattern = [];
+  for(let r=0;r<14;r++){
+    for(let c=0;c<14;c++){
+      // deterministic pseudo-random-looking pattern (decorative only, not a real QR code)
+      const on = ((r*7 + c*13 + (r%3)*5 + (c%4)*3) % 5) < 2;
+      html += `<div class="cell" style="background:${on?'#111':'transparent'};"></div>`;
+    }
+  }
+  grid.innerHTML = html + '<div class="qr-tlogo">T</div>';
+}
+
+/* ============================= QA FINDINGS PANEL ============================= */
+const QA_FINDINGS = [
+ {n:1, area:'Global（登入後首次進入首頁）', sev:'major', issue:'【已更正】先前版本誤判為「幾乎每次切換頁面都會重新出現」，經實際 App 操作測試後確認並非如此——彈窗只在登入後第一次進入首頁時出現一次，之後正常切換頁面不會再跳出。惟原始問題仍成立：即使該帳號已完成 KYC 實名認證（個人中心「已驗證」徽章、實名認證頁「認證已通過」、通知紀錄「您的實名認證(KYC)已通過」皆可佐證），登入當下仍會被要求驗證一次，屬於邏輯矛盾，且該彈窗的「立即驗證」按鈕本身還是壞的（見 #2）。〔本 Demo 版本已將自動彈出關閉以利現場展示不被打斷，該畫面仍可從左上角選單「40. KYC 驗證您的身份 dialog」手動叫出檢視。〕', repro:'以測試帳號登入，確認 Profile/實名認證頁的「已驗證」狀態，注意登入後首頁仍會跳出一次 KYC 彈窗；之後在頁面間切換則不會再出現。'},
+ {n:2, area:'Global — KYC 彈窗', sev:'blocker', issue:'彈窗的「立即驗證」按鈕點擊後沒有任何反應：不導頁、不報錯，彈窗維持開啟。透過直接 DOM .click() 驗證過（元素真實存在、非誤觸）。', repro:'觸發 KYC 彈窗，點擊「立即驗證」，觀察畫面無任何狀態變化。'},
+ {n:3, area:'Global — KYC 彈窗（行動裝置寬度）', sev:'major', issue:'在 430×932 常見手機尺寸下，彈窗操作按鈕（「立即驗證」「稍後再說」）的 getBoundingClientRect().top ≈ 1159px，即已超出可視範圍。Playwright 的指標點擊判定其「outside of the viewport」而拒絕點擊，僅能以 JS 層級 .click() 成功觸發。真實手機使用者可能完全看不到或點不到這些按鈕。', repro:'在約 430×932 尺寸開啟 KYC 彈窗，檢查元素座標或嘗試在彈窗底部進行真實觸控。'},
+ {n:4, area:'底部導覽列（全 App）', sev:'major', issue:'主要 5 項底部導覽列中，有兩個控制項的無障礙名稱同為「C2C」：未標示文字的中央浮動按鈕（→ /swap 市場掛單）與第 4 項標示「C2C」文字的分頁（→ /c2c-my-ads 我的掛單）。仰賴螢幕閱讀器或標籤辨識的使用者無法分辨兩者；第 4 分頁的「C2C」文字亦與其實際開啟的「我的掛單」不符。', repro:'於無障礙快照中比較兩個按鈕的 ref；分別點擊後可見分別導向 /swap 與 /c2c-my-ads。'},
+ {n:5, area:'提領 (/withdrawal)', sev:'major', issue:'「提領地址」與「數量」輸入框帶有 HTML readonly 屬性，一般點擊＋輸入方式無法輸入文字。「提領」送出按鈕即便在欄位為空、可用餘額為 0 的情況下仍未被停用。', repro:'開啟 /withdrawal，嘗試在任一欄位輸入文字——無法輸入；檢查送出按鈕的 disabled 狀態（為 false）。'},
+ {n:6, area:'提領 / 資產 / 轉帳頁面', sev:'minor', issue:'同一帳號狀態下，各頁面顯示的可用餘額不一致：首頁顯示「300.00 USDT」（總額），提領頁顯示「可用 0.00000 USDT」，資產頁正確拆分為 可用 0／凍結 300／總額 300。提領頁單純顯示「可用 0.00000」卻未說明原因（無「全部凍結中」提示），容易讓人誤以為帳戶完全沒有資金。', repro:'在同一 session 中比較 /main、/withdrawal、/wallet 顯示的餘額數字。'},
+ {n:7, area:'轉帳 (/transfer)', sev:'major', issue:'在金額欄位輸入「9999」，遠超過顯示的「可用: 1.00 USDT」，未出現任何錯誤提示，「確認轉帳」按鈕仍維持可點擊狀態。', repro:'進入 /transfer，輸入超過可用餘額的金額，觀察無錯誤訊息且按鈕 disabled 為 false。'},
+ {n:8, area:'掛單 (/post-ad)', sev:'major', issue:'在 C2C 錢包實際可用為 0 的情況下，於「交易數量」輸入「99999」，凍結警示文字正確更新為「發布後將凍結 C2C 錢包 99,999 USDT（可用 0 USDT）」，但「發布掛單」按鈕仍保持可點擊，未做任何阻擋。', repro:'進入 /post-ad，輸入遠超過錢包餘額的數量，檢查發布按鈕的 disabled 狀態（為 false）。'},
+ {n:9, area:'C2C 購買 (/swap-c2c-order)', sev:'major', issue:'輸入「5,000」KRW，低於該掛單標示的「單筆訂單限額 15,000 - 150,000 KRW」下限，且 C2C 錢包可用為 0 KRW，未出現任何錯誤提示，「購買」按鈕仍保持可點擊。', repro:'開啟一筆購買掛單，輸入低於最低限額的金額，檢查購買按鈕的 disabled 狀態（為 false）。'},
+ {n:10, area:'密碼設定頁一致性', sev:'minor', issue:'/transaction-password 的「確認」按鈕在必填欄位為空時正確地被停用——但這是例外；/withdrawal、/transfer、/post-ad、/swap-c2c-order 的主要送出按鈕都不論輸入是否有效／為空皆維持可點擊，表單驗證邏輯在全站並不一致。', repro:'在必填欄位皆為空的狀態下，比較以上頁面主要按鈕的 disabled 狀態。'},
+ {n:11, area:'/modify-password、/transaction-password', sev:'minor', issue:'瀏覽器主控台出現「[VERBOSE] [DOM] Password field is not contained in a form」（分別 3 次、2 次）——密碼欄位未被包在 <form> 元素中，可能造成瀏覽器／密碼管理工具的自動填入與儲存提示失效。', repro:'開啟開發者工具主控台，進入任一頁面並觀察輸出訊息。'},
+ {n:12, area:'鏈上儲值 (/deposit-usdt)', sev:'cosmetic', issue:'「選擇幣別」下拉選單點開後只顯示目前已選的選項（USDT-TRC20），功能上等同無作用，但視覺上仍以下拉選單樣式呈現，暗示有更多選項存在。', repro:'開啟 /deposit-usdt，點擊「選擇幣別」——展開的清單只有目前已選項目。'},
+ {n:13, area:'儲值記錄詳情 (/deposit-record-detail)', sev:'minor', issue:'此頁 header 的 <h1> 為空（無可見／可讀取的標題文字），而對應的 /withdrawal-record-detail 卻有顯示「提領詳情」，兩個原本應對稱的詳情頁 header 呈現不一致。', repro:'檢查兩頁的無障礙樹或直接目視比較 header。'},
+ {n:14, area:'購買訂單頁 (/swap-c2c-order)', sev:'cosmetic', issue:'頁面標題使用 <h2>（「購買USDT」）而非全站幾乎其他所有頁面使用的 <h1>，標題階層不一致。', repro:'檢查 /swap-c2c-order 與其他子頁面的無障礙樹標題階層。'},
+ {n:15, area:'帳戶資訊 vs. 個人中心 header', sev:'minor', issue:'Email 在 /account-info 完整顯示未遮蔽（「sunny.ko+9021@sfwtechco.com」），但在個人中心 header 卻以星號遮蔽（「sunny.ko+9****1@sfwtechco.com」），全站 PII 遮蔽政策不一致。', repro:'比較 /user header 與 /account-info 顯示的 email 字串。'},
+ {n:16, area:'頭像大小寫不一致', sev:'cosmetic', issue:'使用者頭像圓圈在首頁／個人中心顯示大寫「W」，但在 C2C 個人中心 (/fiat-profile) 卻顯示小寫「w」，兩者皆取自暱稱「wewq」的字首。', repro:'比較 /main 或 /user 與 /fiat-profile 的頭像字母。'},
+ {n:17, area:'設定暱稱文案 (/set-nickname)', sev:'minor', issue:'欄位標籤為「商家暱稱」，屬於 C2C 商家專用術語，但此畫面是從一般個人中心「帳戶資訊」流程進入（非 C2C 專屬情境），可能是元件／文案從 C2C 模組重複使用所致。', repro:'進入 個人中心 → 帳戶資訊 → 設定暱稱，閱讀欄位標籤。'},
+ {n:18, area:'實名認證用詞不一致', sev:'cosmetic', issue:'個人中心選單列標示為「身分認證」，但點入後頁面標題卻是「實名認證」——同一功能在僅一層之隔使用了兩種不同中文用詞。', repro:'比較個人中心選單列文字與 /verification-info 頁面標題。'},
+ {n:19, area:'C2C 交易紀錄標題衝突', sev:'cosmetic', issue:'首頁的交易清單區塊與 C2C 區塊的訂單歷史頁 (/order-records) 皆標示為「交易紀錄」，但兩者資料集完全不同（錢包帳本 vs. C2C 交易訂單），容易造成使用者（特別是客服對話中）混淆。', repro:'比較首頁「交易紀錄」區塊標題與 /order-records 頁面標題。'},
+ {n:20, area:'綁定支付方式空狀態 (/bind-payment)', sev:'cosmetic', issue:'尚未新增任何支付方式時的空狀態畫面只有一顆「添加支付方式」按鈕——沒有任何插圖或說明文字，相較於 App 內其他空狀態（如我的掛單「尚未刊登任何廣告」、C2C 出售頁「暫無訂單」、交易紀錄「尚無成交訂單」皆有說明文字）明顯簡陋。', repro:'以尚未綁定任何支付方式的帳號開啟 /bind-payment。'},
+ {n:21, area:'通知列表', sev:'minor', issue:'兩則幾乎重複的「【密碼變動】您的資金密碼已於 [時間] 修改成功」通知，時間相隔僅 50 秒（10:49:33 與 10:48:43，皆為 2026-09-07）。可能是密碼變更流程的重複送出 bug，也可能是兩次真實變更事件——建議與後端團隊確認。另外每則通知列都渲染出第二行空白的段落（可能是原本要顯示時間戳卻未渲染成功）。', repro:'開啟 /notification，檢查兩則【密碼變動】訊息與每則訊息下方的空白第二行。'},
+ {n:22, area:'首頁 Banner 輪播', sev:'cosmetic', issue:'其中一則輪播圖文字疑似被截斷：「所冷錢包」前方帶有不完整字符，讀起來像是被裁切的標語（例如可能原文是「無所不在的冷錢包」之類，被圖片裁切或響應式版面問題截斷）。', repro:'觀察首頁 Banner 輪播循環至 3 張以上的圖卡，留意深色冷錢包主題 Banner 的標題文字。'},
+ {n:23, area:'首頁公告列', sev:'minor', issue:'「【公告】平台版本更新通知」列在該次 session 第一次載入 /main 時有顯示，但在同一 session 內後續再次造訪 /main 時卻不再出現（過程中並無使用者主動關閉的動作）。不確定是刻意的「顯示一次」設計、快取問題，還是會靜默遺失公告的 bug。', repro:'重新整理載入 /main，接著離開再返回同一 session 的 /main，比較公告列是否仍存在。'},
+ {n:24, area:'C2C 全區 UAT 測試資料', sev:'cosmetic', issue:'C2C 市場掛單顯示明顯的假／測試商家名稱——「測試星舟」（字面意思是「Test Starship」）與「erwewr」（隨意亂打的鍵盤字），商家資訊彈窗的所有統計數字（成單數、交易對手、成單率）皆為「0」，帳戶年齡為「25 天前」。此為 UAT 環境預期現象，不應被誤認為正式環境的代表性內容。', repro:'檢視 /swap 購買分頁的掛單列表。'},
+ {n:25, area:'Header 顏色與預期認知的落差', sev:'cosmetic', issue:'紀錄用：App 全站的頂部 header／banner 列在所有頁面觀察到的都是白色（#FFFFFF），並非一般加密貨幣 App 慣例可能預期的深色海軍藍——值得與品牌方確認是否為刻意的設計方向。', repro:'在任一頁面對 header 執行 getComputedStyle(...).backgroundColor，回傳值為 rgb(255,255,255)。'}
+];
+function severityLabel(sev){
+  return {blocker:'BLOCKER', major:'MAJOR', minor:'MINOR', cosmetic:'COSMETIC'}[sev] || sev.toUpperCase();
+}
+function renderQA(){
+  const host = document.getElementById('qaList');
+  host.innerHTML = QA_FINDINGS.map(f => `
+    <div class="qa-item">
+      <div class="qa-item-top">
+        <span class="qa-item-area">#${f.n} · ${f.area}</span>
+        <span class="sev sev-${f.sev}">${severityLabel(f.sev)}</span>
+      </div>
+      <div class="qa-item-issue">${f.issue}</div>
+      <div class="qa-item-repro"><b>Repro：</b>${f.repro}</div>
+    </div>
+  `).join('');
+}
+function toggleQA(open){
+  const panel = document.getElementById('qaPanel');
+  const backdrop = document.getElementById('qaBackdrop');
+  const willOpen = (open !== undefined) ? open : !panel.classList.contains('open');
+  panel.classList.toggle('open', willOpen);
+  backdrop.classList.toggle('open', willOpen);
+}
+
+/* ============================= INIT ============================= */
+function init(){
+  hydrateIcons();
+  buildQrGrid();
+  renderTransferDir();
+  renderQA();
+  document.querySelectorAll('.screen').forEach(s=>{ s.hidden = true; });
+  current = 'main';
+  document.getElementById('scr-main').hidden = false;
+  syncActiveNavStates();
+  onEnterMain();
+}
+init();
+</script>
+
+
+
