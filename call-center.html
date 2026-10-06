@@ -1,0 +1,1510 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Call Center </title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --ink:#1B2430;
+    --ink-soft:#51586A;
+    --paper:#EDEAE2;
+    --surface:#F8F6F0;
+    --surface-2:#FFFFFF;
+    --line:#D3CDBC;
+    --teal:#0F7A78;
+    --teal-ink:#0B5E5C;
+    --teal-soft:#E1EFEC;
+    --amber:#A9691B;
+    --amber-soft:#F3E6CF;
+    --red:#A03C3C;
+    --red-soft:#F4E0DC;
+    --indigo:#4C5FB8;
+    --indigo-ink:#3B4A9A;
+    --indigo-soft:#E4E5F6;
+    --shadow: 0 1px 2px rgba(27,36,48,.06), 0 8px 24px -12px rgba(27,36,48,.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#E9E6DC;
+      --ink-soft:#AEA99B;
+      --paper:#171A1E;
+      --surface:#1E2226;
+      --surface-2:#22262B;
+      --line:#34383D;
+      --teal:#3EAFA6;
+      --teal-ink:#8FD4CC;
+      --teal-soft:#1B302E;
+      --amber:#D6A15A;
+      --amber-soft:#332818;
+      --red:#DB8A7E;
+      --red-soft:#382320;
+      --indigo:#8B96E0;
+      --indigo-ink:#AEB6EC;
+      --indigo-soft:#292D4C;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#E9E6DC;
+    --ink-soft:#AEA99B;
+    --paper:#171A1E;
+    --surface:#1E2226;
+    --surface-2:#22262B;
+    --line:#34383D;
+    --teal:#3EAFA6;
+    --teal-ink:#8FD4CC;
+    --teal-soft:#1B302E;
+    --amber:#D6A15A;
+    --amber-soft:#332818;
+    --red:#DB8A7E;
+    --red-soft:#382320;
+    --indigo:#8B96E0;
+    --indigo-ink:#AEB6EC;
+    --indigo-soft:#292D4C;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -12px rgba(0,0,0,.5);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Noto Sans TC","IBM Plex Mono",-apple-system,BlinkMacSystemFont,sans-serif;
+    line-height:1.7;
+    font-size:15.5px;
+  }
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums;}
+  h1,h2,h3,h4{text-wrap:balance; font-weight:700; margin:0;}
+  a{color:inherit;}
+
+  /* ---- app shell: left sidebar + right content ---- */
+  .app-shell{display:flex; align-items:stretch; min-height:100vh;}
+
+  .sidebar{
+    width:236px; flex-shrink:0; background:var(--surface); border-right:1px solid var(--line);
+    position:sticky; top:0; align-self:flex-start; height:100vh;
+    display:flex; flex-direction:column; padding:22px 0 16px;
+  }
+  .sidebar-brand{padding:0 20px 18px; margin-bottom:10px; border-bottom:1px solid var(--line);}
+  .sidebar-brand .brand-name{font-weight:700; font-size:14.5px; display:flex; align-items:center; gap:8px;}
+  .sidebar-brand .dot{width:8px;height:8px;border-radius:50%;background:var(--teal); box-shadow:0 0 0 3px var(--teal-soft); flex-shrink:0;}
+  .sidebar-brand .brand-sub{font-size:11.5px; color:var(--ink-soft); margin-top:5px; padding-left:16px;}
+
+  .sidebar-nav{display:flex; flex-direction:column; gap:2px; padding:0 12px; flex:1;}
+  .nav-item{
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left;
+    font-family:inherit; font-size:14px; font-weight:500; color:var(--ink-soft);
+    background:transparent; border:none; border-radius:8px; padding:10px 12px; cursor:pointer;
+  }
+  .nav-item .n{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-soft); opacity:.8;}
+  .nav-item:hover{background:var(--paper); color:var(--ink);}
+  .nav-item.active{background:var(--teal-soft); color:var(--teal-ink); font-weight:700;}
+  .nav-item.active .n{color:var(--teal-ink);}
+  .nav-item:focus-visible{outline:2px solid var(--teal); outline-offset:-2px;}
+
+  .nav-subnav{display:flex; flex-direction:column; gap:1px; padding-left:16px; margin:1px 0 6px;}
+  .nav-subitem{
+    display:flex; align-items:center; gap:8px; width:100%; text-align:left; position:relative;
+    font-family:inherit; font-size:12.5px; font-weight:500; color:var(--ink-soft);
+    background:transparent; border:none; border-radius:7px; padding:7px 12px 7px 16px; cursor:pointer;
+  }
+  .nav-subitem::before{
+    content:""; position:absolute; left:2px; top:50%; transform:translateY(-50%);
+    width:4px; height:4px; border-radius:50%; background:var(--line);
+  }
+  .nav-subitem:hover{background:var(--paper); color:var(--ink);}
+  .nav-subitem.active{background:var(--teal-soft); color:var(--teal-ink); font-weight:700;}
+  .nav-subitem.active::before{background:var(--teal);}
+  .nav-subitem:focus-visible{outline:2px solid var(--teal); outline-offset:-2px;}
+
+  .sidebar-foot{padding:14px 20px 0; margin-top:10px; border-top:1px solid var(--line); font-size:11.5px; color:var(--ink-soft); font-family:"IBM Plex Mono",monospace;}
+
+  .main{flex:1; min-width:0;}
+  .main-inner{max-width:900px; margin:0 auto; padding:44px 40px 80px;}
+
+  .page{display:none;}
+  .page.active{display:block;}
+
+  @media (max-width:860px){
+    .app-shell{flex-direction:column;}
+    .sidebar{
+      width:100%; height:auto; position:sticky; top:0; z-index:20; flex-direction:column; align-items:stretch;
+      border-right:none; border-bottom:1px solid var(--line); padding:9px 12px;
+      background:color-mix(in srgb, var(--surface) 94%, transparent); backdrop-filter:blur(8px);
+    }
+    .sidebar-brand{display:none;}
+    .sidebar-nav{flex-direction:row; flex-wrap:wrap; padding:0; gap:6px;}
+    .nav-item{width:auto; white-space:nowrap; font-size:13px; padding:8px 10px;}
+    .nav-subnav{
+      flex-direction:row; flex-wrap:wrap; flex-basis:100%; width:100%;
+      padding:8px 2px 0; margin:6px 0 0; gap:6px;
+      border-top:1px dashed var(--line);
+      display:none;
+    }
+    .nav-item[data-group].active + .nav-subnav{display:flex;}
+    .nav-subitem{width:auto; white-space:nowrap; padding:6px 10px;}
+    .nav-subitem::before{display:none;}
+    .sidebar-foot{display:none;}
+    .main-inner{padding:28px 18px 60px;}
+  }
+
+  .eyebrow{
+    font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--teal-ink); font-weight:600; margin-bottom:14px;
+  }
+  h1.doc-title{font-size:clamp(26px,3.4vw,34px); letter-spacing:-.01em; max-width:16ch;}
+  p.lede{margin-top:14px; max-width:56ch; color:var(--ink-soft); font-size:16px;}
+  .meta-row{display:flex; gap:20px; flex-wrap:wrap; margin-top:22px; font-size:13px; color:var(--ink-soft);}
+  .meta-row span b{color:var(--ink); font-weight:600;}
+
+  .assumption{
+    margin-top:26px; background:var(--amber-soft); border:1px solid color-mix(in srgb, var(--amber) 35%, var(--line));
+    border-radius:10px; padding:16px 18px; font-size:14px; color:var(--ink);
+    display:flex; gap:12px;
+  }
+  .assumption b{color:var(--amber); font-family:"IBM Plex Mono",monospace; font-size:12px; text-transform:uppercase; letter-spacing:.06em; flex-shrink:0; padding-top:2px;}
+
+  /* ---- page section header ---- */
+  .page-eyebrow{
+    font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:600; color:var(--ink-soft);
+    text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px;
+  }
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin-bottom:8px;}
+  .sec-num{font-family:"IBM Plex Mono",monospace; font-size:13px; color:var(--teal-ink); font-weight:600;}
+  .sec-head h2{font-size:24px;}
+  .sec-intro{color:var(--ink-soft); max-width:62ch; margin:10px 0 30px; font-size:15px;}
+
+  h3.sub{font-size:16px; margin:34px 0 12px; display:flex; align-items:center; gap:8px;}
+  h3.sub:first-of-type{margin-top:0;}
+
+  /* ---- generic card / grid ---- */
+  .grid{display:grid; gap:14px;}
+  .cols-2{grid-template-columns:repeat(2,1fr);}
+  .cols-3{grid-template-columns:repeat(3,1fr);}
+  .cols-4{grid-template-columns:repeat(4,1fr);}
+  @media (max-width:760px){.cols-2,.cols-3,.cols-4{grid-template-columns:1fr 1fr;}}
+  @media (max-width:520px){.cols-2,.cols-3,.cols-4{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--surface); border:1px solid var(--line); border-radius:10px;
+    padding:16px 18px;
+  }
+  .role-card{display:flex; flex-direction:column; gap:4px;}
+  .role-card .role-title{font-weight:700; font-size:14.5px;}
+  .role-card .role-desc{font-size:13px; color:var(--ink-soft); line-height:1.55;}
+  .role-card .role-n{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--teal-ink); background:var(--teal-soft); align-self:flex-start; padding:2px 8px; border-radius:20px; margin-top:2px;}
+
+  .goto-card{display:flex; flex-direction:column; gap:6px; cursor:pointer; transition:border-color .15s ease, transform .15s ease;}
+  .goto-card:hover, .goto-card:focus-visible{border-color:var(--teal); transform:translateY(-1px);}
+  .goto-card:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+  .goto-card .goto-title{font-weight:700; font-size:14.5px;}
+  .goto-card .goto-desc{font-size:13px; color:var(--ink-soft); line-height:1.55; flex:1;}
+  .goto-card .goto-link{font-size:12.5px; color:var(--teal-ink); font-weight:600; margin-top:2px;}
+
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-size:13px; padding:6px 12px; border-radius:20px; background:var(--surface);
+    border:1px solid var(--line); font-weight:500;
+  }
+  .pill-select{font-family:inherit; color:var(--ink-soft); cursor:pointer; transition:background .15s ease, color .15s ease, border-color .15s ease;}
+  .pill-select:hover{border-color:var(--teal);}
+  .pill-select.active{background:var(--teal-soft); color:var(--teal-ink); border-color:color-mix(in srgb, var(--teal) 35%, var(--line)); font-weight:700;}
+  .pill-select:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+
+  td input[type="text"]{padding:6px 9px; font-size:13.5px;}
+
+  /* ---- 02 排班表(卡片式) ---- */
+  .schedule-card{
+    border:1px solid var(--line); border-radius:12px; background:var(--surface-2);
+    box-shadow:var(--shadow); overflow:hidden;
+  }
+  .schedule-card-head{
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px 16px;
+    padding:16px 18px; border-bottom:1px solid var(--line); background:var(--surface);
+  }
+  .schedule-card-title{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
+  .schedule-card-title .t{font-weight:700; font-size:15px;}
+  .schedule-card-title .r{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--ink-soft);}
+  .legend-row{display:flex; gap:8px; flex-wrap:wrap;}
+  .legend-chip{
+    display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700;
+    padding:4px 10px 4px 8px; border-radius:20px; font-family:"IBM Plex Mono",monospace;
+    background:var(--surface-2); border:1px solid var(--line); color:var(--ink-soft);
+  }
+  .legend-chip::before{content:""; width:7px; height:7px; border-radius:50%; flex-shrink:0;}
+  .legend-chip[data-shift="A"]{background:var(--teal-soft); color:var(--teal-ink); border-color:transparent;}
+  .legend-chip[data-shift="A"]::before{background:var(--teal);}
+  .legend-chip[data-shift="B"]{background:var(--amber-soft); color:var(--amber); border-color:transparent;}
+  .legend-chip[data-shift="B"]::before{background:var(--amber);}
+  .legend-chip[data-shift="C"]{background:var(--indigo-soft); color:var(--indigo-ink); border-color:transparent;}
+  .legend-chip[data-shift="C"]::before{background:var(--indigo);}
+  .legend-chip[data-shift="行政"]::before{background:var(--ink-soft);}
+  .legend-chip[data-shift="休"]::before{background:transparent; border:1.5px solid var(--ink-soft); width:5px; height:5px;}
+
+  .schedule-table-wrap{border:none; border-radius:0; background:transparent;}
+  #schedule-grid{min-width:780px;}
+  #schedule-grid th, #schedule-grid td{padding:8px 10px; text-align:center;}
+  #schedule-grid thead th:first-child, #schedule-grid td:first-child{text-align:left;}
+  #schedule-grid td:first-child, #schedule-grid th:first-child{
+    position:sticky; left:0; z-index:2; background:var(--surface-2);
+    box-shadow:1px 0 0 var(--line); font-weight:600; font-size:13px; white-space:nowrap;
+  }
+  #schedule-grid thead th:first-child{background:var(--surface); z-index:3;}
+  #schedule-grid tbody tr:nth-child(even) td{background:var(--surface);}
+  #schedule-grid tbody tr:nth-child(even) td:first-child{background:var(--surface);}
+  #schedule-grid tbody tr:hover td{background:var(--teal-soft);}
+  #schedule-grid tbody tr:hover td:first-child{background:var(--teal-soft);}
+
+  .shift-tag{
+    display:inline-block; padding:5px 12px; font-size:12.5px; min-width:50px; font-family:"IBM Plex Mono",monospace;
+    font-weight:700; text-align:center; border-radius:20px;
+    background-color:var(--surface); color:var(--ink-soft); border:1px solid var(--line);
+  }
+  .shift-tag[data-shift="A"]{background-color:var(--teal-soft); color:var(--teal-ink); border-color:color-mix(in srgb, var(--teal) 30%, var(--line));}
+  .shift-tag[data-shift="B"]{background-color:var(--amber-soft); color:var(--amber); border-color:color-mix(in srgb, var(--amber) 30%, var(--line));}
+  .shift-tag[data-shift="C"]{background-color:var(--indigo-soft); color:var(--indigo-ink); border-color:color-mix(in srgb, var(--indigo) 30%, var(--line));}
+  .shift-tag[data-shift="行政"]{background-color:var(--surface); color:var(--ink-soft); border:1px dashed var(--line);}
+  .shift-tag[data-shift="休"]{background-color:transparent; color:var(--ink-soft); border:1px solid var(--line);}
+
+  #schedule-grid td .shift-tag{min-width:64px; font-size:12px; padding:5px 8px;}
+  .field-error{font-size:12px; color:var(--red); margin-top:4px; display:none;}
+  .field-error.show{display:block;}
+
+  #schedule-grid tfoot tr{border-top:1px solid var(--line);}
+  #schedule-grid tfoot td, #schedule-grid tfoot th{
+    font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:700; padding:7px 10px;
+  }
+  #schedule-grid tfoot th{text-align:left; position:sticky; left:0; z-index:2; white-space:nowrap;}
+  #schedule-grid tfoot tr.sum-a td, #schedule-grid tfoot tr.sum-a th{background:var(--teal-soft); color:var(--teal-ink);}
+  #schedule-grid tfoot tr.sum-b td, #schedule-grid tfoot tr.sum-b th{background:var(--amber-soft); color:var(--amber);}
+  #schedule-grid tfoot tr.sum-c td, #schedule-grid tfoot tr.sum-c th{background:var(--indigo-soft); color:var(--indigo-ink);}
+  #schedule-grid tfoot tr.summary-total td, #schedule-grid tfoot tr.summary-total th{
+    background:var(--surface); color:var(--ink); border-top:2px solid var(--line); font-size:12.5px;
+  }
+
+  /* ---- 02 班表(日曆檢視) ---- */
+  .cal-toolbar{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  .cal-grid{
+    display:grid; grid-template-columns:repeat(7, minmax(148px, 1fr)); gap:10px;
+    overflow-x:auto; padding-bottom:6px;
+  }
+  .cal-day{
+    background:var(--surface-2); border:1px solid var(--line); border-radius:10px;
+    display:flex; flex-direction:column; overflow:hidden; transition:border-color .12s ease, background .12s ease;
+  }
+  .cal-day.drag-over{border-color:var(--teal); background:color-mix(in srgb, var(--teal-soft) 60%, var(--surface-2));}
+  .cal-day-head{
+    padding:8px 10px; border-bottom:1px solid var(--line); background:var(--surface);
+    display:flex; align-items:baseline; justify-content:space-between;
+  }
+  .cal-day-head .dname{font-weight:700; font-size:13px;}
+  .cal-day-head .ddate{font-family:"IBM Plex Mono",monospace; color:var(--ink-soft); font-size:11px;}
+  .cal-day-body{flex:1; padding:8px; display:flex; flex-direction:column; gap:6px; min-height:120px;}
+  .cal-card{
+    display:flex; align-items:center; gap:6px; padding:6px 8px; border-radius:7px; cursor:grab;
+    font-size:12px; border:1px solid var(--line); background:var(--surface); user-select:none;
+  }
+  .cal-card:active{cursor:grabbing;}
+  .cal-card.dragging{opacity:.35;}
+  .cal-card .cs{
+    font-family:"IBM Plex Mono",monospace; font-weight:700; font-size:10px; padding:2px 6px;
+    border-radius:20px; flex-shrink:0; color:#fff;
+  }
+  .cal-card .cn{overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:500;}
+  .cal-card[data-shift="A"]{background:var(--teal-soft); border-color:color-mix(in srgb, var(--teal) 25%, var(--line));}
+  .cal-card[data-shift="A"] .cs{background:var(--teal);}
+  .cal-card[data-shift="B"]{background:var(--amber-soft); border-color:color-mix(in srgb, var(--amber) 25%, var(--line));}
+  .cal-card[data-shift="B"] .cs{background:var(--amber);}
+  .cal-card[data-shift="C"]{background:var(--indigo-soft); border-color:color-mix(in srgb, var(--indigo) 25%, var(--line));}
+  .cal-card[data-shift="C"] .cs{background:var(--indigo);}
+  .cal-card[data-shift="行政"]{background:var(--surface); border:1px dashed var(--line);}
+  .cal-card[data-shift="行政"] .cs{background:var(--ink-soft);}
+  .cal-day-off{
+    margin-top:auto; padding-top:8px; border-top:1px dashed var(--line);
+    font-size:11px; color:var(--ink-soft); line-height:1.5;
+  }
+  @media(max-width:640px){
+    .cal-toolbar{flex-direction:column; align-items:stretch;}
+    .cal-toolbar #publish-btn{width:100%;}
+  }
+
+  /* ---- tables ---- */
+  .table-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:10px; background:var(--surface-2);}
+  table{border-collapse:collapse; width:100%; min-width:560px; font-size:13.5px;}
+  th,td{padding:10px 14px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top;}
+  thead th{
+    font-family:"IBM Plex Mono",monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.05em;
+    color:var(--ink-soft); background:var(--surface); font-weight:600;
+  }
+  tbody tr:last-child td{border-bottom:none;}
+  td.mono, th.mono{font-family:"IBM Plex Mono",monospace;}
+  td.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; text-align:right;}
+
+  .badge{
+    display:inline-block; font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:5px;
+    font-family:"IBM Plex Mono",monospace; letter-spacing:.02em;
+  }
+  .badge-p1{background:var(--red-soft); color:var(--red);}
+  .badge-p2{background:var(--amber-soft); color:var(--amber);}
+  .badge-p3{background:var(--teal-soft); color:var(--teal-ink);}
+  .badge-p4{background:var(--surface); color:var(--ink-soft); border:1px solid var(--line);}
+
+  /* ---- rule list ---- */
+  .rule-list{display:flex; flex-direction:column; gap:10px; margin:0; padding:0; list-style:none;}
+  .rule-list li{
+    display:flex; gap:12px; padding:12px 14px; background:var(--surface); border:1px solid var(--line);
+    border-radius:8px; font-size:14px;
+  }
+  .rule-list li .k{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--teal-ink); font-weight:600; flex-shrink:0; padding-top:2px; min-width:64px;}
+
+  /* ---- escalation flow ---- */
+  .flow{position:relative; margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:0;}
+  .flow li{
+    position:relative; padding:0 0 26px 34px;
+  }
+  .flow li:last-child{padding-bottom:0;}
+  .flow li::before{
+    content:""; position:absolute; left:8px; top:4px; width:9px; height:9px; border-radius:50%;
+    background:var(--teal); box-shadow:0 0 0 3px var(--teal-soft);
+  }
+  .flow li::after{
+    content:""; position:absolute; left:12px; top:16px; bottom:0; width:1px; background:var(--line);
+  }
+  .flow li:last-child::after{display:none;}
+  .flow .step-title{font-weight:700; font-size:14.5px; margin-bottom:3px;}
+  .flow .step-desc{color:var(--ink-soft); font-size:13.5px; max-width:60ch;}
+  .flow .step-tag{
+    font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--teal-ink); background:var(--teal-soft);
+    padding:2px 8px; border-radius:20px; margin-left:8px; white-space:nowrap;
+  }
+
+  /* ---- daily timeline (horizontal) ---- */
+  .daytime{display:flex; gap:0; overflow-x:auto; padding-bottom:6px;}
+  .daytime .tpoint{flex:1 0 150px; position:relative; padding:22px 14px 0; border-top:2px solid var(--line);}
+  .daytime .tpoint::before{
+    content:""; position:absolute; top:-5px; left:14px; width:8px; height:8px; border-radius:50%; background:var(--amber);
+  }
+  .daytime .tpoint .t{font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--amber); font-weight:600;}
+  .daytime .tpoint .tt{font-weight:700; font-size:13.5px; margin-top:4px;}
+  .daytime .tpoint .td2{font-size:12.5px; color:var(--ink-soft); margin-top:3px;}
+
+  /* ---- kpi cards ---- */
+  .kpi-card{display:flex; flex-direction:column; gap:6px;}
+  .kpi-card .kpi-label{font-size:12.5px; color:var(--ink-soft); font-weight:500;}
+  .kpi-card .kpi-formula{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--ink-soft);}
+  .kpi-card .kpi-target{
+    font-family:"IBM Plex Mono",monospace; font-size:20px; font-weight:600; color:var(--teal-ink);
+    margin-top:2px;
+  }
+
+  /* ---- report outline ---- */
+  .report-doc{
+    background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:22px 24px;
+  }
+  .report-doc .rd-h{font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; border-bottom:1px dashed var(--line); padding-bottom:12px; margin-bottom:14px; display:flex; justify-content:space-between;}
+  .report-doc ol{margin:0; padding-left:20px; display:flex; flex-direction:column; gap:12px;}
+  .report-doc li b{font-size:14.5px;}
+  .report-doc li p{margin:3px 0 0; font-size:13px; color:var(--ink-soft);}
+
+  /* ---- checklist ---- */
+  .checklist{display:flex; flex-direction:column; gap:9px; margin:0; padding:0; list-style:none;}
+  .checklist li{
+    display:flex; gap:12px; align-items:flex-start; padding:11px 14px; background:var(--surface);
+    border:1px solid var(--line); border-radius:8px; font-size:14px; transition:background .15s ease;
+  }
+  .checklist li:has(input:checked){background:var(--teal-soft);}
+  .checklist input[type="checkbox"]{
+    width:17px; height:17px; margin:2px 0 0; accent-color:var(--teal); flex-shrink:0; cursor:pointer;
+  }
+  .checklist label{cursor:pointer; flex:1;}
+  .checklist li:has(input:checked) label{color:var(--ink-soft); text-decoration:line-through;}
+
+  .progress-track{height:8px; border-radius:20px; background:var(--surface); border:1px solid var(--line); overflow:hidden; margin-bottom:8px;}
+  .progress-fill{height:100%; background:var(--teal); width:0%; transition:width .3s ease;}
+  .progress-label{font-size:12.5px; color:var(--ink-soft); font-family:"IBM Plex Mono",monospace; margin-bottom:16px;}
+
+  /* ---- system note ---- */
+  .system-note{
+    display:flex; gap:10px; align-items:flex-start; background:var(--teal-soft);
+    border:1px solid color-mix(in srgb, var(--teal) 35%, var(--line));
+    border-radius:10px; padding:12px 16px; font-size:13px; color:var(--ink); margin:0 0 28px;
+  }
+  .system-note b{color:var(--teal-ink); font-family:"IBM Plex Mono",monospace; font-size:11px; text-transform:uppercase; letter-spacing:.06em; flex-shrink:0; padding-top:1px; white-space:nowrap;}
+
+  /* ---- forms ---- */
+  .form-card{background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:20px 22px;}
+  .form-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px 16px;}
+  .form-grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  @media(max-width:640px){.form-grid, .form-grid.cols-3{grid-template-columns:1fr;}}
+  .field{display:flex; flex-direction:column; gap:5px;}
+  .field label{font-size:12.5px; font-weight:600; color:var(--ink-soft);}
+  .field.span-2{grid-column:1 / -1;}
+  input, select, textarea{
+    font-family:inherit; font-size:14px; color:var(--ink); background:var(--surface);
+    border:1px solid var(--line); border-radius:7px; padding:9px 11px; width:100%;
+  }
+  input:focus, select:focus, textarea:focus{outline:2px solid var(--teal); outline-offset:1px; border-color:var(--teal);}
+  textarea{resize:vertical; min-height:64px; font-family:inherit;}
+  .form-actions{display:flex; justify-content:flex-end; margin-top:16px;}
+
+  .btn{
+    font-family:"Noto Sans TC",sans-serif; font-size:13.5px; font-weight:600; padding:9px 20px;
+    border-radius:7px; border:1px solid transparent; cursor:pointer;
+  }
+  .btn-submit{background:var(--teal); color:#fff;}
+  .btn-submit:hover{background:var(--teal-ink);}
+  .btn-approve{background:var(--teal-soft); color:var(--teal-ink); border:1px solid color-mix(in srgb, var(--teal) 35%, var(--line)); font-size:12px; padding:5px 10px; margin-right:6px; white-space:nowrap;}
+  .btn-reject{background:var(--red-soft); color:var(--red); border:1px solid color-mix(in srgb, var(--red) 35%, var(--line)); font-size:12px; padding:5px 10px; white-space:nowrap;}
+  .btn-approve:hover, .btn-reject:hover{filter:brightness(0.95);}
+
+  .status-pill{
+    display:inline-block; font-size:11.5px; font-weight:600; padding:3px 10px; border-radius:20px;
+    font-family:"IBM Plex Mono",monospace; white-space:nowrap;
+  }
+  .pill-pending{background:var(--amber-soft); color:var(--amber);}
+  .pill-approved, .pill-closed{background:var(--teal-soft); color:var(--teal-ink);}
+  .pill-rejected{background:var(--red-soft); color:var(--red);}
+
+  .empty-row{padding:26px; text-align:center; color:var(--ink-soft); font-size:13px;}
+
+  footer{padding:36px 0 56px; color:var(--ink-soft); font-size:13px;}
+  footer .foot-line{border-top:1px solid var(--line); padding-top:20px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  @media(max-width:600px){
+    .cols-3, .cols-4{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-name"><span class="dot"></span>Call Center</div>
+      <!-- <div class="brand-sub">15 人客服團隊</div> -->
+    </div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" data-page="overview" type="button"><span class="n">01</span>總覽</button>
+      <button class="nav-item" data-page="sch-assign" data-group="sch-assign,sch-result,sch-swap,sch-announce" type="button"><span class="n">02</span>排班管理</button>
+      <div class="nav-subnav">
+        <button class="nav-subitem" data-page="sch-assign" type="button">排班</button>
+        <button class="nav-subitem" data-page="sch-result" type="button">班表</button>
+        <button class="nav-subitem" data-page="sch-swap" type="button">換班</button>
+        <button class="nav-subitem" data-page="sch-announce" type="button">公告</button>
+      </div>
+      <button class="nav-item" data-page="issue" type="button"><span class="n">03</span>問題回報</button>
+      <button class="nav-item" data-page="handover" type="button"><span class="n">04</span>交接說明</button>
+    </nav>
+    <div class="sidebar-foot">v1.0 · 更新 2026-09-09</div>
+  </aside>
+
+  <main class="main">
+    <div class="main-inner">
+
+  <!-- 01 總覽 -->
+  <div class="page active" id="page-overview" data-page="overview">
+    <!-- <div class="eyebrow">Operations Playbook</div>   -->
+    <div class="sec-head" style="margin-top:44px;"><span class="sec-num">01</span><h2>總覽</h2></div>
+    <!-- <p class="sec-intro">明確的角色分工是排班與問題升級能順利運作的前提。以下為建議的組織架構與服務管道。</p> -->
+
+    <h3 class="sub">組織架構(共 X 人)</h3>
+    <div class="grid cols-4">
+      <div class="card role-card">
+        <span class="role-n">1 名</span>
+        <div class="role-title">客服主管</div>
+        <div class="role-desc">全團隊排班核准、KPI 追蹤、P1/P2 事件最終決策、跨部門協調。</div>
+      </div>
+      <div class="card role-card">
+        <span class="role-n">3 名</span>
+        <div class="role-title">值班組長</div>
+        <div class="role-desc">早/中/晚班各 1 名,負責現場調度、換班審核第一關、問題初步分級與升級、日報彙整。</div>
+      </div>
+      <div class="card role-card">
+        <span class="role-n">1 名</span>
+        <div class="role-title">資深客服 / QA</div>
+        <div class="role-desc">處理疑難案件、新人帶教、通話品質抽核、知識庫維護。</div>
+      </div>
+      <div class="card role-card">
+        <span class="role-n">1 名</span>
+        <div class="role-title">客服代表</div>
+        <div class="role-desc">第一線接聽與回覆、工單登錄、依 SOP 判斷是否升級,分散於三班。</div>
+      </div>
+    </div>
+
+    <h3 class="sub">服務管道</h3>
+    <div class="chip-row">
+      <!-- <span class="chip">☎ 電話專線</span> -->
+      <span class="chip">✉ Email</span>
+      <!-- <span class="chip">💬 LINE 官方帳號</span> -->
+      <!-- <span class="chip">🌐 官網線上客服</span> -->
+      <span class="chip">📱 App 內客服</span>
+      <span class="chip">社群訊息(TG / Whatsapp)</span>
+    </div>
+
+    <h3 class="sub" id="ov-schedule">排班說明</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>班別</th><th>時段</th><th>對應話務高峰</th><th>建議人力占比</th></tr></thead>
+        <tbody>
+          <tr><td><b>早班 A</b></td><td class="mono">08:00–16:00</td><td>開盤詢問、隔夜留言回覆</td><td class="num">30%</td></tr>
+          <tr><td><b>中班 B</b></td><td class="mono">12:00–20:00</td><td>午間至傍晚主力話務</td><td class="num">40%</td></tr>
+          <tr><td><b>晚班 C</b></td><td class="mono">14:00–22:00</td><td>下班後諮詢高峰</td><td class="num">30%</td></tr>
+          <tr><td><b>假日班</b></td><td class="mono">依當週人力表</td><td>採輪替制,避免同仁連續值假日班</td><td class="num">依實際話務</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ul class="rule-list" style="margin-top:14px;">
+      <li><span class="k">工時上限</span><span>每週正常工時上限 40 小時;加班需事前簽核,單月加班時數不超過 46 小時(依勞基法規定)。</span></li>
+      <li><span class="k">公告週期</span><span>採月排班制,每月 25 日前公告次月班表;如遇話務量異常變動,得於 7 日前發布補充調整。</span></li>
+      <li><span class="k">人力覆蓋</span><span>尖峰時段(10:00–12:00、14:00–17:00)在班人力不得低於當日編制人數之 70%。</span></li>
+      <li><span class="k">輪休原則</span><span>比照排班表輪休,每人每週至少 1 例假 1 休息日;假日班採輪替,同仁不連續兩週值假日班。</span></li>
+      <li><span class="k">換班申請</span><span>至少提前 48 小時提出,需雙方同意 → 組長審核 → 主管核准;緊急情況(病假等)另行處理。可到「排班管理」頁直接送出申請。</span></li>
+    </ul>
+
+    <p style="font-size:13px; color:var(--ink-soft); margin:18px 0 8px;">當週班表示例(全員 X 人)</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>人員</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>主管・林</td><td class="mono">行政</td><td class="mono">行政</td><td class="mono">行政</td><td class="mono">行政</td><td class="mono">行政</td><td class="mono">休</td><td class="mono">休</td></tr>
+          <tr><td>組長・陳(早班)</td><td class="mono">A</td><td class="mono">A</td><td class="mono">A</td><td class="mono">休</td><td class="mono">A</td><td class="mono">A</td><td class="mono">休</td></tr>
+          <tr><td>組長・黃(中班)</td><td class="mono">B</td><td class="mono">B</td><td class="mono">B</td><td class="mono">休</td><td class="mono">B</td><td class="mono">休</td><td class="mono">B</td></tr>
+          <tr><td>組長・吳(晚班)</td><td class="mono">C</td><td class="mono">休</td><td class="mono">C</td><td class="mono">C</td><td class="mono">C</td><td class="mono">C</td><td class="mono">休</td></tr>
+          <tr><td>資深・周</td><td class="mono">B</td><td class="mono">B</td><td class="mono">休</td><td class="mono">B</td><td class="mono">B</td><td class="mono">B</td><td class="mono">休</td></tr>
+          <tr><td>資深・鄭</td><td class="mono">A</td><td class="mono">休</td><td class="mono">A</td><td class="mono">A</td><td class="mono">休</td><td class="mono">A</td><td class="mono">A</td></tr>
+          <tr><td>客服・王</td><td class="mono">C</td><td class="mono">C</td><td class="mono">C</td><td class="mono">C</td><td class="mono">休</td><td class="mono">休</td><td class="mono">C</td></tr>
+          <tr><td>客服・李</td><td class="mono">休</td><td class="mono">A</td><td class="mono">A</td><td class="mono">A</td><td class="mono">A</td><td class="mono">休</td><td class="mono">A</td></tr>
+          <tr><td>客服・張</td><td class="mono">B</td><td class="mono">休</td><td class="mono">B</td><td class="mono">B</td><td class="mono">C</td><td class="mono">C</td><td class="mono">休</td></tr>
+          <tr><td>客服・劉</td><td class="mono">A</td><td class="mono">A</td><td class="mono">休</td><td class="mono">A</td><td class="mono">A</td><td class="mono">休</td><td class="mono">B</td></tr>
+          <tr><td>客服・楊</td><td class="mono">C</td><td class="mono">C</td><td class="mono">休</td><td class="mono">休</td><td class="mono">C</td><td class="mono">C</td><td class="mono">C</td></tr>
+          <tr><td>客服・許</td><td class="mono">B</td><td class="mono">B</td><td class="mono">B</td><td class="mono">休</td><td class="mono">休</td><td class="mono">B</td><td class="mono">B</td></tr>
+          <tr><td>客服・蔡</td><td class="mono">休</td><td class="mono">C</td><td class="mono">C</td><td class="mono">C</td><td class="mono">C</td><td class="mono">休</td><td class="mono">休</td></tr>
+          <tr><td>客服・謝</td><td class="mono">A</td><td class="mono">休</td><td class="mono">B</td><td class="mono">B</td><td class="mono">B</td><td class="mono">A</td><td class="mono">休</td></tr>
+          <tr><td>客服・洪</td><td class="mono">休</td><td class="mono">休</td><td class="mono">A</td><td class="mono">C</td><td class="mono">C</td><td class="mono">C</td><td class="mono">C</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12.5px; color:var(--ink-soft); margin-top:10px;">A = 早班(08:00–16:00) · B = 中班(12:00–20:00) · C = 晚班(14:00–22:00) · 行政 = 主管日間協調時段(09:00–18:00)</p>
+
+    <p style="font-size:13px; color:var(--ink-soft); margin:18px 0 8px;">排班檢核指標</p>
+    <div class="grid cols-3">
+      <div class="card kpi-card">
+        <span class="kpi-label">人力覆蓋率</span>
+        <span class="kpi-formula">在班人力 ÷ 編制人力</span>
+        <span class="kpi-target">≥ 90%</span>
+      </div>
+      <div class="card kpi-card">
+        <span class="kpi-label">當月缺勤率</span>
+        <span class="kpi-formula">缺勤人次 ÷ 應到班人次</span>
+        <span class="kpi-target">≤ 3%</span>
+      </div>
+      <div class="card kpi-card">
+        <span class="kpi-label">換班申請次數</span>
+        <span class="kpi-formula">每人每月換班次數</span>
+        <span class="kpi-target">≤ 2 次</span>
+      </div>
+    </div>
+
+    <h3 class="sub" id="ov-issue">問題回報</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>等級</th><th>定義</th><th>回報時限</th><th>處理時限</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge badge-p1">P1 緊急</span></td><td>系統全面中斷、大量客訴、資安或個資疑慮</td><td class="mono">15 分鐘內</td><td class="mono">1 小時內啟動應變</td></tr>
+          <tr><td><span class="badge badge-p2">P2 高</span></td><td>影響服務但有替代方案、個別重大客訴(如退款爭議)</td><td class="mono">30 分鐘內</td><td class="mono">4 小時內</td></tr>
+          <tr><td><span class="badge badge-p3">P3 中</span></td><td>一般操作問題、流程疑義、非緊急客訴</td><td class="mono">當班內</td><td class="mono">24 小時內</td></tr>
+          <tr><td><span class="badge badge-p4">P4 低</span></td><td>建議事項、優化提案、非急迫性回饋</td><td class="mono">每日彙整</td><td class="mono">納入週會討論</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ol class="flow" style="margin-top:20px;">
+      <li>
+        <div class="step-title">發現並登錄問題<span class="step-tag">客服代表</span></div>
+        <div class="step-desc">於問題回報表填寫工單編號、時間、客戶資訊、問題描述,並初步判斷嚴重度。</div>
+      </li>
+      <li>
+        <div class="step-title">分級通報<span class="step-tag">當班全員</span></div>
+        <div class="step-desc">
+		P1 / P2 需立即口頭告知值班組長並同步書面記錄; <br>
+		P3 / P4 於系統登錄即可,無需中斷現場工作。
+		</div>
+      </li>
+      <li>
+        <div class="step-title">組長評估與處理<span class="step-tag">值班組長</span></div>
+        <div class="step-desc">可自行處理者當場處理並記錄結果;超出權限或跨部門者,依聯絡矩陣上呈。</div>
+      </li>
+      <li>
+        <div class="step-title">主管介入與協調<span class="step-tag">客服主管</span></div>
+        <div class="step-desc">P1 / P2 由主管設定 SLA、協調 IT / 產品 / 物流等相關部門,必要時對外發出客戶溝通稿。</div>
+      </li>
+      <li>
+        <div class="step-title">結案與回覆客戶<span class="step-tag">承辦人</span></div>
+        <div class="step-desc">處理完成後回覆客戶、更新工單狀態;屬常見問題者同步更新知識庫。</div>
+      </li>
+      <li>
+        <div class="step-title">事後覆盤<span class="step-tag">P1 / P2 限定</span></div>
+        <div class="step-desc">24 小時內召開簡短檢討會議,產出根因與改善行動,列入下次日報追蹤。</div>
+      </li>
+    </ol>
+
+    <p style="font-size:13px; color:var(--ink-soft); margin:20px 0 8px;">升級聯絡矩陣</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>問題類型</th><th>第一線</th><th>第二線</th><th>第三線</th></tr></thead>
+        <tbody>
+          <tr><td>系統 / 技術問題</td><td>客服代表</td><td>值班組長</td><td>IT 支援窗口</td></tr>
+          <tr><td>客訴 / 服務爭議</td><td>客服代表</td><td>值班組長</td><td>客服主管</td></tr>
+          <tr><td>退款 / 金額爭議</td><td>值班組長</td><td>客服主管</td><td>財務 / 法務</td></tr>
+          <tr><td>資安 / 個資疑慮</td><td colspan="3">任何人發現即直接通報主管與資安窗口,略過一般流程</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- <h3 class="sub">常用功能</h3> -->
+    <!-- <div class="grid cols-2"> -->
+      <!-- <div class="card goto-card" data-goto="sch-assign" tabindex="0" role="button"> -->
+        <!-- <div class="goto-title">填寫換班申請</div> -->
+        <!-- <div class="goto-desc">選擇申請人、想調整的日期與換班對象,送出後組長 / 主管可直接核准或駁回。</div> -->
+        <!-- <div class="goto-link">前往排班管理 →</div> -->
+      <!-- </div> -->
+      <!-- <div class="card goto-card" data-goto="issue" tabindex="0" role="button"> -->
+        <!-- <div class="goto-title">填寫問題回報</div> -->
+        <!-- <div class="goto-desc">選擇嚴重度與問題類型,送出後自動產生工單編號,可標記結案。</div> -->
+        <!-- <div class="goto-link">前往問題回報 →</div> -->
+      <!-- </div> -->
+    <!-- </div> -->
+  </div>
+
+  <!-- 02-1 排班 -->
+  <div class="page" id="page-sch-assign" data-page="sch-assign">
+    <div class="page-eyebrow">排班管理</div>
+    <div class="sec-head"><span class="sec-num">02</span><h2>排班</h2></div>
+    <p class="sec-intro">選擇人員、日期與班別後送出,同一人同一天再次送出會覆蓋原班別;送出後可至「<span class="goto-link" data-goto="sch-result" style="cursor:pointer; text-decoration:underline; color:var(--teal-ink); font-weight:600;" tabindex="0" role="button">班表</span>」查看最新結果。完整的班別設計與排班規則,請見「<span class="goto-link" data-goto="overview" data-anchor="ov-schedule" style="cursor:pointer; text-decoration:underline; color:var(--teal-ink); font-weight:600;" tabindex="0" role="button">總覽 → 排班說明</span>」。</p>
+
+    <div class="form-card">
+      <form id="assign-form">
+        <div class="form-grid cols-3">
+          <div class="field">
+            <label for="assign-name">人員</label>
+            <select id="assign-name" required></select>
+          </div>
+          <div class="field">
+            <label for="assign-date">日期</label>
+            <input type="date" id="assign-date" required value="2026-09-14" min="2026-09-14" max="2026-09-20">
+            <span class="field-error" id="assign-date-error">日期需在本週(09/14–09/20)範圍內</span>
+          </div>
+          <div class="field">
+            <label for="assign-shift">班別</label>
+            <select id="assign-shift" required>
+              <option value="" disabled selected>選擇班別</option>
+              <option value="A">早班 A(08:00–16:00)</option>
+              <option value="B">中班 B(12:00–20:00)</option>
+              <option value="C">晚班 C(14:00–22:00)</option>
+              <option value="行政">行政(09:00–18:00)</option>
+              <option value="休">休假</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-actions"><button type="submit" class="btn btn-submit">設定班別</button></div>
+      </form>
+    </div>
+
+    <div class="table-wrap" style="margin-top:14px;">
+      <table id="assign-log-table">
+        <thead><tr><th>時間</th><th>人員</th><th>日期</th><th>班別</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="assign-log-empty" class="empty-row">目前沒有排班紀錄。送出上方表單後會顯示在這裡。</div>
+    </div>
+  </div>
+
+  <!-- 02-2 班表(結果) -->
+  <div class="page" id="page-sch-result" data-page="sch-result">
+    <div class="page-eyebrow">排班管理</div>
+    <div class="sec-head"><span class="sec-num">02</span><h2>本週班表</h2></div>
+    <p class="sec-intro">以下為目前排定結果,會隨「<span class="goto-link" data-goto="sch-assign" style="cursor:pointer; text-decoration:underline; color:var(--teal-ink); font-weight:600;" tabindex="0" role="button">排班</span>」頁的指派即時更新。日曆檢視可直接拖曳卡片,把某人的班別移到別天;確認無誤後按右上角「發佈班表到公告」。</p>
+
+    <div class="cal-toolbar">
+      <div class="chip-row" id="cal-view-toggle">
+        <button type="button" class="chip pill-select active" data-view="calendar">日曆檢視</button>
+        <button type="button" class="chip pill-select" data-view="table">表格檢視</button>
+      </div>
+      <button type="button" class="btn btn-submit" id="publish-btn">發佈班表到公告</button>
+    </div>
+
+    <div id="publish-note" class="system-note" style="display:none; margin:14px 0 0; align-items:center;">
+      <b>已發佈</b>
+      <span id="publish-note-text" style="flex:1;"></span>
+      <span class="goto-link" data-goto="sch-announce" style="cursor:pointer; text-decoration:underline; color:var(--teal-ink); font-weight:600; white-space:nowrap;" tabindex="0" role="button">前往公告 →</span>
+    </div>
+
+    <div class="cal-legend legend-row" style="margin:16px 0 10px;">
+      <span class="legend-chip" data-shift="A">早 A・08–16</span>
+      <span class="legend-chip" data-shift="B">中 B・12–20</span>
+      <span class="legend-chip" data-shift="C">晚 C・14–22</span>
+      <span class="legend-chip" data-shift="行政">行政・09–18</span>
+      <span class="legend-chip" data-shift="休">休假</span>
+    </div>
+
+    <div id="view-calendar" class="view-panel">
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+
+    <div id="view-table" class="view-panel" style="display:none;">
+      <div class="schedule-card">
+        <div class="schedule-card-head">
+          <div class="schedule-card-title">
+            <span class="t">本週班表</span>
+            <span class="r mono">第 38 週・09/14(一)– 09/20(日)</span>
+          </div>
+        </div>
+        <div class="table-wrap schedule-table-wrap">
+          <table id="schedule-grid">
+            <thead>
+              <tr><th>人員</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr>
+            </thead>
+            <tbody id="schedule-grid-body"></tbody>
+            <tfoot id="schedule-summary"></tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02-3 換班 -->
+  <div class="page" id="page-sch-swap" data-page="sch-swap">
+    <div class="page-eyebrow">排班管理</div>
+    <div class="sec-head"><span class="sec-num">02</span><h2>換班申請</h2></div>
+    <p class="sec-intro">送出換班申請,由組長 / 主管於下方表格核准或駁回。</p>
+
+    <div class="form-card">
+      <form id="swap-form">
+        <div class="form-grid cols-3">
+          <div class="field">
+            <label for="swap-name">申請人</label>
+            <select id="swap-name" required></select>
+          </div>
+          <div class="field">
+            <label for="swap-date">想調整的班別日期</label>
+            <input type="date" id="swap-date" required>
+          </div>
+          <div class="field">
+            <label for="swap-target">換班對象</label>
+            <select id="swap-target" required></select>
+          </div>
+          <div class="field span-2">
+            <label for="swap-reason">原因</label>
+            <input type="text" id="swap-reason" placeholder="例如:家中有事需請假">
+          </div>
+        </div>
+        <div class="form-actions"><button type="submit" class="btn btn-submit">送出申請</button></div>
+      </form>
+    </div>
+
+    <div class="table-wrap" style="margin-top:14px;">
+      <table id="swap-table">
+        <thead><tr><th>編號</th><th>申請人</th><th>日期</th><th>換班對象</th><th>原因</th><th>狀態</th><th>組長 / 主管審核</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="swap-empty" class="empty-row">目前沒有換班申請。送出上方表單後會顯示在這裡。</div>
+    </div>
+  </div>
+
+  <!-- 02-4 公告 -->
+  <div class="page" id="page-sch-announce" data-page="sch-announce">
+    <div class="page-eyebrow">排班管理</div>
+    <div class="sec-head"><span class="sec-num"></span><h2>公告</h2></div>
+    <!-- <p class="sec-intro">選擇這個月班表要用哪個管道公告,並填上實際連結或群組名稱。</p> -->
+
+    <h3 class="sub" style="margin-top:0;">已發佈班表</h3>
+    <div class="card" style="margin-bottom:28px;">
+      <div id="announce-not-published" class="empty-row" style="padding:14px 4px;">
+        本週班表尚未發佈。請至「<span class="goto-link" data-goto="sch-result" style="cursor:pointer; text-decoration:underline; color:var(--teal-ink); font-weight:600;" tabindex="0" role="button">班表</span>」頁確認排班結果後發佈。
+      </div>
+      <div id="announce-published" style="display:none;">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:14px;">
+          <div style="font-size:13px; color:var(--ink-soft); display:flex; align-items:center; gap:8px;">
+            <span class="status-pill pill-approved">已發佈</span>
+            <span id="announce-publish-time" class="mono"></span>
+          </div>
+          <span class="goto-link" data-goto="sch-result" style="cursor:pointer; text-decoration:underline; color:var(--teal-ink); font-weight:600; font-size:12.5px;" tabindex="0" role="button">回班表調整 →</span>
+        </div>
+        <div class="table-wrap schedule-table-wrap">
+          <table id="published-grid">
+            <thead><tr><th>人員</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr></thead>
+            <tbody id="published-grid-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- <h3 class="sub" style="margin-top:0;">公告管道</h3> -->
+    <!-- <div class="card"> -->
+      <!-- <div class="chip-row" id="channel-pills"> -->
+        <!-- <button type="button" class="chip pill-select active" data-channel="system">排班系統</button> -->
+        <!-- <button type="button" class="chip pill-select" data-channel="form">共用表單</button> -->
+        <!-- <button type="button" class="chip pill-select" data-channel="group">群組公告</button> -->
+      <!-- </div> -->
+      <!-- <div class="field" style="margin-top:14px; max-width:440px;"> -->
+        <!-- <label for="channel-link">公告連結 / 群組名稱</label> -->
+        <!-- <input type="text" id="channel-link" placeholder="例如:LINE 群組「客服排班公告」或 Google 表單連結"> -->
+      <!-- </div> -->
+    <!-- </div> -->
+  </div>
+
+  <!-- 03 問題回報與升級 -->
+  <div class="page" id="page-issue" data-page="issue">
+    <div class="sec-head"><span class="sec-num">03</span><h2>問題回報與升級流程</h2></div>
+    <p class="sec-intro">以下為問題回報表單。完整的嚴重度分級、升級流程與聯絡矩陣,請見「<span class="goto-link" data-goto="overview" data-anchor="ov-issue" style="cursor:pointer; text-decoration:underline; color:var(--teal-ink); font-weight:600;" tabindex="0" role="button">總覽 → 問題回報</span>」。</p>
+
+    <h3 class="sub">問題回報表</h3>
+    <div class="form-card">
+      <form id="issue-form">
+        <div class="form-grid">
+          <div class="field">
+            <label for="issue-reporter">回報人</label>
+            <select id="issue-reporter" required></select>
+          </div>
+          <div class="field">
+            <label for="issue-type">問題類型</label>
+            <select id="issue-type" required>
+              <option value="" disabled selected>選擇問題類型</option>
+              <option>系統 / 技術問題</option>
+              <option>客訴 / 服務爭議</option>
+              <option>退款 / 金額爭議</option>
+              <option>資安 / 個資疑慮</option>
+              <option>其他</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="issue-severity">嚴重度</label>
+            <select id="issue-severity" required>
+              <option value="" disabled selected>選擇嚴重度</option>
+              <option value="P1">P1 緊急</option>
+              <option value="P2">P2 高</option>
+              <option value="P3">P3 中</option>
+              <option value="P4">P4 低</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="issue-contact">客戶 ID / 聯絡方式</label>
+            <input type="text" id="issue-contact" placeholder="例如:會員編號或電話">
+          </div>
+          <div class="field span-2">
+            <label for="issue-desc">問題描述</label>
+            <textarea id="issue-desc" required placeholder="具體說明發生了什麼事、客戶反映的內容"></textarea>
+          </div>
+        </div>
+        <div class="form-actions"><button type="submit" class="btn btn-submit">送出回報</button></div>
+      </form>
+    </div>
+
+    <div class="table-wrap" style="margin-top:14px;">
+      <table id="issue-table">
+        <thead><tr><th>工單編號</th><th>時間</th><th>回報人</th><th>類型</th><th>嚴重度</th><th>描述</th><th>狀態</th><th>操作</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="issue-empty" class="empty-row">目前沒有回報紀錄。送出上方表單後會顯示在這裡。</div>
+    </div>
+  </div>
+
+  <!-- 04 客服交接說明 -->
+  <div class="page" id="page-handover" data-page="handover">
+    <div class="sec-head"><span class="sec-num">04</span><h2>客服交接說明</h2></div>
+    <p class="sec-intro">換班或下班前,請填寫交接內容,確保重要資訊與待處理事項不遺漏給下一班。</p>
+
+    <h3 class="sub" style="margin-top:0;">交接表單</h3>
+    <div class="form-card">
+      <form id="handover-form">
+        <div class="form-grid">
+          <div class="field">
+            <label for="handover-from">交班人</label>
+            <select id="handover-from" required></select>
+          </div>
+          <div class="field">
+            <label for="handover-shift">交班班別</label>
+            <select id="handover-shift" required>
+              <option value="" disabled selected>選擇班別</option>
+              <option value="A">早班 A(08:00–16:00)</option>
+              <option value="B">中班 B(12:00–20:00)</option>
+              <option value="C">晚班 C(14:00–22:00)</option>
+              <option value="行政">行政(09:00–18:00)</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="handover-to">接班人</label>
+            <select id="handover-to" required></select>
+          </div>
+          <div class="field">
+            <label for="handover-level">提醒等級</label>
+            <select id="handover-level" required>
+              <option value="" disabled selected>選擇提醒等級</option>
+              <option value="general">一般</option>
+              <option value="attention">需留意</option>
+              <option value="urgent">緊急</option>
+            </select>
+          </div>
+          <div class="field span-2">
+            <div class="chip-row" id="handover-tab-toggle">
+              <button type="button" class="chip pill-select active" data-tab="summary">交接摘要</button>
+              <button type="button" class="chip pill-select" data-tab="todo">待處理事項</button>
+            </div>
+            <div id="handover-tab-summary">
+              <textarea id="handover-summary" required placeholder="本班重點事項、特殊客戶狀況、系統或流程異常等"></textarea>
+            </div>
+            <div id="handover-tab-todo" style="display:none;">
+              <textarea id="handover-todo" placeholder="尚未完成、需要下一班接續處理的項目(選填)"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions"><button type="submit" class="btn btn-submit">送出交接</button></div>
+      </form>
+    </div>
+
+    <h3 class="sub">交接紀錄</h3>
+    <div class="table-wrap">
+      <table id="handover-table">
+        <thead><tr><th>時間</th><th>班別</th><th>交班 → 接班</th><th>摘要</th><th>待處理事項</th><th>等級</th><th>狀態</th><th>操作</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div id="handover-empty" class="empty-row">目前沒有交接紀錄。送出上方表單後會顯示在這裡。</div>
+    </div>
+  </div>
+
+  <footer>
+    <!-- <div class="foot-line"> -->
+      <!-- <span>本手冊為通用範本,建議依團隊規模、產業與現有系統調整後使用。表單資料僅暫存於本機瀏覽器分頁,重新整理即清空。</span> -->
+      <!-- <span class="mono">Call Center 營運手冊 · v1.0</span> -->
+    <!-- </div> -->
+  </footer>
+
+    </div>
+  </main>
+</div>
+
+<script>
+(function(){
+  /* ---- 02 本週排班表 ---- */
+  const SHIFT_OPTIONS = [
+    {v:'A', label:'早 A'},
+    {v:'B', label:'中 B'},
+    {v:'C', label:'晚 C'},
+    {v:'行政', label:'行政'},
+    {v:'休', label:'休'}
+  ];
+  const SCHEDULE_DATA = [
+    {name:'主管・林', shifts:['行政','行政','行政','行政','行政','休','休']},
+    {name:'組長・陳(早班)', shifts:['A','A','A','休','A','A','休']},
+    {name:'組長・黃(中班)', shifts:['B','B','B','休','B','休','B']},
+    {name:'組長・吳(晚班)', shifts:['C','休','C','C','C','C','休']},
+    {name:'資深・周', shifts:['B','B','休','B','B','B','休']},
+    {name:'資深・鄭', shifts:['A','休','A','A','休','A','A']},
+    {name:'客服・王', shifts:['C','C','C','C','休','休','C']},
+    {name:'客服・李', shifts:['休','A','A','A','A','休','A']},
+    {name:'客服・張', shifts:['B','休','B','B','C','C','休']},
+    {name:'客服・劉', shifts:['A','A','休','A','A','休','B']},
+    {name:'客服・楊', shifts:['C','C','休','休','C','C','C']},
+    {name:'客服・許', shifts:['B','B','B','休','休','B','B']},
+    {name:'客服・蔡', shifts:['休','C','C','C','C','休','休']},
+    {name:'客服・謝', shifts:['A','休','B','B','B','A','休']},
+    {name:'客服・洪', shifts:['休','休','A','C','C','C','C']}
+  ];
+  const scheduleBody = document.getElementById('schedule-grid-body');
+  const scheduleSummary = document.getElementById('schedule-summary');
+
+  const SHIFT_LABEL = {};
+  SHIFT_OPTIONS.forEach(o => { SHIFT_LABEL[o.v] = o.label; });
+  const SCHEDULE_WEEK_START = new Date('2026-09-14T00:00:00Z');
+
+  function renderScheduleGrid(){
+    if(!scheduleBody) return;
+    scheduleBody.innerHTML = SCHEDULE_DATA.map((person, pi) => {
+      const cells = person.shifts.map((val, di) => `
+        <td><span class="shift-tag" data-shift="${val}">${SHIFT_LABEL[val] || val}</span></td>`).join('');
+      return `<tr><td>${escapeHtml(person.name)}</td>${cells}</tr>`;
+    }).join('');
+  }
+
+  function updateScheduleSummary(){
+    if(!scheduleSummary) return;
+    const counts = {A:[0,0,0,0,0,0,0], B:[0,0,0,0,0,0,0], C:[0,0,0,0,0,0,0]};
+    const onDuty = [0,0,0,0,0,0,0];
+    SCHEDULE_DATA.forEach(person => {
+      person.shifts.forEach((val, di) => {
+        if(val === 'A' || val === 'B' || val === 'C'){ counts[val][di]++; onDuty[di]++; }
+      });
+    });
+    const rowHtml = (cls, label, arr) => `<tr class="${cls}"><th>${label}</th>${arr.map(n => `<td>${n}</td>`).join('')}</tr>`;
+    scheduleSummary.innerHTML =
+      rowHtml('sum-a', '早 A 在班', counts.A) +
+      rowHtml('sum-b', '中 B 在班', counts.B) +
+      rowHtml('sum-c', '晚 C 在班', counts.C) +
+      `<tr class="summary-total"><th>在班合計</th>${onDuty.map(n => `<td>${n}</td>`).join('')}</tr>`;
+  }
+
+  /* ---- 02 班表(日曆檢視 + 拖曳) ---- */
+  const calGrid = document.getElementById('cal-grid');
+  const WEEKDAY_LABELS = ['一','二','三','四','五','六','日'];
+  const SHIFT_ORDER = {A:0, B:1, C:2, '行政':3};
+
+  function calFmtDate(dayIndex){
+    const d = new Date(SCHEDULE_WEEK_START.getTime() + dayIndex * 86400000);
+    return String(d.getUTCMonth() + 1).padStart(2,'0') + '/' + String(d.getUTCDate()).padStart(2,'0');
+  }
+
+  function renderCalendar(){
+    if(!calGrid) return;
+    calGrid.innerHTML = WEEKDAY_LABELS.map((label, di) => {
+      const onDuty = [];
+      const off = [];
+      SCHEDULE_DATA.forEach((p, pi) => {
+        const val = p.shifts[di];
+        if(val === '休'){ off.push(p.name); }
+        else { onDuty.push({pi, name: p.name, val}); }
+      });
+      onDuty.sort((a, b) => (SHIFT_ORDER[a.val] ?? 9) - (SHIFT_ORDER[b.val] ?? 9));
+      const cards = onDuty.map(o => `
+        <div class="cal-card" data-shift="${o.val}" data-person="${o.pi}" data-day="${di}" draggable="true">
+          <span class="cs">${escapeHtml(o.val)}</span><span class="cn">${escapeHtml(o.name)}</span>
+        </div>`).join('');
+      const offLine = off.length ? `<div class="cal-day-off">休假:${off.map(escapeHtml).join('、')}</div>` : '';
+      return `
+        <div class="cal-day" data-day="${di}">
+          <div class="cal-day-head"><span class="dname">${label}</span><span class="ddate mono">${calFmtDate(di)}</span></div>
+          <div class="cal-day-body" data-day="${di}">${cards}${offLine}</div>
+        </div>`;
+    }).join('');
+  }
+
+  let calDragData = null;
+  if(calGrid){
+    calGrid.addEventListener('dragstart', function(e){
+      const card = e.target.closest('.cal-card');
+      if(!card) return;
+      calDragData = { person: Number(card.dataset.person), day: Number(card.dataset.day), shift: card.dataset.shift };
+      card.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      try{ e.dataTransfer.setData('text/plain', JSON.stringify(calDragData)); }catch(err){}
+    });
+    calGrid.addEventListener('dragend', function(e){
+      const card = e.target.closest('.cal-card');
+      if(card) card.classList.remove('dragging');
+      calGrid.querySelectorAll('.cal-day.drag-over').forEach(d => d.classList.remove('drag-over'));
+    });
+    calGrid.addEventListener('dragover', function(e){
+      const dayEl = e.target.closest('.cal-day');
+      if(!dayEl) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      calGrid.querySelectorAll('.cal-day.drag-over').forEach(d => { if(d !== dayEl) d.classList.remove('drag-over'); });
+      dayEl.classList.add('drag-over');
+    });
+    calGrid.addEventListener('dragleave', function(e){
+      const dayEl = e.target.closest('.cal-day');
+      if(dayEl && !dayEl.contains(e.relatedTarget)) dayEl.classList.remove('drag-over');
+    });
+    calGrid.addEventListener('drop', function(e){
+      const dayEl = e.target.closest('.cal-day');
+      if(!dayEl || !calDragData) return;
+      e.preventDefault();
+      dayEl.classList.remove('drag-over');
+      const targetDay = Number(dayEl.dataset.day);
+      const { person, day: originDay, shift } = calDragData;
+      calDragData = null;
+      if(targetDay === originDay) return;
+      SCHEDULE_DATA[person].shifts[originDay] = '休';
+      SCHEDULE_DATA[person].shifts[targetDay] = shift;
+      renderCalendar();
+      renderScheduleGrid();
+      updateScheduleSummary();
+    });
+  }
+
+  const calViewToggle = document.getElementById('cal-view-toggle');
+  const viewCalendar = document.getElementById('view-calendar');
+  const viewTable = document.getElementById('view-table');
+  if(calViewToggle){
+    calViewToggle.addEventListener('click', function(e){
+      const btn = e.target.closest('.pill-select');
+      if(!btn) return;
+      calViewToggle.querySelectorAll('.pill-select').forEach(b => b.classList.toggle('active', b === btn));
+      const view = btn.dataset.view;
+      if(viewCalendar) viewCalendar.style.display = view === 'calendar' ? '' : 'none';
+      if(viewTable) viewTable.style.display = view === 'table' ? '' : 'none';
+    });
+  }
+
+  /* ---- 02 發佈班表到公告 ---- */
+  let PUBLISHED_SCHEDULE = null;
+  let PUBLISHED_AT = null;
+  const publishBtn = document.getElementById('publish-btn');
+  const publishNote = document.getElementById('publish-note');
+  const publishNoteText = document.getElementById('publish-note-text');
+
+  function renderPublishedOnAnnounce(){
+    const notPub = document.getElementById('announce-not-published');
+    const pub = document.getElementById('announce-published');
+    if(!notPub || !pub) return;
+    if(!PUBLISHED_SCHEDULE){
+      notPub.style.display = '';
+      pub.style.display = 'none';
+      return;
+    }
+    notPub.style.display = 'none';
+    pub.style.display = 'block';
+    const timeEl = document.getElementById('announce-publish-time');
+    if(timeEl) timeEl.textContent = `發佈時間 ${PUBLISHED_AT} · 第 38 週・09/14–09/20`;
+    const body = document.getElementById('published-grid-body');
+    if(body){
+      body.innerHTML = PUBLISHED_SCHEDULE.map(p => {
+        const cells = p.shifts.map(val => `<td><span class="shift-tag" data-shift="${val}">${SHIFT_LABEL[val] || val}</span></td>`).join('');
+        return `<tr><td>${escapeHtml(p.name)}</td>${cells}</tr>`;
+      }).join('');
+    }
+  }
+
+  if(publishBtn){
+    publishBtn.addEventListener('click', function(){
+      PUBLISHED_SCHEDULE = SCHEDULE_DATA.map(p => ({name: p.name, shifts: p.shifts.slice()}));
+      const now = new Date();
+      PUBLISHED_AT = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+      if(publishNoteText) publishNoteText.textContent = `本週班表(09/14–09/20)已於 ${PUBLISHED_AT} 發佈到公告頁。`;
+      if(publishNote) publishNote.style.display = 'flex';
+      renderPublishedOnAnnounce();
+    });
+  }
+
+  renderScheduleGrid();
+  updateScheduleSummary();
+  renderCalendar();
+  renderPublishedOnAnnounce();
+
+  /* ---- 02 指派班別(表單式,比照換班申請) ---- */
+  let assignLogSeq = 1;
+  const assignLog = [];
+  const assignForm = document.getElementById('assign-form');
+  const assignDateError = document.getElementById('assign-date-error');
+  const assignLogBody = document.querySelector('#assign-log-table tbody');
+  const assignLogEmpty = document.getElementById('assign-log-empty');
+
+  function renderAssignLog(){
+    if(!assignLogBody) return;
+    if(assignLog.length === 0){
+      assignLogEmpty.style.display = '';
+      assignLogBody.innerHTML = '';
+      return;
+    }
+    assignLogEmpty.style.display = 'none';
+    assignLogBody.innerHTML = assignLog.slice().reverse().map(r => `
+      <tr>
+        <td class="mono">${escapeHtml(r.time)}</td>
+        <td>${escapeHtml(r.name)}</td>
+        <td class="mono">${escapeHtml(r.date)}(${r.dayLabel})</td>
+        <td><span class="shift-tag" data-shift="${r.shift}">${SHIFT_LABEL[r.shift] || r.shift}</span></td>
+      </tr>`).join('');
+  }
+
+  if(assignForm){
+    fillSelect('assign-name', SCHEDULE_DATA.map(p => p.name), '選擇人員');
+
+    assignForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('assign-name').value;
+      const dateStr = document.getElementById('assign-date').value;
+      const shift = document.getElementById('assign-shift').value;
+      assignDateError.classList.remove('show');
+      if(!name || !dateStr || !shift) return;
+
+      const picked = new Date(dateStr + 'T00:00:00Z');
+      const dayIndex = Math.round((picked - SCHEDULE_WEEK_START) / 86400000);
+      if(dayIndex < 0 || dayIndex > 6 || Number.isNaN(dayIndex)){
+        assignDateError.classList.add('show');
+        return;
+      }
+
+      const pi = SCHEDULE_DATA.findIndex(p => p.name === name);
+      if(pi === -1) return;
+
+      SCHEDULE_DATA[pi].shifts[dayIndex] = shift;
+      renderScheduleGrid();
+      updateScheduleSummary();
+      renderCalendar();
+
+      const dayLabels = ['一','二','三','四','五','六','日'];
+      const now = new Date();
+      const timeStr = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+      assignLog.push({id: assignLogSeq++, time: timeStr, name, date: dateStr, dayLabel: dayLabels[dayIndex], shift});
+      renderAssignLog();
+
+      document.getElementById('assign-shift').value = '';
+    });
+  }
+
+  /* ---- 02 班表公告管道 pill select ---- */
+  const channelPills = document.getElementById('channel-pills');
+  if(channelPills){
+    channelPills.addEventListener('click', function(e){
+      const btn = e.target.closest('.pill-select');
+      if(!btn) return;
+      channelPills.querySelectorAll('.pill-select').forEach(b => b.classList.toggle('active', b === btn));
+    });
+  }
+
+  /* ---- sidebar tab switching ---- */
+  const navItems = document.querySelectorAll('.nav-item');
+  const navSubItems = document.querySelectorAll('.nav-subitem');
+  const pages = document.querySelectorAll('.page');
+  function goToPage(target, anchorId){
+    navItems.forEach(b => {
+      const group = b.dataset.group ? b.dataset.group.split(',') : [b.dataset.page];
+      b.classList.toggle('active', group.includes(target));
+    });
+    navSubItems.forEach(b => b.classList.toggle('active', b.dataset.page === target));
+    pages.forEach(p => p.classList.toggle('active', p.dataset.page === target));
+    if(anchorId){
+      const el = document.getElementById(anchorId);
+      if(el){ el.scrollIntoView({block:'start', behavior:'instant'}); return; }
+    }
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+  navItems.forEach(btn => btn.addEventListener('click', () => goToPage(btn.dataset.page)));
+  navSubItems.forEach(btn => btn.addEventListener('click', () => goToPage(btn.dataset.page)));
+  document.querySelectorAll('[data-goto]').forEach(el => {
+    el.addEventListener('click', () => goToPage(el.dataset.goto, el.dataset.anchor));
+    el.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); goToPage(el.dataset.goto, el.dataset.anchor); }
+    });
+  });
+
+  const NAMES = ["主管・林","組長・陳","組長・黃","組長・吳","資深・周","資深・鄭","客服・王","客服・李","客服・張","客服・劉","客服・楊","客服・許","客服・蔡","客服・謝","客服・洪"];
+
+  function fillSelect(id, list, placeholder){
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.innerHTML = `<option value="" disabled selected>${placeholder}</option>` + list.map(n=>`<option value="${n}">${n}</option>`).join('');
+  }
+  function escapeHtml(s){
+    return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function statusPill(status){
+    const cls = (status === '待審核' || status === '待確認') ? 'pill-pending'
+      : (status === '已核准' || status === '已結案' || status === '已確認') ? 'pill-approved'
+      : (status === '已駁回') ? 'pill-rejected'
+      : 'pill-pending';
+    return `<span class="status-pill ${cls}">${status}</span>`;
+  }
+
+  fillSelect('swap-name', NAMES, '選擇申請人');
+  fillSelect('swap-target', NAMES, '選擇換班對象');
+  fillSelect('issue-reporter', NAMES, '選擇回報人');
+
+  /* ---- 02 換班申請 ---- */
+  let swapSeq = 1;
+  const swapRequests = [];
+  const swapForm = document.getElementById('swap-form');
+  const swapTableBody = document.querySelector('#swap-table tbody');
+  const swapEmpty = document.getElementById('swap-empty');
+
+  function renderSwaps(){
+    if(swapRequests.length === 0){
+      swapEmpty.style.display = '';
+      swapTableBody.innerHTML = '';
+      return;
+    }
+    swapEmpty.style.display = 'none';
+    swapTableBody.innerHTML = swapRequests.slice().reverse().map(r => `
+      <tr>
+        <td class="mono">SW-${String(r.id).padStart(3,'0')}</td>
+        <td>${escapeHtml(r.name)}</td>
+        <td class="mono">${escapeHtml(r.date)}</td>
+        <td>${escapeHtml(r.target)}</td>
+        <td>${escapeHtml(r.reason) || '—'}</td>
+        <td>${statusPill(r.status)}</td>
+        <td>${r.status === '待審核'
+            ? `<button class="btn btn-approve" data-id="${r.id}" data-action="approve" type="button">核准</button><button class="btn btn-reject" data-id="${r.id}" data-action="reject" type="button">駁回</button>`
+            : `<span class="mono" style="color:var(--ink-soft); font-size:12px;">已處理</span>`}</td>
+      </tr>`).join('');
+  }
+
+  if(swapForm){
+    swapForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('swap-name').value;
+      const date = document.getElementById('swap-date').value;
+      const target = document.getElementById('swap-target').value;
+      const reason = document.getElementById('swap-reason').value;
+      if(!name || !date || !target) return;
+      swapRequests.push({id: swapSeq++, name, date, target, reason, status:'待審核'});
+      renderSwaps();
+      swapForm.reset();
+      fillSelect('swap-name', NAMES, '選擇申請人');
+      fillSelect('swap-target', NAMES, '選擇換班對象');
+    });
+    swapTableBody.addEventListener('click', function(e){
+      const btn = e.target.closest('button[data-action]');
+      if(!btn) return;
+      const req = swapRequests.find(r => r.id === Number(btn.dataset.id));
+      if(!req) return;
+      req.status = btn.dataset.action === 'approve' ? '已核准' : '已駁回';
+      renderSwaps();
+    });
+  }
+  renderSwaps();
+
+  /* ---- 03 問題回報 ---- */
+  let issueSeq = 1;
+  const issues = [];
+  const issueForm = document.getElementById('issue-form');
+  const issueTableBody = document.querySelector('#issue-table tbody');
+  const issueEmpty = document.getElementById('issue-empty');
+  const severityBadge = { P1:'badge-p1', P2:'badge-p2', P3:'badge-p3', P4:'badge-p4' };
+  const severityLabel = { P1:'P1 緊急', P2:'P2 高', P3:'P3 中', P4:'P4 低' };
+
+  function renderIssues(){
+    if(issues.length === 0){
+      issueEmpty.style.display = '';
+      issueTableBody.innerHTML = '';
+      return;
+    }
+    issueEmpty.style.display = 'none';
+    issueTableBody.innerHTML = issues.slice().reverse().map(t => `
+      <tr>
+        <td class="mono">TCK-${String(t.id).padStart(4,'0')}</td>
+        <td class="mono">${t.time}</td>
+        <td>${escapeHtml(t.reporter)}</td>
+        <td>${escapeHtml(t.type)}</td>
+        <td><span class="badge ${severityBadge[t.severity]}">${severityLabel[t.severity]}</span></td>
+        <td style="max-width:220px;">${escapeHtml(t.desc)}</td>
+        <td>${statusPill(t.status)}</td>
+        <td>${t.status === '處理中'
+            ? `<button class="btn btn-approve" data-id="${t.id}" data-action="close" type="button">標記結案</button>`
+            : `<span class="mono" style="color:var(--ink-soft); font-size:12px;">${t.closedTime||''}</span>`}</td>
+      </tr>`).join('');
+  }
+
+  if(issueForm){
+    issueForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const reporter = document.getElementById('issue-reporter').value;
+      const type = document.getElementById('issue-type').value;
+      const severity = document.getElementById('issue-severity').value;
+      const desc = document.getElementById('issue-desc').value;
+      if(!reporter || !type || !severity || !desc) return;
+      const time = new Date().toTimeString().slice(0,5);
+      issues.push({id: issueSeq++, reporter, type, severity, desc, status:'處理中', time});
+      renderIssues();
+      issueForm.reset();
+      fillSelect('issue-reporter', NAMES, '選擇回報人');
+    });
+    issueTableBody.addEventListener('click', function(e){
+      const btn = e.target.closest('button[data-action="close"]');
+      if(!btn) return;
+      const t = issues.find(x => x.id === Number(btn.dataset.id));
+      if(!t) return;
+      t.status = '已結案';
+      t.closedTime = new Date().toTimeString().slice(0,5) + ' 結案';
+      renderIssues();
+    });
+  }
+  renderIssues();
+
+  /* ---- 04 客服交接說明 ---- */
+  fillSelect('handover-from', NAMES, '選擇交班人');
+  fillSelect('handover-to', NAMES, '選擇接班人');
+
+  let handoverSeq = 1;
+  const handovers = [];
+  const handoverForm = document.getElementById('handover-form');
+  const handoverTableBody = document.querySelector('#handover-table tbody');
+  const handoverEmpty = document.getElementById('handover-empty');
+  const HANDOVER_LEVELS = {
+    general:   { label:'一般',   badge:'badge-p3' },
+    attention: { label:'需留意', badge:'badge-p2' },
+    urgent:    { label:'緊急',   badge:'badge-p1' }
+  };
+  const HANDOVER_SHIFT_LABEL = { A:'早班 A', B:'中班 B', C:'晚班 C', '行政':'行政' };
+
+  const handoverTabToggle = document.getElementById('handover-tab-toggle');
+  const handoverTabSummary = document.getElementById('handover-tab-summary');
+  const handoverTabTodo = document.getElementById('handover-tab-todo');
+  if(handoverTabToggle){
+    handoverTabToggle.addEventListener('click', function(e){
+      const btn = e.target.closest('.pill-select');
+      if(!btn) return;
+      handoverTabToggle.querySelectorAll('.pill-select').forEach(b => b.classList.toggle('active', b === btn));
+      const tab = btn.dataset.tab;
+      if(handoverTabSummary) handoverTabSummary.style.display = tab === 'summary' ? '' : 'none';
+      if(handoverTabTodo) handoverTabTodo.style.display = tab === 'todo' ? '' : 'none';
+    });
+  }
+
+  function renderHandovers(){
+    if(!handoverTableBody) return;
+    if(handovers.length === 0){
+      handoverEmpty.style.display = '';
+      handoverTableBody.innerHTML = '';
+      return;
+    }
+    handoverEmpty.style.display = 'none';
+    handoverTableBody.innerHTML = handovers.slice().reverse().map(h => {
+      const lvl = HANDOVER_LEVELS[h.level] || HANDOVER_LEVELS.general;
+      return `
+      <tr>
+        <td class="mono">${escapeHtml(h.time)}</td>
+        <td>${escapeHtml(HANDOVER_SHIFT_LABEL[h.shift] || h.shift)}</td>
+        <td>${escapeHtml(h.from)} → ${escapeHtml(h.to)}</td>
+        <td style="max-width:200px;">${escapeHtml(h.summary)}</td>
+        <td style="max-width:160px;">${escapeHtml(h.todo) || '—'}</td>
+        <td><span class="badge ${lvl.badge}">${lvl.label}</span></td>
+        <td>${statusPill(h.status)}</td>
+        <td>${h.status === '待確認'
+            ? `<button class="btn btn-approve" data-id="${h.id}" data-action="ack" type="button">確認交接</button>`
+            : `<span class="mono" style="color:var(--ink-soft); font-size:12px;">${h.ackTime || ''}</span>`}</td>
+      </tr>`;
+    }).join('');
+  }
+
+  if(handoverForm){
+    handoverForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const from = document.getElementById('handover-from').value;
+      const shift = document.getElementById('handover-shift').value;
+      const to = document.getElementById('handover-to').value;
+      const level = document.getElementById('handover-level').value;
+      const summary = document.getElementById('handover-summary').value;
+      const todo = document.getElementById('handover-todo').value;
+      if(!from || !shift || !to || !level || !summary) return;
+      const time = new Date().toTimeString().slice(0,5);
+      handovers.push({id: handoverSeq++, time, from, shift, to, level, summary, todo, status:'待確認'});
+      renderHandovers();
+      handoverForm.reset();
+      fillSelect('handover-from', NAMES, '選擇交班人');
+      fillSelect('handover-to', NAMES, '選擇接班人');
+      if(handoverTabToggle){
+        handoverTabToggle.querySelectorAll('.pill-select').forEach(b => b.classList.toggle('active', b.dataset.tab === 'summary'));
+        if(handoverTabSummary) handoverTabSummary.style.display = '';
+        if(handoverTabTodo) handoverTabTodo.style.display = 'none';
+      }
+    });
+    handoverTableBody.addEventListener('click', function(e){
+      const btn = e.target.closest('button[data-action="ack"]');
+      if(!btn) return;
+      const h = handovers.find(x => x.id === Number(btn.dataset.id));
+      if(!h) return;
+      h.status = '已確認';
+      h.ackTime = new Date().toTimeString().slice(0,5) + ' 已確認';
+      renderHandovers();
+    });
+  }
+  renderHandovers();
+})();
+</script>
+</body>
+</html>

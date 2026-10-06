@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto Demo 客服作業手冊</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#F5F2EA;
+    --surface:#FFFFFF;
+    --surface-2:#ECE6D6;
+    --ink:#182338;
+    --ink-muted:#5C6577;
+    --line:#DDD5BE;
+    --line-strong:#C7BC9C;
+    --brand:#0B6D74;
+    --brand-ink:#FFFFFF;
+    --brand-tint:#E3F1EF;
+    --sev-crit:#A6291F;
+    --sev-crit-tint:#F7E4E1;
+    --sev-mid:#96600A;
+    --sev-mid-tint:#F6EAD4;
+    --sev-low:#276B44;
+    --sev-low-tint:#E2EEE4;
+    --sev-info:#3A5578;
+    --sev-info-tint:#E7ECF3;
+    --shadow: 0 1px 2px rgba(24,35,56,.06), 0 6px 20px -8px rgba(24,35,56,.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10161F;
+      --surface:#171F2B;
+      --surface-2:#1D2733;
+      --ink:#E8EAEE;
+      --ink-muted:#98A2B3;
+      --line:#2B3644;
+      --line-strong:#3A4756;
+      --brand:#3FBFC4;
+      --brand-ink:#08161A;
+      --brand-tint:#123236;
+      --sev-crit:#E88079;
+      --sev-crit-tint:#3A2323;
+      --sev-mid:#E0AD5C;
+      --sev-mid-tint:#3A2F1C;
+      --sev-low:#7FC79A;
+      --sev-low-tint:#1E3327;
+      --sev-info:#9FB4D6;
+      --sev-info-tint:#20293A;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 28px -10px rgba(0,0,0,.55);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10161F;
+    --surface:#171F2B;
+    --surface-2:#1D2733;
+    --ink:#E8EAEE;
+    --ink-muted:#98A2B3;
+    --line:#2B3644;
+    --line-strong:#3A4756;
+    --brand:#3FBFC4;
+    --brand-ink:#08161A;
+    --brand-tint:#123236;
+    --sev-crit:#E88079;
+    --sev-crit-tint:#3A2323;
+    --sev-mid:#E0AD5C;
+    --sev-mid-tint:#3A2F1C;
+    --sev-low:#7FC79A;
+    --sev-low-tint:#1E3327;
+    --sev-info:#9FB4D6;
+    --sev-info-tint:#20293A;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 28px -10px rgba(0,0,0,.55);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:40px 20px 80px;}
+
+  .masthead{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:24px;
+    padding-bottom:22px;
+    border-bottom:2px solid var(--ink);
+    margin-bottom:22px;
+    flex-wrap:wrap;
+  }
+  .masthead-title{
+    font-family:'Noto Serif TC',serif;
+    font-weight:700;
+    font-size:clamp(26px,4vw,34px);
+    letter-spacing:.01em;
+    text-wrap:balance;
+    margin:0 0 6px;
+  }
+  .masthead-sub{
+    margin:0;
+    color:var(--ink-muted);
+    font-size:14.5px;
+  }
+  .masthead-mono{
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-size:12px;
+    color:var(--ink-muted);
+    text-align:right;
+    line-height:1.7;
+    white-space:nowrap;
+  }
+  .masthead-mono b{color:var(--ink);font-weight:600;}
+
+  .notice{
+    display:flex;
+    gap:12px;
+    background:var(--sev-mid-tint);
+    border-left:3px solid var(--sev-mid);
+    border-radius:4px;
+    padding:14px 16px;
+    margin-bottom:28px;
+    font-size:13.5px;
+    line-height:1.7;
+    color:var(--ink);
+  }
+  .notice .mark{
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-weight:700;
+    color:var(--sev-mid);
+    flex:none;
+  }
+  .notice b{color:var(--sev-mid);}
+
+  .toolbar{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+  }
+  .tabs{
+    display:flex;
+    gap:4px;
+    background:var(--surface-2);
+    padding:4px;
+    border-radius:9px;
+    border:1px solid var(--line);
+  }
+  .tab-btn{
+    font-family:'Noto Serif TC',serif;
+    font-weight:600;
+    font-size:14.5px;
+    background:transparent;
+    border:none;
+    color:var(--ink-muted);
+    padding:8px 16px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  .tab-btn .count{
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-weight:500;
+    font-size:11.5px;
+    opacity:.75;
+    margin-left:4px;
+  }
+  .tab-btn[aria-selected="true"]{
+    background:var(--surface);
+    color:var(--brand);
+    box-shadow:var(--shadow);
+  }
+  .tab-btn:focus-visible{outline:2px solid var(--brand);outline-offset:2px;}
+
+  .search{
+    flex:1;
+    min-width:180px;
+    position:relative;
+  }
+  .search input{
+    width:100%;
+    font-family:'Noto Sans TC',sans-serif;
+    font-size:14px;
+    padding:9px 12px 9px 34px;
+    border-radius:8px;
+    border:1px solid var(--line-strong);
+    background:var(--surface);
+    color:var(--ink);
+  }
+  .search input:focus-visible{outline:2px solid var(--brand);outline-offset:1px;}
+  .search svg{
+    position:absolute;
+    left:11px;top:50%;
+    transform:translateY(-50%);
+    stroke:var(--ink-muted);
+    pointer-events:none;
+  }
+
+  .group-label{
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-size:11.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-muted);
+    margin:26px 2px 10px;
+  }
+
+  .list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .item{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .item-head{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 16px;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+    text-align:left;
+    color:var(--ink);
+  }
+  .item-head:focus-visible{outline:2px solid var(--brand);outline-offset:-2px;}
+  .idx{
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-size:13px;
+    color:var(--brand);
+    background:var(--brand-tint);
+    border-radius:5px;
+    padding:3px 7px;
+    flex:none;
+    min-width:30px;
+    text-align:center;
+  }
+  .q-text{
+    flex:1;
+    font-size:15.5px;
+    font-weight:500;
+    line-height:1.5;
+  }
+  .chip{
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-size:11px;
+    font-weight:600;
+    padding:3px 9px;
+    border-radius:999px;
+    flex:none;
+    white-space:nowrap;
+  }
+  .chip.crit{background:var(--sev-crit-tint);color:var(--sev-crit);}
+  .chip.mid{background:var(--sev-mid-tint);color:var(--sev-mid);}
+  .chip.low{background:var(--sev-low-tint);color:var(--sev-low);}
+  .chip.info{background:var(--sev-info-tint);color:var(--sev-info);}
+
+  .chev{
+    flex:none;
+    width:18px;height:18px;
+    stroke:var(--ink-muted);
+    transition:transform .2s ease;
+  }
+  .item[data-open="true"] .chev{transform:rotate(180deg);}
+
+  .item-body{
+    display:grid;
+    grid-template-rows:0fr;
+    transition:grid-template-rows .22s ease;
+  }
+  .item[data-open="true"] .item-body{grid-template-rows:1fr;}
+  .item-body-inner{overflow:hidden;}
+  .item-content{
+    padding:2px 16px 18px 60px;
+    border-top:1px solid var(--line);
+    padding-top:14px;
+  }
+  .steps{
+    list-style:none;
+    margin:0 0 14px;
+    padding:0;
+    counter-reset:step;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+  }
+  .steps li{
+    counter-increment:step;
+    position:relative;
+    padding-left:26px;
+    font-size:14px;
+    line-height:1.7;
+    color:var(--ink);
+  }
+  .steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;top:1px;
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    font-size:11.5px;
+    font-weight:600;
+    color:var(--brand);
+    background:var(--brand-tint);
+    width:18px;height:18px;
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .plain{font-size:14px;line-height:1.75;color:var(--ink);margin:0 0 12px;}
+  .sublist{margin:0 0 12px;padding-left:20px;font-size:14px;line-height:1.8;color:var(--ink);}
+  .sublist li{margin-bottom:4px;}
+  .callout{
+    display:flex;
+    gap:9px;
+    background:var(--sev-crit-tint);
+    border-left:3px solid var(--sev-crit);
+    border-radius:4px;
+    padding:10px 12px;
+    font-size:13px;
+    line-height:1.7;
+    color:var(--ink);
+    margin:0 0 14px;
+  }
+  .callout b{color:var(--sev-crit);}
+
+  .meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 22px;
+    padding-top:10px;
+    border-top:1px dashed var(--line-strong);
+  }
+  .meta-pair{font-size:12.5px;line-height:1.6;}
+  .meta-pair .k{
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+    color:var(--ink-muted);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    font-size:10.5px;
+    display:block;
+    margin-bottom:2px;
+  }
+  .meta-pair .v{color:var(--ink);font-weight:500;}
+  .meta-pair .v.warn{color:var(--sev-mid);}
+  .meta-pair .v.ok{color:var(--sev-low);}
+
+  .empty{
+    text-align:center;
+    color:var(--ink-muted);
+    font-size:14px;
+    padding:40px 0;
+  }
+
+  footer{
+    margin-top:36px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+    font-size:12px;
+    color:var(--ink-muted);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+    font-family:'IBM Plex Mono',ui-monospace,monospace;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .item-body,.chev{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div>
+      <p class="masthead-title">Crypto Demo 客服作業手冊</p>
+      <p class="masthead-sub">加密貨幣簽帳卡服務 · 客戶流程與客服 SOP 速查表</p>
+    </div>
+    <div class="masthead-mono">
+      文件版本 <b>v1.1（含實測驗證）</b><br>
+      更新日期 <b>2026-09-09</b><br>
+      適用單位 <b>客服／營運團隊</b>
+    </div>
+  </div>
+
+  <!-- <div class="notice"> -->
+    <!-- <span class="mark">!</span> -->
+    <!-- <span>本手冊內容係參考同類加密貨幣簽帳卡產品（如 RedotPay）之公開作業模式整理而成，作為 <b>Crypto Demo Trading</b> 內部 SOP 草稿。標示「⚠ 待確認」者仍為參考值或範例，須另行確認；標示「✓ 已實測驗證」者，則是 2026-09-09 以測試帳號登入 h5-prod3.Crypto Demo.cc 實際操作後記錄的真實畫面內容，可信度較高，但仍建議正式發布前再次覆核（介面可能隨版本更新調整）。</span> -->
+  <!-- </div> -->
+
+  <div class="toolbar">
+    <div class="tabs" role="tablist" aria-label="SOP 分類">
+      <button class="tab-btn" role="tab" aria-selected="true" data-group="A">客戶操作指南<span class="count">05</span></button>
+      <button class="tab-btn" role="tab" aria-selected="false" data-group="B">客服處理 SOP<span class="count">12</span></button>
+	 <button class="tab-btn" role="tab" aria-selected="false" data-group="B"
+        onclick="window.location.href='call-center.html'">
+	  客服回報<span class="count">Call Center</span>
+	</button>
+    </div>
+    <div class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input id="searchInput" type="text" placeholder="搜尋問題關鍵字，例如：鏈別、退款、KYC…" autocomplete="off">
+    </div>
+  </div>
+
+  <p class="group-label" id="groupLabel">A · 客戶操作指南（5 題）</p>
+  <div class="list" id="list"></div>
+  <p class="empty" id="emptyMsg" hidden>找不到符合的項目，換個關鍵字試試。</p>
+
+  <footer>
+    <span>Crypto Demo Trading · Internal Reference</span>
+    <span>草稿僅供內部作業參考，非對客戶之正式承諾</span>
+  </footer>
+</div>
+
+<script>
+const DATA = [
+  // ---------- GROUP A ----------
+  {
+    group:'A', q:'客戶如何完成開戶與身分驗證（KYC）？',
+    steps:[
+      '下載 App／前往官網註冊：以 Email 或手機號碼建立帳號，並確認申請地區未列於服務限制名單',
+      '填寫個人資料：姓名、出生日期、居住地址須與證件完全一致',
+      '上傳身分證件：建議優先引導客戶使用護照，降低中英文姓名拼寫不一致造成後續交易被擋下的風險',
+      '自拍比對（Liveness Check）：光線充足、避免配戴口罩或墨鏡',
+      '送出審核並等待結果：客服應主動告知預估等待時間，並提供查詢進度的方式',
+      '收到審核結果通知：通過即開通錢包與消費功能；遭退回須清楚說明原因與補件方式',
+    ],
+    meta:[
+      ['建議回覆時效','⚠ 待確認官方 SLA（同業常見約 1 週）','warn'],
+      ['對應自助資源','Opening Your Account'],
+    ],
+  },
+  {
+    group:'A', q:'客戶如何儲值到 Crypto Demo 錢包？',
+    steps:[
+      '進入「儲值」頁面：「選擇幣別」下拉選單目前僅有一個選項「USDT-TRC20」，尚未看到 BTC／ETH／USDC 或其他鏈別',
+      '頁面直接顯示專屬儲值地址與 QR Code：地址為長期專屬、可重複使用，若異動會以站內公告或 Email 通知',
+      'App 內原文提醒：「僅限儲值 USDT-TRC20，其他資產或使用其他網路儲值將無法找回」',
+      '到帳時間：App 內公告約 5 分鐘至 12 小時（需等待全網節點確認）',
+    ],
+    callout:'實測結果：目前僅開放 USDT-TRC20 單一管道，並未支援多鏈。若客戶詢問可否用 BTC／ETH／其他鏈別儲值，應明確告知「目前不支援」，切勿引導嘗試，以免誤用地址造成資金無法找回。日後若開放更多幣別／鏈別，須同步更新本節。',
+    meta:[
+      ['實測結果','✓ 已於 2026-09-09 登入驗證（僅 USDT-TRC20）','ok'],
+      ['到帳時間','5 分鐘至 12 小時（App 內公告）','ok'],
+      ['對應自助資源','Deposit and Withdrawals'],
+    ],
+  },
+  {
+    group:'A', q:'如何申請與啟用卡片（虛擬卡／實體卡）？',
+    steps:[
+      '進入「卡片」頁面選擇卡片類型：目前僅顯示「常規卡」一種——Visa、USD 計價、虛擬卡即時開通、免年費、全球商家通用',
+      '確認申請：頁面明確標示開卡費用「15 USDT」，由錢包餘額扣款',
+      '（若後續開放實體卡）等待寄送：客服應主動同步物流進度，避免客戶重複追問',
+      '啟用卡片：可於 App 內進行卡片管理，如凍結／解凍等操作（須實際持卡後才能逐項驗證）',
+    ],
+    callout:'實測結果：目前僅看到「常規卡」一種虛擬卡選項，未看到實體卡申請入口。若客戶詢問實體卡，應先確認當下是否已開放，避免承諾尚不存在的服務。',
+    meta:[
+      ['開卡費用','✓ 已於 2026-09-09 實測：15 USDT／常規卡','ok'],
+      ['卡片類型','目前僅「常規卡」（虛擬卡）；實體卡是否已開放待確認','warn'],
+      ['對應自助資源','Managing Your Card'],
+    ],
+  },
+  {
+    group:'A', q:'消費與提領的手續費怎麼計算？',
+    steps:null,
+    plain:'費用結構通常包含以下幾個組成部分（參考同業公開費率整理，正式數字須以 Crypto Demo Trading 官方費率頁面為準）：',
+    sublist:[
+      '非原生貨幣交易手續費',
+      '一般處理費',
+      'ATM 提款另計手續費',
+      '兩種卡別通常無年費',
+    ],
+    plain2:'客服回覆扣款爭議前，務必核對官方最新費率頁面，避免引用過期資訊造成金額爭議。',
+    meta:[
+      ['查詢管道','官方費率頁面'],
+      ['常見爭議','手續費疊加計算不透明'],
+    ],
+  },
+  {
+    group:'A', q:'有哪些客戶自助資源可以查詢？',
+    steps:null,
+    plain:'建議依主題整理自助知識庫分類，並在標準回覆中附上對應連結，減少客戶重複詢問基礎問題：',
+    sublist:[
+      '開戶與驗證 → Opening Your Account',
+      '卡片設定、費用與使用 → Managing Your Card',
+      '入金與出金 → Deposit and Withdrawals',
+      '刷卡紀錄、ATM、退款 → Managing Your Transactions',
+      '帳戶安全與詐騙防範 → Safety Guide',
+    ],
+    meta:[
+      ['知識庫網址','help.Crypto Demotrading.com（範例，請替換為實際網址）'],
+    ],
+  },
+
+  // ---------- GROUP B ----------
+  {
+    group:'B', sev:'info', q:'官方支援管道有哪些？',
+    steps:null,
+    plain:'App 內「聯繫客服」頁面實際提供三種管道：',
+    sublist:[
+      'WhatsApp：另開 WhatsApp App 與客服對話（點選後會先跳出「即將離開 App」確認彈窗）',
+      'Telegram：另開 Telegram App 與客服對話（同樣先跳出離開確認彈窗）',
+      '線上客服（App 內標示「推薦」）：免離開 App，直接在 App 內開啟即時聊天視窗',
+    ],
+    plain2:'',
+    meta:[
+      ['實測結果','✓ 已於 2026-09-09 登入驗證：WhatsApp／Telegram／App 內線上客服','ok'],
+      ['各管道回覆時效','⚠ 待確認（App 內未提供具體數字）','warn'],
+    ],
+  },
+  {
+    group:'B', sev:'mid', q:'KYC 審核延遲或被拒，該怎麼處理？',
+    steps:[
+      '查詢後台審核狀態與退回原因',
+      '依原因引導補件（證件模糊、姓名不符、地址不符等）',
+      '逾承諾時效仍未結案者，主動回報客戶並升級複審',
+    ],
+    meta:[
+      ['需向客戶蒐集','帳號 Email／手機、送審日期、證件類型'],
+      ['建議時效','⚠ 待確認官方目標時效；逾時轉二線複審','warn'],
+    ],
+  },
+  {
+    group:'B', sev:'crit', q:'客戶儲值鏈別選錯、資金疑似遺失，該怎麼處理？',
+    steps:[
+      '立即安撫客戶，並收集交易哈希（TxID）與轉出／轉入地址',
+      '查證該筆交易於鏈上的實際狀態',
+      '依內部資產找回流程評估是否可協助（多數情況跨鏈資產無法找回，須誠實告知客戶）',
+      '留存紀錄，作為後續防止再犯的客戶教育素材',
+    ],
+    meta:[
+      ['需向客戶蒐集','TxID、轉出錢包地址、選用鏈別、金額'],
+      ['建議時效','24 小時內回覆初步查證結果','warn'],
+      ['⚠ 待確認','是否提供跨鏈資產協尋／找回服務','warn'],
+    ],
+  },
+  {
+    group:'B', sev:'low', q:'客戶反映「無法提領」，可能是什麼原因？',
+    steps:[
+      '發現：帳號首次點擊「提領」會先跳出「設定交易密碼」彈窗，要求先設定 6 位數交易密碼才能繼續操作',
+      '請客戶確認是否已完成交易密碼設定；若尚未設定，引導其於 App 內自行完成設定流程',
+      '交易密碼與登入密碼是不同機制，客服不應代客戶設定或索取交易密碼',
+      '確認已設定交易密碼但仍無法提領，才依下一項「提款／退款延遲」繼續排查（餘額、驗證等級、單日限額等）',
+    ],
+    meta:[
+      ['實測結果','✓ 已於 2026-09-09 登入驗證','ok'],
+      ['常見誤判','客戶常誤以為帳號被鎖定，實際上多半只是尚未設定交易密碼'],
+    ],
+  },
+  {
+    group:'B', sev:'crit', q:'提款／退款延遲，該怎麼處理？',
+    steps:[
+      '查詢提款單狀態（銀行處理中／平台處理中／已完成）',
+      '若已逾承諾時效，主動說明原因並給予明確後續時間',
+      '逾 7 個工作天未結案者，升級財務／出款團隊處理',
+    ],
+    meta:[
+      ['需向客戶蒐集','提款單號、提款方式、申請日期'],
+      ['建議時效','⚠ 待確認官方承諾天數（同業常見約 3–7 個工作天）；逾時升級','warn'],
+    ],
+  },
+  {
+    group:'B', sev:'mid', q:'手續費／扣款金額有爭議，該怎麼處理？',
+    steps:[
+      '調閱該筆交易明細（原始金額、匯率、手續費拆分）',
+      '逐項向客戶說明扣款組成',
+      '確認為系統誤算者，走退款流程；屬正常費率者，清楚解釋並附上官方費率頁面',
+    ],
+    meta:[
+      ['需向客戶蒐集','交易時間、交易金額、商戶名稱'],
+      ['建議時效','3 個工作天內回覆說明'],
+    ],
+  },
+  {
+    group:'B', sev:'low', q:'實體卡寄送延遲，該怎麼處理？',
+    steps:[
+      '查詢物流追蹤單號與最新狀態',
+      '超過官方預估寄送天數者，主動聯繫物流商',
+      '確認遺失或損壞者，評估是否補發',
+    ],
+    meta:[
+      ['需向客戶蒐集','收件地址、下單日期'],
+      ['建議時效','⚠ 待確認官方預估寄送天數','warn'],
+    ],
+  },
+  {
+    group:'B', sev:'mid', q:'系統維護後功能未恢復，該怎麼處理？',
+    steps:[
+      '確認是否為已知系統性問題（對照維運公告）',
+      '屬系統性問題者，統一對外發布狀態更新，避免逐一由客服各自解釋',
+      '非系統性問題者，個案排查帳號設定',
+    ],
+    meta:[
+      ['需向客戶蒐集','帳號 Email、功能名稱、發生時間'],
+      ['建議時效','系統性問題：2 小時內同步狀態；個案：1 個工作天'],
+    ],
+  },
+  {
+    group:'B', sev:'low', q:'客戶因地區／合規限制無法使用，該怎麼處理？',
+    steps:[
+      '核對客戶所在地是否為服務限制地區或受制裁名單',
+      '屬限制地區者，禮貌說明目前無法提供服務，不揣測或提供繞過方式',
+      '疑似規避地理限制（如 VPN）之異常帳號，轉風控／合規審查',
+    ],
+    meta:[
+      ['需向客戶蒐集','帳號 Email、目前所在地區'],
+      ['建議時效','1 個工作天內回覆'],
+    ],
+  },
+  {
+    group:'B', sev:'info', q:'客訴升級的三層流程是什麼？',
+    steps:null,
+    plain:'依問題複雜度分層處理，避免所有案件都堆積在第一線：',
+    sublist:[
+      'Tier 1 一線客服：處理常見、已有標準答案之問題，時效內可結案者直接回覆客戶',
+      'Tier 2 二線／專案處理：涉及資金查證或需跨部門（財務、風控）協助者，受理後立即轉派並同步預估時間給客戶',
+      'Tier 3 管理層／合規：疑似詐騙、洗錢風險、媒體或社群負面擴散、法規申訴等，須即時通報主管與合規窗口',
+      '跨案例一致性檢查：同一主題若一週內收到 3 件以上相同疑問或抱怨，應建立或更新標準回覆範本',
+    ],
+    meta:null,
+  },
+  {
+    group:'B', sev:'info', q:'客服溝通品質要注意哪些原則？',
+    steps:null,
+    plain:null,
+    sublist:[
+      '避免制式化罐頭回覆：先複述客戶問題重點，展現已理解個案情境，再提供解法',
+      '處理前先核對歷史工單紀錄，避免對同一客戶給出前後矛盾的說法',
+      '涉及金額或時效的承諾，一律以官方最新公告或內部核准口徑為準，不可個人臆測',
+      '每次結案後於工單註記處理結果與依據，作為後續品質稽核與知識庫更新的素材',
+    ],
+    meta:null,
+  },
+  {
+    group:'B', sev:'info', q:'品質監控（QA）要做哪些事？',
+    steps:null,
+    plain:null,
+    sublist:[
+      '每月抽查一定比例工單，檢核回覆內容是否符合本 SOP 口徑與時效',
+      '追蹤各問題類型的 SLA 達成率與客戶滿意度（如有 CSAT／NPS 機制）',
+      '每月彙整 Top 5 客訴主題與根因，回饋產品／技術團隊',
+      '重大資安或資金遺失事件，應建立獨立事後檢討（Postmortem）紀錄',
+    ],
+    meta:null,
+  },
+];
+
+const SEV_LABEL = { crit:'高', mid:'中', low:'低', info:'資訊' };
+
+const listEl = document.getElementById('list');
+const groupLabelEl = document.getElementById('groupLabel');
+const emptyMsg = document.getElementById('emptyMsg');
+const searchInput = document.getElementById('searchInput');
+const tabBtns = document.querySelectorAll('.tab-btn');
+
+let activeGroup = 'A';
+let openIndex = -1; // index within currently rendered filtered list
+
+function render(){
+  const query = searchInput.value.trim().toLowerCase();
+  const items = DATA
+    .map((d, i) => ({...d, _i:i}))
+    .filter(d => d.group === activeGroup)
+    .filter(d => !query || d.q.toLowerCase().includes(query) ||
+      (d.steps || []).some(s => s.toLowerCase().includes(query)) ||
+      (d.sublist || []).some(s => s.toLowerCase().includes(query)));
+
+  groupLabelEl.textContent = activeGroup === 'A'
+    ? `A · 客戶操作指南（${items.length} 題）`
+    : `B · 客服處理 SOP（${items.length} 題）`;
+
+  listEl.innerHTML = '';
+  emptyMsg.hidden = items.length !== 0;
+
+  items.forEach((d, renderIdx) => {
+    const item = document.createElement('div');
+    item.className = 'item';
+    item.dataset.open = 'false';
+
+    const head = document.createElement('button');
+    head.className = 'item-head';
+    head.setAttribute('aria-expanded', 'false');
+    head.innerHTML = `
+      <span class="idx">${String(renderIdx+1).padStart(2,'0')}</span>
+      <span class="q-text">${d.q}</span>
+      ${d.sev ? `<span class="chip ${d.sev}">${SEV_LABEL[d.sev]}</span>` : ''}
+      <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    `;
+
+    const body = document.createElement('div');
+    body.className = 'item-body';
+
+    let inner = '<div class="item-body-inner"><div class="item-content">';
+    if (d.callout) {
+      inner += `<div class="callout"><span>⚠</span><span>${d.callout}</span></div>`;
+    }
+    if (d.plain) {
+      inner += `<p class="plain">${d.plain}</p>`;
+    }
+    if (d.steps) {
+      inner += '<ol class="steps">' + d.steps.map(s => `<li>${s}</li>`).join('') + '</ol>';
+    }
+    if (d.sublist) {
+      inner += '<ul class="sublist">' + d.sublist.map(s => `<li>${s}</li>`).join('') + '</ul>';
+    }
+    if (d.plain2) {
+      inner += `<p class="plain" style="margin-bottom:0;">${d.plain2}</p>`;
+    }
+    if (d.meta) {
+      inner += '<div class="meta">' + d.meta.map(([k,v,cls]) =>
+        `<div class="meta-pair"><span class="k">${k}</span><span class="v${cls?' '+cls:''}">${v}</span></div>`
+      ).join('') + '</div>';
+    }
+    inner += '</div></div>';
+    body.innerHTML = inner;
+
+    head.addEventListener('click', () => {
+      const willOpen = item.dataset.open !== 'true';
+      document.querySelectorAll('.item[data-open="true"]').forEach(el => {
+        el.dataset.open = 'false';
+        el.querySelector('.item-head').setAttribute('aria-expanded','false');
+      });
+      if (willOpen) {
+        item.dataset.open = 'true';
+        head.setAttribute('aria-expanded','true');
+      }
+    });
+
+    item.appendChild(head);
+    item.appendChild(body);
+    listEl.appendChild(item);
+  });
+}
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => b.setAttribute('aria-selected', b === btn ? 'true' : 'false'));
+    activeGroup = btn.dataset.group;
+    render();
+  });
+});
+
+searchInput.addEventListener('input', render);
+
+render();
+</script>
+</body>
+</html>
