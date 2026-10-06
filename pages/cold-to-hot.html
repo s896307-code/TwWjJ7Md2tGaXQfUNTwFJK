@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>冷轉熱訂單</title>
+<link rel="stylesheet" href="../assets/common.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card search">
+        <div class="field">
+            <label>幣種：</label>
+            <select>
+                <option>全部</option>
+                <option>USDT</option>
+                <option>TRX</option>
+                <option>ETH</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>網絡類型：</label>
+            <select>
+                <option>全部</option>
+                <option>TRON</option>
+                <option>ETH</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>狀態</label>
+            <select>
+                <option>全部</option>
+                <option>待審核</option>
+                <option>已通過</option>
+                <option>已拒絕</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>冷錢包地址：</label>
+            <input type="text" placeholder="請輸入地址">
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            搜索
+        </button>
+        <button class="btn-reset">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            重置
+        </button>
+    </div>
+
+    <div class="card table-wrap">
+        <div class="list-toolbar">
+            <button class="btn-primary" id="batchApproveBtn" disabled>批量通過</button>
+            <button class="btn-danger" id="batchRejectBtn" disabled>批量拒絕</button>
+            <div class="spacer"></div>
+            <div class="icon-btn" title="搜尋">
+                <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="icon-btn" title="刷新" id="refreshBtn">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </div>
+            <div class="icon-btn" title="全螢幕">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            </div>
+        </div>
+
+        <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th class="sticky-outer checkbox-col" style="width:44px"><div class="sticky-inner checkbox-inner" style="left:0px;width:44px"><input type="checkbox" id="selectAll"></div></th>
+                    <th class="sticky-outer" style="width:160px"><div class="sticky-inner" style="left:44px;width:160px"><span class="th-inner">發起時間<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></div></th>
+                    <th class="sticky-outer" style="width:100px"><div class="sticky-inner shadow" style="left:204px;width:100px"><span class="th-inner">幣種<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></div></th>
+                    <th><span class="th-inner">網絡<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th><span class="th-inner">轉賬數量<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th class="col-w-260">冷錢包地址</th>
+                    <th class="col-w-200">TXID</th>
+                    <th><span class="th-inner">狀態<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th>轉賬備注</th>
+                    <th class="col-w-200">操作</th>
+                </tr>
+            </thead>
+            <tbody id="orderBody">
+                <tr>
+                    <td class="sticky-outer checkbox-col" style="width:44px"><div class="sticky-inner checkbox-inner" style="left:0px;width:44px"><input type="checkbox"></div></td>
+                    <td class="sticky-outer" style="width:160px"><div class="sticky-inner" style="left:44px;width:160px">2026-08-24 09:12:03</div></td>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner shadow" style="left:204px;width:100px">USDT</div></td>
+                    <td>TRON</td>
+                    <td>50000</td>
+                    <td>TEMLAenrqj...PRxH6UE6Uq</td>
+                    <td>a1b2c3d4e5...f6a7b8c9d0</td>
+                    <td>待審核</td>
+                    <td>-</td>
+                    <td><button class="action-btn">通過</button><button class="action-btn danger">拒絕</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer checkbox-col" style="width:44px"><div class="sticky-inner checkbox-inner" style="left:0px;width:44px"><input type="checkbox"></div></td>
+                    <td class="sticky-outer" style="width:160px"><div class="sticky-inner" style="left:44px;width:160px">2026-08-23 21:45:11</div></td>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner shadow" style="left:204px;width:100px">ETH</div></td>
+                    <td>ETH</td>
+                    <td>2.5</td>
+                    <td>0x86a25497...2b069edd7f</td>
+                    <td>7f6e5d4c3b...2a1908f7e6</td>
+                    <td>待審核</td>
+                    <td>大額提領</td>
+                    <td><button class="action-btn">通過</button><button class="action-btn danger">拒絕</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer checkbox-col" style="width:44px"><div class="sticky-inner checkbox-inner" style="left:0px;width:44px"><input type="checkbox"></div></td>
+                    <td class="sticky-outer" style="width:160px"><div class="sticky-inner" style="left:44px;width:160px">2026-08-22 14:08:47</div></td>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner shadow" style="left:204px;width:100px">USDT</div></td>
+                    <td>ETH</td>
+                    <td>120000</td>
+                    <td>0x2d335943...567f1f971a</td>
+                    <td>9d8c7b6a5f...4e3d2c1b0a</td>
+                    <td>已通過</td>
+                    <td>-</td>
+                    <td><button class="action-btn">查看</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer checkbox-col" style="width:44px"><div class="sticky-inner checkbox-inner" style="left:0px;width:44px"><input type="checkbox"></div></td>
+                    <td class="sticky-outer" style="width:160px"><div class="sticky-inner" style="left:44px;width:160px">2026-08-21 08:30:52</div></td>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner shadow" style="left:204px;width:100px">TRX</div></td>
+                    <td>TRON</td>
+                    <td>8000</td>
+                    <td>TEMLAenrqj...PRxH6UE6Uq</td>
+                    <td>3c2b1a0f9e...8d7c6b5a4f</td>
+                    <td>已拒絕</td>
+                    <td>地址風險名單</td>
+                    <td><button class="action-btn">查看</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer checkbox-col" style="width:44px"><div class="sticky-inner checkbox-inner" style="left:0px;width:44px"><input type="checkbox"></div></td>
+                    <td class="sticky-outer" style="width:160px"><div class="sticky-inner" style="left:44px;width:160px">2026-08-20 19:56:30</div></td>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner shadow" style="left:204px;width:100px">USDT</div></td>
+                    <td>TRON</td>
+                    <td>30000</td>
+                    <td>TEMLAenrqj...PRxH6UE6Uq</td>
+                    <td>5a4b3c2d1e...0f9e8d7c6b</td>
+                    <td>已通過</td>
+                    <td>-</td>
+                    <td><button class="action-btn">查看</button></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 通過備注彈窗 ===== -->
+<div class="modal-mask" id="approveModal">
+    <div class="modal-box" style="width:440px">
+        <div class="modal-header">
+            <span>通過確認</span>
+            <span class="modal-close" onclick="closeApproveModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="form-row">
+                <label>備注</label>
+                <input type="text" id="approveRemarkInput" placeholder="選填，可留空">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeApproveModal()" style="background:#fff;color:#555;border:1px solid #d9dee5;margin-right:10px">取消</button>
+            <button onclick="confirmApprove()">確定</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 拒絕原因彈窗 ===== -->
+<div class="modal-mask" id="rejectModal">
+    <div class="modal-box" style="width:440px">
+        <div class="modal-header">
+            <span>拒絕原因</span>
+            <span class="modal-close" onclick="closeRejectModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="form-row">
+                <label>拒絕原因</label>
+                <input type="text" id="rejectReasonInput" placeholder="請輸入拒絕原因">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeRejectModal()" style="background:#fff;color:#555;border:1px solid #d9dee5;margin-right:10px">取消</button>
+            <button onclick="confirmReject()">確定</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Toast 提示 ===== -->
+<div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
+    </svg>
+    <span id="toastMsg">刷新成功</span>
+</div>
+
+<script>
+/* ===== Toast 提示邏輯 ===== */
+let toastTimer = null;
+function showToast(msg){
+    const toast = document.getElementById("toast");
+    document.getElementById("toastMsg").textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+/* 工具列「刷新」按鈕 */
+document.getElementById("refreshBtn").addEventListener("click", () => {
+    showToast("刷新成功");
+});
+
+/* 全選 checkbox：有勾選任一列時才啟用「批量通過／批量拒絕」 */
+function updateBatchButtons(){
+    const anyChecked = !!document.querySelector("#orderBody input[type=checkbox]:checked");
+    const approveBtn = document.getElementById("batchApproveBtn");
+    const rejectBtn = document.getElementById("batchRejectBtn");
+    approveBtn.disabled = !anyChecked;
+    rejectBtn.disabled = !anyChecked;
+    approveBtn.classList.toggle("btn-disabled", !anyChecked);
+    rejectBtn.classList.toggle("btn-disabled", !anyChecked);
+}
+
+document.getElementById("selectAll").addEventListener("change", (e) => {
+    document.querySelectorAll("#orderBody input[type=checkbox]").forEach(cb => {
+        cb.checked = e.target.checked;
+    });
+    updateBatchButtons();
+});
+
+/* 反向同步：使用者自行勾選/取消各列時，同步更新最上方的全選 checkbox 狀態 */
+function syncSelectAllState(){
+    const rowCheckboxes = document.querySelectorAll("#orderBody input[type=checkbox]");
+    const selectAll = document.getElementById("selectAll");
+    if(rowCheckboxes.length === 0){
+        selectAll.checked = false;
+        selectAll.indeterminate = false;
+        return;
+    }
+    const checkedCount = document.querySelectorAll("#orderBody input[type=checkbox]:checked").length;
+    selectAll.checked = checkedCount === rowCheckboxes.length;
+    selectAll.indeterminate = checkedCount > 0 && checkedCount < rowCheckboxes.length;
+}
+
+document.getElementById("orderBody").addEventListener("change", (e) => {
+    if(e.target.type === "checkbox"){
+        syncSelectAllState();
+        updateBatchButtons();
+    }
+});
+
+document.getElementById("batchApproveBtn").addEventListener("click", () => {
+    if(document.getElementById("batchApproveBtn").disabled) return;
+    showToast("批量通過成功");
+});
+document.getElementById("batchRejectBtn").addEventListener("click", () => {
+    if(document.getElementById("batchRejectBtn").disabled) return;
+    showToast("批量拒絕成功");
+});
+
+/* ===== 通過備注彈窗 ===== */
+let pendingApproveRow = null;
+
+function openApproveModal(tr){
+    pendingApproveRow = tr;
+    document.getElementById("approveRemarkInput").value = "";
+    document.getElementById("approveModal").classList.add("show");
+}
+function closeApproveModal(){
+    pendingApproveRow = null;
+    document.getElementById("approveModal").classList.remove("show");
+}
+document.getElementById("approveModal").addEventListener("click", (e) => {
+    if(e.target.id === "approveModal") closeApproveModal();
+});
+function confirmApprove(){
+    const remark = document.getElementById("approveRemarkInput").value.trim();
+    if(pendingApproveRow){
+        pendingApproveRow.children[7].textContent = "已通過";
+        if(remark) pendingApproveRow.children[8].textContent = remark;
+        pendingApproveRow.children[9].innerHTML = `<button class="action-btn">查看</button>`;
+        showToast("已通過");
+    }
+    closeApproveModal();
+}
+
+/* ===== 拒絕原因彈窗 ===== */
+let pendingRejectRow = null;
+
+function openRejectModal(tr){
+    pendingRejectRow = tr;
+    document.getElementById("rejectReasonInput").value = "";
+    document.getElementById("rejectModal").classList.add("show");
+}
+function closeRejectModal(){
+    pendingRejectRow = null;
+    document.getElementById("rejectModal").classList.remove("show");
+}
+document.getElementById("rejectModal").addEventListener("click", (e) => {
+    if(e.target.id === "rejectModal") closeRejectModal();
+});
+function confirmReject(){
+    const reason = document.getElementById("rejectReasonInput").value.trim();
+    if(!reason){
+        showToast("請輸入拒絕原因");
+        return;
+    }
+    if(pendingRejectRow){
+        pendingRejectRow.children[7].textContent = "已拒絕";
+        pendingRejectRow.children[8].textContent = reason;
+        pendingRejectRow.children[9].innerHTML = `<button class="action-btn">查看</button>`;
+        showToast("已拒絕");
+    }
+    closeRejectModal();
+}
+
+/* 表格中「通過」「拒絕」「查看」操作按鈕 */
+document.getElementById("orderBody").addEventListener("click", (e) => {
+    const target = e.target;
+    if(!target.classList.contains("action-btn")) return;
+    const tr = target.closest("tr");
+    const action = target.textContent.trim();
+
+    if(action === "通過"){
+        openApproveModal(tr);
+    } else if(action === "拒絕"){
+        openRejectModal(tr);
+    } else {
+        showToast("查看功能尚未串接");
+    }
+});
+</script>
+</body>
+</html>

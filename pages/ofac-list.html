@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>執行制裁名單(OFAC)</title>
+<link rel="stylesheet" href="../assets/common.css">
+<style>
+.sync-bar{
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:#606b78;
+    font-size:14px;
+}
+.sync-bar .spacer{flex:1}
+.badge{
+    display:inline-flex;
+    align-items:center;
+    height:24px;
+    padding:0 10px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:500;
+}
+.badge.normal{background:#f0f1f3;color:#9aa2ac}
+.badge.hit{background:#fff1ec;color:#FF5722}
+.detail-row{display:flex;gap:16px;margin-bottom:14px}
+.detail-row:last-child{margin-bottom:0}
+.detail-label{width:90px;flex-shrink:0;color:#9aa2ac;font-size:13px}
+.detail-value{color:#303846;font-size:14px;word-break:break-all}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card sync-bar">
+        <span>上次同步時間：<b id="lastSyncTime" style="color:#303846">2026-08-25 03:00:12</b></span>
+        <span>共 12,438 筆制裁名單資料</span>
+        <div class="spacer"></div>
+        <button class="btn-primary" id="syncBtn" onclick="startSync()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;vertical-align:-2px">
+                <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            立即同步
+        </button>
+    </div>
+
+    <div class="card search">
+        <div class="field">
+            <label>名稱/別名：</label>
+            <input type="text" placeholder="請輸入名稱或別名">
+        </div>
+        <div class="field">
+            <label>幣種：</label>
+            <select>
+                <option>全部</option>
+                <option>BTC</option>
+                <option>ETH</option>
+                <option>USDT</option>
+                <option>TRX</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>地址：</label>
+            <input type="text" placeholder="請輸入錢包地址">
+        </div>
+        <div class="field">
+            <label>制裁計畫：</label>
+            <select>
+                <option>全部</option>
+                <option>DPRK3</option>
+                <option>CYBER2</option>
+                <option>IRAN</option>
+                <option>VENEZUELA</option>
+                <option>SDGT</option>
+            </select>
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            搜索
+        </button>
+        <button class="btn-reset">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            重置
+        </button>
+    </div>
+
+    <div class="card table-wrap">
+        <div class="toolbar">
+            <div class="icon-btn" title="搜尋">
+                <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="icon-btn" title="刷新" id="refreshBtn">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </div>
+            <div class="icon-btn" title="全螢幕">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            </div>
+        </div>
+
+        <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th class="sticky-outer" style="width:170px"><div class="sticky-inner" style="left:0px;width:170px"><span class="th-inner">名稱/別名<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></div></th>
+                    <th class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:170px;width:90px">類型</div></th>
+                    <th class="sticky-outer" style="width:90px"><div class="sticky-inner shadow" style="left:260px;width:90px">幣種</div></th>
+                    <th class="col-w-320">錢包地址</th>
+                    <th>制裁計畫</th>
+                    <th><span class="th-inner">生效日期<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th>命中狀態</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="ofacBody">
+                <tr data-detail='{"name":"LAZARUS GROUP","aliases":"GUARDIANS OF PEACE; WHOIS TEAM; ZINC","type":"組織","currency":"BTC","address":"bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh","program":"CYBER2 / DPRK3","effectiveDate":"2019-09-13","status":"已命中","remark":"與朝鮮相關之網路攻擊組織，多起交易所遭駭事件涉及此位址。"}'>
+                    <td class="sticky-outer" style="width:170px"><div class="sticky-inner" style="left:0px;width:170px">LAZARUS GROUP</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:170px;width:90px">組織</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner shadow" style="left:260px;width:90px">BTC</div></td>
+                    <td>bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</td>
+                    <td>CYBER2 / DPRK3</td>
+                    <td>2019-09-13</td>
+                    <td><span class="badge hit">已命中</span></td>
+                    <td><button class="action-btn">查看</button></td>
+                </tr>
+                <tr data-detail='{"name":"TORNADO CASH","aliases":"TORNADO.CASH; TORN","type":"組織","currency":"ETH","address":"0x8589427373D6D84E98730D7795D8f6f8731FDA0","program":"CYBER2","effectiveDate":"2022-08-08","status":"正常","remark":"混幣協議，因協助北韓洗錢遭 OFAC 制裁。"}'>
+                    <td class="sticky-outer" style="width:170px"><div class="sticky-inner" style="left:0px;width:170px">TORNADO CASH</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:170px;width:90px">組織</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner shadow" style="left:260px;width:90px">ETH</div></td>
+                    <td>0x8589427373D6D84E98730D7795D8f6f8731FDA0</td>
+                    <td>CYBER2</td>
+                    <td>2022-08-08</td>
+                    <td><span class="badge normal">正常</span></td>
+                    <td><button class="action-btn">查看</button></td>
+                </tr>
+                <tr data-detail='{"name":"BITZLATO LIMITED","aliases":"BITZLATO","type":"組織","currency":"USDT","address":"TQn9Y2khEsLMG6XZDaKGKvHz6VwZ8Yx4pR","program":"CYBER2","effectiveDate":"2023-01-18","status":"正常","remark":"交易所遭指控協助處理非法所得資金。"}'>
+                    <td class="sticky-outer" style="width:170px"><div class="sticky-inner" style="left:0px;width:170px">BITZLATO LIMITED</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:170px;width:90px">組織</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner shadow" style="left:260px;width:90px">USDT</div></td>
+                    <td>TQn9Y2khEsLMG6XZDaKGKvHz6VwZ8Yx4pR</td>
+                    <td>CYBER2</td>
+                    <td>2023-01-18</td>
+                    <td><span class="badge normal">正常</span></td>
+                    <td><button class="action-btn">查看</button></td>
+                </tr>
+                <tr data-detail='{"name":"KIM SU IL","aliases":"KIM, Su-il","type":"個人","currency":"BTC","address":"1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2","program":"DPRK3","effectiveDate":"2020-03-02","status":"已命中","remark":"涉嫌為朝鮮政權洗錢之個人。"}'>
+                    <td class="sticky-outer" style="width:170px"><div class="sticky-inner" style="left:0px;width:170px">KIM SU IL</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:170px;width:90px">個人</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner shadow" style="left:260px;width:90px">BTC</div></td>
+                    <td>1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2</td>
+                    <td>DPRK3</td>
+                    <td>2020-03-02</td>
+                    <td><span class="badge hit">已命中</span></td>
+                    <td><button class="action-btn">查看</button></td>
+                </tr>
+                <tr data-detail='{"name":"HYDRA MARKET","aliases":"HYDRA; GIDRA","type":"組織","currency":"BTC","address":"3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5","program":"CYBER2","effectiveDate":"2022-04-05","status":"正常","remark":"暗網市場，因洗錢及毒品交易遭制裁。"}'>
+                    <td class="sticky-outer" style="width:170px"><div class="sticky-inner" style="left:0px;width:170px">HYDRA MARKET</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:170px;width:90px">組織</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner shadow" style="left:260px;width:90px">BTC</div></td>
+                    <td>3FZbgi29cpjq2GjdwV8eyHuJJnkLtktZc5</td>
+                    <td>CYBER2</td>
+                    <td>2022-04-05</td>
+                    <td><span class="badge normal">正常</span></td>
+                    <td><button class="action-btn">查看</button></td>
+                </tr>
+                <tr data-detail='{"name":"ALEXANDER VINNIK","aliases":"VINNIK, Alexander Igorevich","type":"個人","currency":"BTC","address":"1DKJ2M4NJZmXvBoLBzXqmJqfXhZ3dEQZeM","program":"CYBER2","effectiveDate":"2017-07-27","status":"正常","remark":"BTC-e 交易所經營者，涉及大規模洗錢。"}'>
+                    <td class="sticky-outer" style="width:170px"><div class="sticky-inner" style="left:0px;width:170px">ALEXANDER VINNIK</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:170px;width:90px">個人</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner shadow" style="left:260px;width:90px">BTC</div></td>
+                    <td>1DKJ2M4NJZmXvBoLBzXqmJqfXhZ3dEQZeM</td>
+                    <td>CYBER2</td>
+                    <td>2017-07-27</td>
+                    <td><span class="badge normal">正常</span></td>
+                    <td><button class="action-btn">查看</button></td>
+                </tr>
+                <tr data-detail='{"name":"IRGC-QF FRONT COMPANY","aliases":"IRGC QUDS FORCE FINANCIAL NETWORK","type":"組織","currency":"USDT","address":"TXYZmn7A9k2LpQeR5vD3sFh8Jc1WuB6Ntg","program":"IRAN","effectiveDate":"2021-11-18","status":"已命中","remark":"與伊朗革命衛隊聖城旅相關之資金網絡。"}'>
+                    <td class="sticky-outer" style="width:170px"><div class="sticky-inner" style="left:0px;width:170px">IRGC-QF FRONT CO.</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:170px;width:90px">組織</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner shadow" style="left:260px;width:90px">USDT</div></td>
+                    <td>TXYZmn7A9k2LpQeR5vD3sFh8Jc1WuB6Ntg</td>
+                    <td>IRAN</td>
+                    <td>2021-11-18</td>
+                    <td><span class="badge hit">已命中</span></td>
+                    <td><button class="action-btn">查看</button></td>
+                </tr>
+                <tr data-detail='{"name":"MAXIMILIANO ROSALES","aliases":"ROSALES, Maximiliano","type":"個人","currency":"ETH","address":"0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984","program":"VENEZUELA","effectiveDate":"2020-06-10","status":"正常","remark":"與委內瑞拉政府相關之資產轉移個人。"}'>
+                    <td class="sticky-outer" style="width:170px"><div class="sticky-inner" style="left:0px;width:170px">MAXIMILIANO ROSALES</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:170px;width:90px">個人</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner shadow" style="left:260px;width:90px">ETH</div></td>
+                    <td>0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984</td>
+                    <td>VENEZUELA</td>
+                    <td>2020-06-10</td>
+                    <td><span class="badge normal">正常</span></td>
+                    <td><button class="action-btn">查看</button></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <div class="pagination-bar">
+            <div class="page-nav">&lsaquo;</div>
+            <div class="page-num active">1</div>
+            <div class="page-num">2</div>
+            <div class="page-num">3</div>
+            <div class="page-nav">&rsaquo;</div>
+            <span>到第</span>
+            <input class="page-jump" value="1">
+            <span>頁</span>
+            <button class="btn-confirm">確定</button>
+            <span>共 12,438 條</span>
+            <select class="page-size">
+                <option>10條/頁</option>
+                <option>50條/頁</option>
+                <option selected>100條/頁</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 查看詳情彈窗 ===== -->
+<div class="modal-mask" id="detailModal">
+    <div class="modal-box" style="width:560px">
+        <div class="modal-header">
+            <span>制裁名單詳情</span>
+            <span class="modal-close" onclick="closeDetailModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="detail-row"><div class="detail-label">名稱</div><div class="detail-value" id="detailName"></div></div>
+            <div class="detail-row"><div class="detail-label">別名</div><div class="detail-value" id="detailAliases"></div></div>
+            <div class="detail-row"><div class="detail-label">類型</div><div class="detail-value" id="detailType"></div></div>
+            <div class="detail-row"><div class="detail-label">幣種</div><div class="detail-value" id="detailCurrency"></div></div>
+            <div class="detail-row"><div class="detail-label">錢包地址</div><div class="detail-value" id="detailAddress"></div></div>
+            <div class="detail-row"><div class="detail-label">制裁計畫</div><div class="detail-value" id="detailProgram"></div></div>
+            <div class="detail-row"><div class="detail-label">生效日期</div><div class="detail-value" id="detailDate"></div></div>
+            <div class="detail-row"><div class="detail-label">命中狀態</div><div class="detail-value" id="detailStatus"></div></div>
+            <div class="detail-row"><div class="detail-label">備注</div><div class="detail-value" id="detailRemark"></div></div>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeDetailModal()">知道了</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Toast 提示 ===== -->
+<div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
+    </svg>
+    <span id="toastMsg">操作成功</span>
+</div>
+
+<script>
+/* ===== Toast 提示邏輯 ===== */
+let toastTimer = null;
+function showToast(msg){
+    const toast = document.getElementById("toast");
+    document.getElementById("toastMsg").textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+function formatNow(){
+    const d = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
+
+/* ===== 立即同步 ===== */
+function startSync(){
+    const btn = document.getElementById("syncBtn");
+    btn.disabled = true;
+    btn.style.opacity = "0.6";
+    const originalText = btn.innerHTML;
+    btn.innerHTML = "同步中...";
+    showToast("開始同步 OFAC 制裁名單");
+
+    setTimeout(() => {
+        document.getElementById("lastSyncTime").textContent = formatNow();
+        btn.disabled = false;
+        btn.style.opacity = "1";
+        btn.innerHTML = originalText;
+        showToast("同步完成，名單已更新");
+    }, 1500);
+}
+
+/* 工具列「刷新」按鈕 */
+document.getElementById("refreshBtn").addEventListener("click", () => {
+    showToast("刷新成功");
+});
+
+/* ===== 查看詳情彈窗 ===== */
+function openDetailModal(data){
+    document.getElementById("detailName").textContent = data.name;
+    document.getElementById("detailAliases").textContent = data.aliases;
+    document.getElementById("detailType").textContent = data.type;
+    document.getElementById("detailCurrency").textContent = data.currency;
+    document.getElementById("detailAddress").textContent = data.address;
+    document.getElementById("detailProgram").textContent = data.program;
+    document.getElementById("detailDate").textContent = data.effectiveDate;
+    document.getElementById("detailStatus").innerHTML = data.status === "已命中"
+        ? '<span class="badge hit">已命中</span>'
+        : '<span class="badge normal">正常</span>';
+    document.getElementById("detailRemark").textContent = data.remark;
+    document.getElementById("detailModal").classList.add("show");
+}
+function closeDetailModal(){
+    document.getElementById("detailModal").classList.remove("show");
+}
+document.getElementById("detailModal").addEventListener("click", (e) => {
+    if(e.target.id === "detailModal") closeDetailModal();
+});
+
+document.getElementById("ofacBody").addEventListener("click", (e) => {
+    const target = e.target;
+    if(!target.classList.contains("action-btn")) return;
+    const tr = target.closest("tr");
+    const data = JSON.parse(tr.dataset.detail);
+    openDetailModal(data);
+});
+</script>
+</body>
+</html>

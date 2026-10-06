@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>歸集記錄</title>
+<link rel="stylesheet" href="../assets/common.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card search">
+        <div class="field">
+            <label>幣種：</label>
+            <select>
+                <option>全部</option>
+                <option>USDT</option>
+                <option>TRX</option>
+                <option>ETH</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>TXID：</label>
+            <input type="text" placeholder="請輸入TXID">
+        </div>
+
+        <div class="field">
+            <label>歸集狀態：</label>
+            <select>
+                <option>全部</option>
+                <option>等待簽名</option>
+                <option>已簽名</option>
+                <option>已完成</option>
+                <option>失敗</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>歸集地址：</label>
+            <input type="text" placeholder="請輸入歸集地址">
+        </div>
+
+        <div class="field">
+            <label>歸集時間：</label>
+            <input type="date" value="2026-05-30">
+            <span>至</span>
+            <input type="date" value="2026-08-27">
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            搜索
+        </button>
+        <button class="btn-reset">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            重置
+        </button>
+    </div>
+
+    <div class="card table-wrap">
+        <div class="toolbar">
+            <div class="icon-btn" title="搜尋">
+                <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="icon-btn" title="刷新" id="refreshBtn">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </div>
+            <div class="icon-btn" title="全螢幕">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>創建時間</th>
+                    <th>幣種</th>
+                    <th>網絡</th>
+                    <th>區塊手續費</th>
+                    <th>歸集數量</th>
+                    <th>TXID</th>
+                    <th>歸集狀態</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="collectBody">
+                <tr data-detail='{"status":"等待簽名","createTime":"2026-08-27 10:24:00","updateTime":"2026-08-27 10:24:00","txid":"","currency":"USDT","network":"TRON","amount":"20","fromAddr":"TMXfXCDQQUXp22uHieKyHChg4QzeQbyN7z","toAddr":""}'>
+                    <td>2026-08-27 10:24:00</td>
+                    <td>USDT</td>
+                    <td>TRON</td>
+                    <td>30</td>
+                    <td>20</td>
+                    <td>-</td>
+                    <td>等待簽名</td>
+                    <td><button class="action-btn" onclick="openDetailModal(this)">詳情</button></td>
+                </tr>
+                <tr data-detail='{"status":"等待簽名","createTime":"2026-08-27 09:56:40","updateTime":"2026-08-27 09:56:40","txid":"","currency":"USDT","network":"TRON","amount":"1","fromAddr":"TMXfXCDQQUXp22uHieKyHChg4QzeQbyN7z","toAddr":""}'>
+                    <td>2026-08-27 09:56:40</td>
+                    <td>USDT</td>
+                    <td>TRON</td>
+                    <td>30</td>
+                    <td>1</td>
+                    <td>-</td>
+                    <td>等待簽名</td>
+                    <td><button class="action-btn" onclick="openDetailModal(this)">詳情</button></td>
+                </tr>
+                <tr data-detail='{"status":"等待簽名","createTime":"2026-08-27 09:53:20","updateTime":"2026-08-27 09:53:20","txid":"","currency":"USDT","network":"TRON","amount":"1","fromAddr":"TWq9Y2khEsLMG6XZDaKGKvHz6VwZ8Yx4pR","toAddr":""}'>
+                    <td>2026-08-27 09:53:20</td>
+                    <td>USDT</td>
+                    <td>TRON</td>
+                    <td>30</td>
+                    <td>1</td>
+                    <td>-</td>
+                    <td>等待簽名</td>
+                    <td><button class="action-btn" onclick="openDetailModal(this)">詳情</button></td>
+                </tr>
+                <tr data-detail='{"status":"等待簽名","createTime":"2026-08-26 11:22:00","updateTime":"2026-08-26 11:22:00","txid":"","currency":"USDT","network":"TRON","amount":"20","fromAddr":"TXhotWalletAddr9dQeF3xLpQeR5vD3sFh8","toAddr":""}'>
+                    <td>2026-08-26 11:22:00</td>
+                    <td>USDT</td>
+                    <td>TRON</td>
+                    <td>30</td>
+                    <td>20</td>
+                    <td>-</td>
+                    <td>等待簽名</td>
+                    <td><button class="action-btn" onclick="openDetailModal(this)">詳情</button></td>
+                </tr>
+                <tr data-detail='{"status":"等待簽名","createTime":"2026-08-26 10:10:20","updateTime":"2026-08-26 10:10:20","txid":"","currency":"USDT","network":"TRON","amount":"200","fromAddr":"TCompanyWallet7bK1deXqmJqfXhZ3dEQZeM","toAddr":""}'>
+                    <td>2026-08-26 10:10:20</td>
+                    <td>USDT</td>
+                    <td>TRON</td>
+                    <td>30</td>
+                    <td>200</td>
+                    <td>-</td>
+                    <td>等待簽名</td>
+                    <td><button class="action-btn" onclick="openDetailModal(this)">詳情</button></td>
+                </tr>
+                <tr data-detail='{"status":"等待簽名","createTime":"2026-08-21 21:41:40","updateTime":"2026-08-21 21:41:40","txid":"","currency":"USDT","network":"TRON","amount":"1000","fromAddr":"TEMLAenrqj9kQwE2PRxH6UE6Uq","toAddr":""}'>
+                    <td>2026-08-21 21:41:40</td>
+                    <td>USDT</td>
+                    <td>TRON</td>
+                    <td>30</td>
+                    <td>1000</td>
+                    <td>-</td>
+                    <td>等待簽名</td>
+                    <td><button class="action-btn" onclick="openDetailModal(this)">詳情</button></td>
+                </tr>
+                <tr data-detail='{"status":"等待簽名","createTime":"2026-08-21 15:03:40","updateTime":"2026-08-21 15:03:40","txid":"","currency":"USDT","network":"TRON","amount":"1","fromAddr":"T61788373cb4e1cfa1fXqmJqfXhZ3dE","toAddr":""}'>
+                    <td>2026-08-21 15:03:40</td>
+                    <td>USDT</td>
+                    <td>TRON</td>
+                    <td>30</td>
+                    <td>1</td>
+                    <td>-</td>
+                    <td>等待簽名</td>
+                    <td><button class="action-btn" onclick="openDetailModal(this)">詳情</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="pagination-bar">
+            <div class="page-nav">&lsaquo;</div>
+            <div class="page-num active">1</div>
+            <div class="page-num">2</div>
+            <div class="page-nav">&rsaquo;</div>
+            <span>到第</span>
+            <input class="page-jump" value="1">
+            <span>頁</span>
+            <button class="btn-confirm">確定</button>
+            <span>共 15 條</span>
+            <select class="page-size">
+                <option>10條/頁</option>
+                <option selected>20條/頁</option>
+                <option>50條/頁</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 歸集詳情彈窗 ===== -->
+<div class="modal-mask" id="detailModal">
+    <div class="modal-box" style="width:560px">
+        <div class="modal-header">
+            <span>歸集詳情</span>
+            <span class="modal-close" onclick="closeDetailModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <table>
+                <tbody>
+                    <tr><th style="width:140px">歸集狀態</th><td id="detailStatus"></td></tr>
+                    <tr><th>創建時間</th><td id="detailCreateTime"></td></tr>
+                    <tr><th>更新時間</th><td id="detailUpdateTime"></td></tr>
+                    <tr><th>TXID</th><td id="detailTxid"></td></tr>
+                    <tr><th>幣種簡稱</th><td id="detailCurrency"></td></tr>
+                    <tr><th>幣種網絡</th><td id="detailNetwork"></td></tr>
+                    <tr><th>歸集數量</th><td id="detailAmount"></td></tr>
+                    <tr><th>轉出地址</th><td id="detailFromAddr" style="word-break:break-all"></td></tr>
+                    <tr><th>轉入地址</th><td id="detailToAddr" style="word-break:break-all"></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeDetailModal()" style="background:#1E9FFF">關閉</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Toast 提示 ===== -->
+<div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
+    </svg>
+    <span id="toastMsg">刷新成功</span>
+</div>
+
+<script>
+/* ===== Toast 提示邏輯 ===== */
+let toastTimer = null;
+function showToast(msg){
+    const toast = document.getElementById("toast");
+    document.getElementById("toastMsg").textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+/* 工具列「刷新」按鈕 */
+document.getElementById("refreshBtn").addEventListener("click", () => {
+    showToast("刷新成功");
+});
+
+/* ===== 歸集詳情彈窗 ===== */
+function openDetailModal(btn){
+    const tr = btn.closest("tr");
+    const data = JSON.parse(tr.dataset.detail);
+    document.getElementById("detailStatus").textContent = data.status;
+    document.getElementById("detailCreateTime").textContent = data.createTime;
+    document.getElementById("detailUpdateTime").textContent = data.updateTime;
+    document.getElementById("detailTxid").textContent = data.txid || "-";
+    document.getElementById("detailCurrency").textContent = data.currency;
+    document.getElementById("detailNetwork").textContent = data.network;
+    document.getElementById("detailAmount").textContent = data.amount;
+    document.getElementById("detailFromAddr").textContent = data.fromAddr || "-";
+    document.getElementById("detailToAddr").textContent = data.toAddr || "-";
+    document.getElementById("detailModal").classList.add("show");
+}
+function closeDetailModal(){
+    document.getElementById("detailModal").classList.remove("show");
+}
+document.getElementById("detailModal").addEventListener("click", (e) => {
+    if(e.target.id === "detailModal") closeDetailModal();
+});
+</script>
+</body>
+</html>

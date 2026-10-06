@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>歸集管理</title>
+<link rel="stylesheet" href="../assets/common.css">
+<style>
+.tab-bar{
+    display:flex;
+    gap:4px;
+    padding:0 20px;
+    background:#fff;
+    border-bottom:1px solid #e5e8ed;
+}
+.tab-item{
+    padding:14px 20px;
+    font-size:15px;
+    color:#606b78;
+    cursor:pointer;
+    border-bottom:2px solid transparent;
+    margin-bottom:-1px;
+}
+.tab-item:hover{color:#009688}
+.tab-item.active{color:#009688;border-bottom-color:#009688;font-weight:500}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card" style="margin-bottom:16px">
+        <div class="tab-bar">
+            <div class="tab-item active" data-tab="hot" onclick="switchTab('hot')">熱錢包歸集</div>
+            <div class="tab-item" data-tab="cold" onclick="switchTab('cold')">冷錢包歸集</div>
+        </div>
+    </div>
+
+    <!-- ===== 熱錢包歸集 ===== -->
+    <div class="tab-panel active" id="panel-hot">
+
+        <div class="card search">
+            <div class="field">
+                <label>幣種：</label>
+                <select>
+                    <option>全部</option>
+                    <option>USDT</option>
+                    <option>TRX</option>
+                    <option>ETH</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>網絡類型：</label>
+                <select>
+                    <option>全部</option>
+                    <option>TRON</option>
+                    <option>ETH</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>地址：</label>
+                <input type="text" placeholder="請輸入地址">
+            </div>
+            <div class="spacer"></div>
+            <button class="btn-search">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                搜索
+            </button>
+            <button class="btn-reset">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                </svg>
+                重置
+            </button>
+        </div>
+
+        <div class="card table-wrap">
+            <div class="list-toolbar">
+                <button class="btn-primary" id="batchCollectBtn-hot" disabled onclick="openCollectModal('hot', true)">批量發起歸集</button>
+                <div class="spacer"></div>
+                <div class="icon-btn" title="搜尋">
+                    <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
+                <div class="icon-btn" title="刷新" onclick="showToast('刷新成功')">
+                    <svg viewBox="0 0 24 24" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                </div>
+                <div class="icon-btn" title="全螢幕">
+                    <svg viewBox="0 0 24 24" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th class="checkbox-col"><input type="checkbox" id="selectAll-hot" onchange="toggleSelectAll('hot')"></th>
+                        <th>幣種</th>
+                        <th>網絡</th>
+                        <th>用戶入金地址</th>
+                        <th>可歸集餘額</th>
+                        <th>餘額更新時間</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="collectableBody-hot">
+                    <tr>
+                        <td class="checkbox-col"><input type="checkbox"></td>
+                        <td>USDT</td>
+                        <td>TRON</td>
+                        <td>TN3W4H6rK2ce4vX9YnFQHwKENnHjoxb3m9</td>
+                        <td>1,325.50</td>
+                        <td>2026-08-27 09:12:03</td>
+                        <td><button class="action-btn" onclick="openCollectModal('hot', false, this)">發起歸集</button></td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-col"><input type="checkbox"></td>
+                        <td>USDT</td>
+                        <td>TRON</td>
+                        <td>TAjjqdrTFcHFxjWWXPTFPn6ejeoJZuLnLR</td>
+                        <td>820.00</td>
+                        <td>2026-08-27 08:45:11</td>
+                        <td><button class="action-btn" onclick="openCollectModal('hot', false, this)">發起歸集</button></td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-col"><input type="checkbox"></td>
+                        <td>ETH</td>
+                        <td>ETH</td>
+                        <td>0x3fA2b1E7c9D84F02aB6E1c5D9F0a7B2C1e4D8f6A</td>
+                        <td>2.35</td>
+                        <td>2026-08-26 22:30:47</td>
+                        <td><button class="action-btn" onclick="openCollectModal('hot', false, this)">發起歸集</button></td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-col"><input type="checkbox"></td>
+                        <td>USDT</td>
+                        <td>ETH</td>
+                        <td>0x7bC4e9A21fD063C8e5B2A1F9D4E7C0B3A6D5F812</td>
+                        <td>15,000.00</td>
+                        <td>2026-08-26 19:08:22</td>
+                        <td><button class="action-btn" onclick="openCollectModal('hot', false, this)">發起歸集</button></td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-col"><input type="checkbox"></td>
+                        <td>TRX</td>
+                        <td>TRON</td>
+                        <td>TXhK2mZq7Yc4sD8fJ1eR6nW3vB9pL0oQaC</td>
+                        <td>4,500.00</td>
+                        <td>2026-08-26 14:55:09</td>
+                        <td><button class="action-btn" onclick="openCollectModal('hot', false, this)">發起歸集</button></td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-col"><input type="checkbox"></td>
+                        <td>USDT</td>
+                        <td>TRON</td>
+                        <td>TQmR8vN2xF5jK9pL3cD7eW1sZ4bY6gH0oA</td>
+                        <td>62.80</td>
+                        <td>2026-08-25 11:20:35</td>
+                        <td><button class="action-btn" onclick="openCollectModal('hot', false, this)">發起歸集</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination-bar">
+                <div class="page-nav">&lsaquo;</div>
+                <div class="page-num active">1</div>
+                <div class="page-num">2</div>
+                <div class="page-nav">&rsaquo;</div>
+                <span>到第</span>
+                <input class="page-jump" value="1">
+                <span>頁</span>
+                <button class="btn-confirm">確定</button>
+                <span>共 18 條</span>
+                <select class="page-size">
+                    <option>10條/頁</option>
+                    <option selected>20條/頁</option>
+                    <option>50條/頁</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== 冷錢包歸集 ===== -->
+    <div class="tab-panel" id="panel-cold">
+
+        <div class="card search">
+            <div class="field">
+                <label>幣種：</label>
+                <select>
+                    <option>全部</option>
+                    <option>USDT</option>
+                    <option>TRX</option>
+                    <option>ETH</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>網絡類型：</label>
+                <select>
+                    <option>全部</option>
+                    <option>TRON</option>
+                    <option>ETH</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>地址：</label>
+                <input type="text" placeholder="請輸入地址">
+            </div>
+            <div class="spacer"></div>
+            <button class="btn-search">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                搜索
+            </button>
+            <button class="btn-reset">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                </svg>
+                重置
+            </button>
+        </div>
+
+        <div class="card table-wrap">
+            <div class="list-toolbar">
+                <button class="btn-primary" id="batchCollectBtn-cold" disabled onclick="openCollectModal('cold', true)">批量發起歸集</button>
+                <div class="spacer"></div>
+                <div class="icon-btn" title="搜尋">
+                    <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </div>
+                <div class="icon-btn" title="刷新" onclick="showToast('刷新成功')">
+                    <svg viewBox="0 0 24 24" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                </div>
+                <div class="icon-btn" title="全螢幕">
+                    <svg viewBox="0 0 24 24" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th class="checkbox-col"><input type="checkbox" id="selectAll-cold" onchange="toggleSelectAll('cold')"></th>
+                        <th>幣種</th>
+                        <th>網絡</th>
+                        <th>冷錢包地址</th>
+                        <th>可歸集餘額</th>
+                        <th>餘額更新時間</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="collectableBody-cold">
+                    <tr>
+                        <td class="checkbox-col"><input type="checkbox"></td>
+                        <td>USDT</td>
+                        <td>TRON</td>
+                        <td>TEMLAenrqj9kQwE2PRxH6UE6Uq</td>
+                        <td>50,000.00</td>
+                        <td>2026-08-24 08:00:00</td>
+                        <td><button class="action-btn" onclick="openCollectModal('cold', false, this)">發起歸集</button></td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-col"><input type="checkbox"></td>
+                        <td>ETH</td>
+                        <td>ETH</td>
+                        <td>0x86a25497B2c1E4D8f6A2b069edd7f</td>
+                        <td>12.400</td>
+                        <td>2026-08-23 22:30:00</td>
+                        <td><button class="action-btn" onclick="openCollectModal('cold', false, this)">發起歸集</button></td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-col"><input type="checkbox"></td>
+                        <td>USDT</td>
+                        <td>ETH</td>
+                        <td>0x2d335943A6D5F812567f1f971a</td>
+                        <td>28,500.00</td>
+                        <td>2026-08-22 10:15:00</td>
+                        <td><button class="action-btn" onclick="openCollectModal('cold', false, this)">發起歸集</button></td>
+                    </tr>
+                    <tr>
+                        <td class="checkbox-col"><input type="checkbox"></td>
+                        <td>TRX</td>
+                        <td>TRON</td>
+                        <td>TCompanyWallet7bK1deXqmJqfXhZ3</td>
+                        <td>9,000.00</td>
+                        <td>2026-08-20 17:45:00</td>
+                        <td><button class="action-btn" onclick="openCollectModal('cold', false, this)">發起歸集</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="pagination-bar">
+                <div class="page-nav">&lsaquo;</div>
+                <div class="page-num active">1</div>
+                <div class="page-nav">&rsaquo;</div>
+                <span>到第</span>
+                <input class="page-jump" value="1">
+                <span>頁</span>
+                <button class="btn-confirm">確定</button>
+                <span>共 4 條</span>
+                <select class="page-size">
+                    <option>10條/頁</option>
+                    <option selected>20條/頁</option>
+                    <option>50條/頁</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== 發起歸集彈窗（選擇歸集錢包目的地） ===== -->
+<div class="modal-mask" id="collectModal">
+    <div class="modal-box" style="width:480px">
+        <div class="modal-header">
+            <span>發起歸集</span>
+            <span class="modal-close" onclick="closeCollectModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="form-row" id="collectCountRow" style="display:none">
+                <label>已選筆數</label>
+                <span id="collectCount" style="color:#303846"></span>
+            </div>
+            <div class="form-row">
+                <label class="required-label">歸集錢包：</label>
+                <select id="collectTargetWallet">
+                    <option value="">請選擇歸集錢包地址</option>
+                    <option>TEMLAenrqj9kQwE2PRxH6UE6Uq（USDT・TRON・公司錢包・熱）</option>
+                    <option>TXhK2mZq7Yc4sD8fJ1eR6nW3vB9pL0oQaC（TRX・TRON・手續費錢包・熱）</option>
+                    <option>0x7bC4e9A21fD063C8e5B2A1F9D4E7C0B3A6D5F812（ETH・ETH・手續費錢包・熱）</option>
+                    <option>TCompanyWallet7bK1deXqmJqfXhZ3（USDT・TRON・公司錢包・冷）</option>
+                    <option>0x2d335943A6D5F812567f1f971a（USDT・ETH・公司錢包・冷）</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label class="required-label">GA驗證碼：</label>
+                <input type="text" id="collectGaInput" placeholder="請輸入6位GA驗證碼" maxlength="6">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeCollectModal()" style="background:#fff;color:#555;border:1px solid #d9dee5;margin-right:10px">取消</button>
+            <button onclick="confirmCollect()">確定</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Toast 提示 ===== -->
+<div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
+    </svg>
+    <span id="toastMsg">操作成功</span>
+</div>
+
+<script>
+/* ===== 分頁切換 ===== */
+function switchTab(tab){
+    document.querySelectorAll(".tab-item").forEach(t => t.classList.toggle("active", t.dataset.tab === tab));
+    document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+    document.getElementById(`panel-${tab}`).classList.add("active");
+}
+
+/* ===== Toast 提示邏輯 ===== */
+let toastTimer = null;
+function showToast(msg, type){
+    const toast = document.getElementById("toast");
+    document.getElementById("toastMsg").textContent = msg;
+    toast.classList.toggle("error", type === "error");
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+/* 全選 checkbox：兩個分頁各自獨立 */
+function toggleSelectAll(scope){
+    const selectAll = document.getElementById(`selectAll-${scope}`);
+    document.querySelectorAll(`#collectableBody-${scope} input[type=checkbox]`).forEach(cb => {
+        cb.checked = selectAll.checked;
+    });
+    updateBatchButton(scope);
+}
+function updateBatchButton(scope){
+    const anyChecked = !!document.querySelector(`#collectableBody-${scope} input[type=checkbox]:checked`);
+    document.getElementById(`batchCollectBtn-${scope}`).disabled = !anyChecked;
+}
+["hot","cold"].forEach(scope => {
+    document.getElementById(`collectableBody-${scope}`).addEventListener("change", (e) => {
+        if(e.target.type === "checkbox") updateBatchButton(scope);
+    });
+});
+
+/* ===== 發起歸集彈窗 ===== */
+let collectMode = "single";
+let collectScope = "hot";
+let collectSingleRow = null;
+
+function openCollectModal(scope, isBatch, btn){
+    collectScope = scope;
+    document.getElementById("collectTargetWallet").value = "";
+    document.getElementById("collectGaInput").value = "";
+
+    if(isBatch){
+        collectMode = "batch";
+        collectSingleRow = null;
+        const count = document.querySelectorAll(`#collectableBody-${scope} input[type=checkbox]:checked`).length;
+        document.getElementById("collectCount").textContent = `${count} 筆`;
+        document.getElementById("collectCountRow").style.display = "flex";
+    } else {
+        collectMode = "single";
+        collectSingleRow = btn.closest("tr");
+        document.getElementById("collectCountRow").style.display = "none";
+    }
+    document.getElementById("collectModal").classList.add("show");
+}
+function closeCollectModal(){
+    document.getElementById("collectModal").classList.remove("show");
+}
+document.getElementById("collectModal").addEventListener("click", (e) => {
+    if(e.target.id === "collectModal") closeCollectModal();
+});
+
+function confirmCollect(){
+    const wallet = document.getElementById("collectTargetWallet").value;
+    const gaCode = document.getElementById("collectGaInput").value.trim();
+
+    if(!wallet){
+        showToast("請選擇歸集錢包地址", "error");
+        return;
+    }
+    if(!/^\d{6}$/.test(gaCode)){
+        showToast("請輸入6位數字GA驗證碼", "error");
+        return;
+    }
+
+    if(collectMode === "single" && collectSingleRow){
+        collectSingleRow.remove();
+    } else if(collectMode === "batch"){
+        document.querySelectorAll(`#collectableBody-${collectScope} input[type=checkbox]:checked`).forEach(cb => {
+            cb.closest("tr").remove();
+        });
+        document.getElementById(`selectAll-${collectScope}`).checked = false;
+        updateBatchButton(collectScope);
+    }
+
+    closeCollectModal();
+    showToast("歸集申請已送出");
+}
+</script>
+</body>
+</html>

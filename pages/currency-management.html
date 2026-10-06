@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>幣種管理</title>
+<link rel="stylesheet" href="../assets/common.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card search">
+        <div class="field">
+            <input type="text" placeholder="幣種">
+        </div>
+        <div class="field">
+            <input type="text" placeholder="時間範圍">
+        </div>
+
+        <button class="btn-search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            搜索
+        </button>
+        <button class="btn-primary" onclick="openAddModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:4px;vertical-align:-2px">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            添加
+        </button>
+    </div>
+
+    <div class="card table-wrap">
+        <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th class="sticky-outer" style="width:60px"><div class="sticky-inner" style="left:0px;width:60px">圖標</div></th>
+                    <th class="sticky-outer" style="width:130px"><div class="sticky-inner" style="left:60px;width:130px"><span class="th-inner">交易對<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></div></th>
+                    <th class="sticky-outer" style="width:110px"><div class="sticky-inner shadow" style="left:190px;width:110px"><span class="th-inner">保留小數點位<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></div></th>
+                    <th>幣種類型</th>
+                    <th>最小提幣量</th>
+                    <th>提幣最小區間值</th>
+                    <th>提幣最大區間值</th>
+                    <th>提幣手續費率</th>
+                    <th>幣幣量</th>
+                    <th>狀態</th>
+                    <th>賣出</th>
+                    <th class="col-w-200">操作</th>
+                </tr>
+            </thead>
+            <tbody id="currencyBody">
+                <tr data-name="BTC/USDT">
+                    <td class="sticky-outer" style="width:60px"><div class="sticky-inner" style="left:0px;width:60px"><div class="coin-icon" style="background:#f7931a">B</div></div></td>
+                    <td class="sticky-outer" style="width:130px"><div class="sticky-inner" style="left:60px;width:130px">BTC/USDT</div></td>
+                    <td class="sticky-outer" style="width:110px"><div class="sticky-inner shadow" style="left:190px;width:110px">8</div></td>
+                    <td>火幣</td>
+                    <td>0.001</td>
+                    <td>0.001</td>
+                    <td>1000</td>
+                    <td>0.0005%</td>
+                    <td>0.0001</td>
+                    <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><button class="action-btn">修改</button><button class="action-btn danger">刪除</button></td>
+                </tr>
+                <tr data-name="ADA/USDT">
+                    <td class="sticky-outer" style="width:60px"><div class="sticky-inner" style="left:0px;width:60px"><div class="coin-icon" style="background:#0033ad">A</div></div></td>
+                    <td class="sticky-outer" style="width:130px"><div class="sticky-inner" style="left:60px;width:130px">ADA/USDT</div></td>
+                    <td class="sticky-outer" style="width:110px"><div class="sticky-inner shadow" style="left:190px;width:110px">4</div></td>
+                    <td>火幣</td>
+                    <td>0.1</td>
+                    <td>10</td>
+                    <td>10000</td>
+                    <td>0.01%</td>
+                    <td>0.0000</td>
+                    <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><button class="action-btn">修改</button><button class="action-btn danger">刪除</button></td>
+                </tr>
+                <tr data-name="HT/USDT">
+                    <td class="sticky-outer" style="width:60px"><div class="sticky-inner" style="left:0px;width:60px"><div class="coin-icon" style="background:#0e8c7f">H</div></div></td>
+                    <td class="sticky-outer" style="width:130px"><div class="sticky-inner" style="left:60px;width:130px">HT/USDT</div></td>
+                    <td class="sticky-outer" style="width:110px"><div class="sticky-inner shadow" style="left:190px;width:110px">4</div></td>
+                    <td>火幣</td>
+                    <td>0.1</td>
+                    <td>10</td>
+                    <td>10000</td>
+                    <td>0.1%</td>
+                    <td>0.0000</td>
+                    <td><span class="toggle-switch" onclick="toggleSwitch(this)"><span class="toggle-label">禁用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><span class="toggle-switch" onclick="toggleSwitch(this)"><span class="toggle-label">禁用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><button class="action-btn">修改</button><button class="action-btn danger">刪除</button></td>
+                </tr>
+                <tr data-name="ONT/USDT">
+                    <td class="sticky-outer" style="width:60px"><div class="sticky-inner" style="left:0px;width:60px"><div class="coin-icon" style="background:#1f7ed0">O</div></div></td>
+                    <td class="sticky-outer" style="width:130px"><div class="sticky-inner" style="left:60px;width:130px">ONT/USDT</div></td>
+                    <td class="sticky-outer" style="width:110px"><div class="sticky-inner shadow" style="left:190px;width:110px">4</div></td>
+                    <td>火幣</td>
+                    <td>0.1</td>
+                    <td>10</td>
+                    <td>10000</td>
+                    <td>0.1%</td>
+                    <td>0.0000</td>
+                    <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><button class="action-btn">修改</button><button class="action-btn danger">刪除</button></td>
+                </tr>
+                <tr data-name="ETH/USDT">
+                    <td class="sticky-outer" style="width:60px"><div class="sticky-inner" style="left:0px;width:60px"><div class="coin-icon" style="background:#627eea">E</div></div></td>
+                    <td class="sticky-outer" style="width:130px"><div class="sticky-inner" style="left:60px;width:130px">ETH/USDT</div></td>
+                    <td class="sticky-outer" style="width:110px"><div class="sticky-inner shadow" style="left:190px;width:110px">4</div></td>
+                    <td>火幣</td>
+                    <td>0.005</td>
+                    <td>0.005</td>
+                    <td>1000</td>
+                    <td>0.001%</td>
+                    <td>0.001</td>
+                    <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><button class="action-btn">修改</button><button class="action-btn danger">刪除</button></td>
+                </tr>
+                <tr data-name="XRP/USDT">
+                    <td class="sticky-outer" style="width:60px"><div class="sticky-inner" style="left:0px;width:60px"><div class="coin-icon" style="background:#25a2e0">X</div></div></td>
+                    <td class="sticky-outer" style="width:130px"><div class="sticky-inner" style="left:60px;width:130px">XRP/USDT</div></td>
+                    <td class="sticky-outer" style="width:110px"><div class="sticky-inner shadow" style="left:190px;width:110px">4</div></td>
+                    <td>火幣</td>
+                    <td>1</td>
+                    <td>100</td>
+                    <td>10000</td>
+                    <td>0.1%</td>
+                    <td>0.0001</td>
+                    <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><button class="action-btn">修改</button><button class="action-btn danger">刪除</button></td>
+                </tr>
+                <tr data-name="XMR/USDT">
+                    <td class="sticky-outer" style="width:60px"><div class="sticky-inner" style="left:0px;width:60px"><div class="coin-icon" style="background:#ff6600">M</div></div></td>
+                    <td class="sticky-outer" style="width:130px"><div class="sticky-inner" style="left:60px;width:130px">XMR/USDT</div></td>
+                    <td class="sticky-outer" style="width:110px"><div class="sticky-inner shadow" style="left:190px;width:110px">4</div></td>
+                    <td>火幣</td>
+                    <td>1</td>
+                    <td>100</td>
+                    <td>10000</td>
+                    <td>0.1%</td>
+                    <td>0.0001</td>
+                    <td><span class="toggle-switch" onclick="toggleSwitch(this)"><span class="toggle-label">禁用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><span class="toggle-switch" onclick="toggleSwitch(this)"><span class="toggle-label">禁用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><button class="action-btn">修改</button><button class="action-btn danger">刪除</button></td>
+                </tr>
+                <tr data-name="LTC/USDT">
+                    <td class="sticky-outer" style="width:60px"><div class="sticky-inner" style="left:0px;width:60px"><div class="coin-icon" style="background:#345d9d">L</div></div></td>
+                    <td class="sticky-outer" style="width:130px"><div class="sticky-inner" style="left:60px;width:130px">LTC/USDT</div></td>
+                    <td class="sticky-outer" style="width:110px"><div class="sticky-inner shadow" style="left:190px;width:110px">4</div></td>
+                    <td>火幣</td>
+                    <td>2</td>
+                    <td>100</td>
+                    <td>10000</td>
+                    <td>0.1%</td>
+                    <td>0.0001</td>
+                    <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+                    <td><button class="action-btn">修改</button><button class="action-btn danger">刪除</button></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <div class="pagination-bar">
+            <div class="page-nav">&lsaquo;</div>
+            <div class="page-num active">1</div>
+            <div class="page-nav">&rsaquo;</div>
+            <span>到第</span>
+            <input class="page-jump" value="1">
+            <span>頁</span>
+            <button class="btn-confirm">確定</button>
+            <span>共 45 條</span>
+            <select class="page-size">
+                <option>10條/頁</option>
+                <option>50條/頁</option>
+                <option selected>100條/頁</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 刪除確認彈窗 ===== -->
+<div class="modal-mask" id="confirmDeleteModal">
+    <div class="modal-box" style="width:400px">
+        <div class="modal-header">
+            <span>提示</span>
+            <span class="modal-close" onclick="closeConfirmDelete()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p style="margin:0;color:#4a5563;font-size:15px">確定要刪除這個交易對嗎？</p>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeConfirmDelete()" style="background:#fff;color:#555;border:1px solid #d9dee5;margin-right:10px">取消</button>
+            <button onclick="confirmDelete()" style="background:#ff7043">確定刪除</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 添加幣種彈窗 ===== -->
+<div class="modal-mask" id="addModal">
+    <div class="modal-box" style="width:480px">
+        <div class="modal-header">
+            <span>添加交易對</span>
+            <span class="modal-close" onclick="closeAddModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="form-row">
+                <label>交易對</label>
+                <input type="text" id="addPair" placeholder="例如 SOL/USDT">
+            </div>
+            <div class="form-row">
+                <label>幣種類型</label>
+                <select id="addType">
+                    <option>火幣</option>
+                    <option>幣安</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label>保留小數點位</label>
+                <input type="text" id="addDecimals" placeholder="例如 4">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeAddModal()" style="background:#fff;color:#555;border:1px solid #d9dee5;margin-right:10px">取消</button>
+            <button onclick="submitAdd()">確定</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Toast 提示 ===== -->
+<div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
+    </svg>
+    <span id="toastMsg">操作成功</span>
+</div>
+
+<script>
+/* ===== Toast 提示邏輯 ===== */
+let toastTimer = null;
+function showToast(msg){
+    const toast = document.getElementById("toast");
+    document.getElementById("toastMsg").textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+/* ===== 開關切換 ===== */
+function toggleSwitch(el){
+    el.classList.toggle("on");
+    const label = el.querySelector(".toggle-label");
+    label.textContent = el.classList.contains("on") ? "啟用" : "禁用";
+    showToast(el.classList.contains("on") ? "已啟用" : "已禁用");
+}
+
+/* ===== 刪除確認彈窗 ===== */
+let pendingDeleteRow = null;
+function openConfirmDelete(tr){
+    pendingDeleteRow = tr;
+    document.getElementById("confirmDeleteModal").classList.add("show");
+}
+function closeConfirmDelete(){
+    pendingDeleteRow = null;
+    document.getElementById("confirmDeleteModal").classList.remove("show");
+}
+document.getElementById("confirmDeleteModal").addEventListener("click", (e) => {
+    if(e.target.id === "confirmDeleteModal") closeConfirmDelete();
+});
+function confirmDelete(){
+    if(pendingDeleteRow){
+        pendingDeleteRow.remove();
+        showToast("刪除成功");
+    }
+    closeConfirmDelete();
+}
+
+/* ===== 添加交易對彈窗 ===== */
+function openAddModal(){
+    document.getElementById("addModal").classList.add("show");
+}
+function closeAddModal(){
+    document.getElementById("addModal").classList.remove("show");
+    document.getElementById("addPair").value = "";
+    document.getElementById("addDecimals").value = "";
+}
+document.getElementById("addModal").addEventListener("click", (e) => {
+    if(e.target.id === "addModal") closeAddModal();
+});
+function submitAdd(){
+    const pair = document.getElementById("addPair").value.trim();
+    const type = document.getElementById("addType").value;
+    const decimals = document.getElementById("addDecimals").value.trim() || "4";
+    if(!pair){
+        showToast("請輸入交易對");
+        return;
+    }
+    const symbol = pair.split("/")[0] || "?";
+    const colors = ["#f7931a","#0033ad","#627eea","#25a2e0","#345d9d","#ff6600","#0e8c7f"];
+    const color = colors[Math.floor(Math.random()*colors.length)];
+
+    const tr = document.createElement("tr");
+    tr.dataset.name = pair;
+    tr.innerHTML = `
+        <td class="sticky-outer" style="width:60px"><div class="sticky-inner" style="left:0px;width:60px"><div class="coin-icon" style="background:${color}">${symbol.charAt(0)}</div></div></td>
+        <td class="sticky-outer" style="width:130px"><div class="sticky-inner" style="left:60px;width:130px">${pair}</div></td>
+        <td class="sticky-outer" style="width:110px"><div class="sticky-inner shadow" style="left:190px;width:110px">${decimals}</div></td>
+        <td>${type}</td>
+        <td>1</td>
+        <td>100</td>
+        <td>10000</td>
+        <td>0.1%</td>
+        <td>0.0000</td>
+        <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+        <td><span class="toggle-switch on" onclick="toggleSwitch(this)"><span class="toggle-label">啟用</span><span class="toggle-track"><span class="toggle-thumb"></span></span></span></td>
+        <td><button class="action-btn">修改</button><button class="action-btn danger">刪除</button></td>`;
+    document.getElementById("currencyBody").appendChild(tr);
+
+    closeAddModal();
+    showToast("新增成功");
+}
+
+/* 表格中的「修改」「刪除」按鈕 */
+document.getElementById("currencyBody").addEventListener("click", (e) => {
+    const target = e.target;
+    if(!target.classList.contains("action-btn")) return;
+    const tr = target.closest("tr");
+    const action = target.textContent.trim();
+
+    if(action === "刪除"){
+        openConfirmDelete(tr);
+    } else if(action === "修改"){
+        showToast("修改功能尚未串接");
+    }
+});
+</script>
+</body>
+</html>

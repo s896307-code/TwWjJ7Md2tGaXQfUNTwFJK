@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>敬請期待</title>
+<link rel="stylesheet" href="../assets/common.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                <rect x="3" y="4" width="18" height="16" rx="2"/>
+                <path d="M3 9h18"/>
+                <path d="M8 3v3M16 3v3"/>
+            </svg>
+            <span id="emptyText">此頁面尚未設計，敬請期待</span>
+        </div>
+    </div>
+</div>
+
+<script>
+/* 由主選單透過網址參數帶入標題，例如 placeholder.html?title=冷錢包管理 */
+const params = new URLSearchParams(location.search);
+const title = params.get("title");
+if(title){
+    document.getElementById("emptyText").textContent = `「${title}」頁面尚未設計，敬請期待`;
+}
+</script>
+</body>
+</html>

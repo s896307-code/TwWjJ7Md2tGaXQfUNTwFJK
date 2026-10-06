@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>熱錢包管理</title>
+<link rel="stylesheet" href="../assets/common.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card search">
+        <div class="field">
+            <label>幣種：</label>
+            <select id="filterCurrency">
+                <option>全部</option>
+                <option>USDT</option>
+                <option>TRX</option>
+                <option>ETH</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>網絡類型：</label>
+            <select id="filterNetwork">
+                <option>全部</option>
+                <option>TRON</option>
+                <option>ETH</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>地址類型</label>
+            <select>
+                <option>手續費錢包</option>
+                <option>歸集錢包</option>
+                <option>提幣錢包</option>
+            </select>
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-primary" onclick="openGaModal()">發起熱轉冷</button>
+        <button class="btn-search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            搜索
+        </button>
+        <button class="btn-reset">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            重置
+        </button>
+    </div>
+
+    <div class="card table-wrap">
+        <div class="toolbar">
+            <div class="icon-btn" title="搜尋">
+                <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="icon-btn" title="刷新">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </div>
+            <div class="icon-btn" title="全螢幕">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            </div>
+        </div>
+
+        <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:0px;width:100px"><span class="th-inner">幣種<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></div></th>
+                    <th class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:100px;width:100px"><span class="th-inner">網絡<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></div></th>
+                    <th class="sticky-outer" style="width:220px"><div class="sticky-inner shadow" style="left:200px;width:220px"><span class="th-inner">地址<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></div></th>
+                    <th><span class="th-inner">餘額<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th><span class="th-inner">地址類型（錢包）<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th><span class="th-inner">餘額更新時間<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th class="col-w-200">操作</th>
+                </tr>
+            </thead>
+            <tbody id="walletTableBody">
+                <tr>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:0px;width:100px">TRX</div></td><td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:100px;width:100px">TRON</div></td><td class="sticky-outer" style="width:220px"><div class="sticky-inner shadow" style="left:200px;width:220px">TEMLAenrqj...PRxH6UE6Uq</div></td><td>134.638</td>
+                    <td>歸集錢包</td><td>2026-08-24 09:48:47</td>
+                    <td><button class="action-btn">日誌</button><button class="action-btn">更新餘額</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:0px;width:100px">USDT</div></td><td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:100px;width:100px">TRON</div></td><td class="sticky-outer" style="width:220px"><div class="sticky-inner shadow" style="left:200px;width:220px">TEMLAenrqj...PRxH6UE6Uq</div></td><td>9.975375</td>
+                    <td>歸集錢包</td><td>2026-08-21 15:03:29</td>
+                    <td><button class="action-btn">日誌</button><button class="action-btn">更新餘額</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:0px;width:100px">USDT</div></td><td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:100px;width:100px">ETH</div></td><td class="sticky-outer" style="width:220px"><div class="sticky-inner shadow" style="left:200px;width:220px">0x86a25497...2b069edd7f</div></td><td>24975</td>
+                    <td>歸集錢包</td><td>2026-07-20 20:49:40</td>
+                    <td><button class="action-btn">日誌</button><button class="action-btn">更新餘額</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:0px;width:100px">ETH</div></td><td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:100px;width:100px">ETH</div></td><td class="sticky-outer" style="width:220px"><div class="sticky-inner shadow" style="left:200px;width:220px">0x86a25497...2b069edd7f</div></td><td>99.99989474</td>
+                    <td>歸集錢包</td><td>2026-07-20 20:49:40</td>
+                    <td><button class="action-btn">日誌</button><button class="action-btn">更新餘額</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:0px;width:100px">USDT</div></td><td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:100px;width:100px">ETH</div></td><td class="sticky-outer" style="width:220px"><div class="sticky-inner shadow" style="left:200px;width:220px">0x2d335943...567f1f971a</div></td><td>24975</td>
+                    <td>歸集錢包</td><td>2026-07-20 20:46:24</td>
+                    <td><button class="action-btn">日誌</button><button class="action-btn">更新餘額</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:0px;width:100px">ETH</div></td><td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:100px;width:100px">ETH</div></td><td class="sticky-outer" style="width:220px"><div class="sticky-inner shadow" style="left:200px;width:220px">0x2d335943...567f1f971a</div></td><td>99.99989474</td>
+                    <td>歸集錢包</td><td>2026-07-20 20:46:24</td>
+                    <td><button class="action-btn">日誌</button><button class="action-btn">更新餘額</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:0px;width:100px">USDT</div></td><td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:100px;width:100px">ETH</div></td><td class="sticky-outer" style="width:220px"><div class="sticky-inner shadow" style="left:200px;width:220px">0x5229c4e5...418b5aa4b2</div></td><td>24975</td>
+                    <td>歸集錢包</td><td>2026-07-20 20:38:17</td>
+                    <td><button class="action-btn">日誌</button><button class="action-btn">更新餘額</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:0px;width:100px">ETH</div></td><td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:100px;width:100px">ETH</div></td><td class="sticky-outer" style="width:220px"><div class="sticky-inner shadow" style="left:200px;width:220px">0x5229c4e5...418b5aa4b2</div></td><td>99.99989474</td>
+                    <td>歸集錢包</td><td>2026-07-20 20:38:17</td>
+                    <td><button class="action-btn">日誌</button><button class="action-btn">更新餘額</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:0px;width:100px">USDT</div></td><td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:100px;width:100px">ETH</div></td><td class="sticky-outer" style="width:220px"><div class="sticky-inner shadow" style="left:200px;width:220px">0x61788373...cb4e1cfa1f</div></td><td>24975</td>
+                    <td>歸集錢包</td><td>2026-07-20 20:36:21</td>
+                    <td><button class="action-btn">日誌</button><button class="action-btn">更新餘額</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:0px;width:100px">ETH</div></td><td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:100px;width:100px">ETH</div></td><td class="sticky-outer" style="width:220px"><div class="sticky-inner shadow" style="left:200px;width:220px">0x61788373...cb4e1cfa1f</div></td><td>99.99989474</td>
+                    <td>歸集錢包</td><td>2026-07-20 20:36:21</td>
+                    <td><button class="action-btn">日誌</button><button class="action-btn">更新餘額</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:0px;width:100px">USDT</div></td><td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:100px;width:100px">ETH</div></td><td class="sticky-outer" style="width:220px"><div class="sticky-inner shadow" style="left:200px;width:220px">0x21ef0507...a201b518b9</div></td><td>1000000000</td>
+                    <td>歸集錢包</td><td>2026-07-20 20:30:03</td>
+                    <td><button class="action-btn">日誌</button><button class="action-btn">更新餘額</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:0px;width:100px">ETH</div></td><td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:100px;width:100px">ETH</div></td><td class="sticky-outer" style="width:220px"><div class="sticky-inner shadow" style="left:200px;width:220px">0x21ef0507...a201b518b9</div></td><td>0</td>
+                    <td>歸集錢包</td><td>2026-07-20 20:30:03</td>
+                    <td><button class="action-btn">日誌</button><button class="action-btn">更新餘額</button></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+
+        <div class="pagination-bar">
+            <div class="page-nav">&lsaquo;</div>
+            <div class="page-num active">1</div>
+            <div class="page-num">2</div>
+            <div class="page-num">3</div>
+            <div class="page-num">4</div>
+            <div class="page-nav">&rsaquo;</div>
+            <span>到第</span>
+            <input class="page-jump" value="1">
+            <span>頁</span>
+            <button class="btn-confirm">確定</button>
+            <span>共 42 條</span>
+            <select class="page-size">
+                <option>10條/頁</option>
+                <option selected>20條/頁</option>
+                <option>50條/頁</option>
+                <option>100條/頁</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- ===== GA 驗證彈窗 ===== -->
+<div class="modal-mask" id="gaModal">
+    <div class="modal-box" style="width:460px">
+        <div class="modal-header">
+            <span>提示</span>
+            <span class="modal-close" onclick="closeGaModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p style="margin:0 0 12px;color:#4a5563;font-size:15px">請輸入GA驗證碼：</p>
+            <input type="text" id="gaCodeInput" placeholder="請輸入6位GA驗證碼" maxlength="6" style="width:100%">
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeGaModal()" style="background:#fff;color:#555;border:1px solid #d9dee5;margin-right:10px">取消</button>
+            <button onclick="confirmGaCode()" style="background:#1E9FFF">確定</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 日誌彈窗 ===== -->
+<div class="modal-mask" id="logModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <span>熱錢包日誌</span>
+            <span class="modal-close" onclick="closeLogModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間</th>
+                        <th>操作人</th>
+                        <th>操作事項</th>
+                        <th>備註</th>
+                    </tr>
+                </thead>
+                <tbody id="logModalBody"></tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeLogModal()">知道了</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Toast 提示 ===== -->
+<div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
+    </svg>
+    <span id="toastMsg">刷新成功</span>
+</div>
+
+<script>
+/* ===== Toast 提示邏輯 ===== */
+let toastTimer = null;
+function showToast(msg, type){
+    const toast = document.getElementById("toast");
+    document.getElementById("toastMsg").textContent = msg;
+    toast.classList.toggle("error", type === "error");
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+/* ===== GA 驗證彈窗 ===== */
+function openGaModal(){
+    const currency = document.getElementById("filterCurrency").value;
+    const network = document.getElementById("filterNetwork").value;
+    if(currency === "全部" || network === "全部"){
+        showToast("請選擇幣種或者網絡類型", "error");
+        return;
+    }
+    document.getElementById("gaCodeInput").value = "";
+    document.getElementById("gaModal").classList.add("show");
+}
+function closeGaModal(){
+    document.getElementById("gaModal").classList.remove("show");
+}
+document.getElementById("gaModal").addEventListener("click", (e) => {
+    if(e.target.id === "gaModal") closeGaModal();
+});
+function confirmGaCode(){
+    const code = document.getElementById("gaCodeInput").value.trim();
+    if(!/^\d{6}$/.test(code)){
+        showToast("請輸入6位數字驗證碼");
+        return;
+    }
+    closeGaModal();
+    showToast("已發起熱轉冷");
+}
+
+/* ===== 日誌彈窗邏輯 ===== */
+function openLogModal(row){
+    document.getElementById("logModalBody").innerHTML = `
+        <tr>
+            <td>${row.updateTime}</td>
+            <td>admin</td>
+            <td>更新錢包地址餘額</td>
+            <td>refresh balance ${row.network}/${row.currency} = ${row.balance}</td>
+        </tr>`;
+    document.getElementById("logModal").classList.add("show");
+}
+function closeLogModal(){
+    document.getElementById("logModal").classList.remove("show");
+}
+document.getElementById("logModal").addEventListener("click", (e) => {
+    if(e.target.id === "logModal") closeLogModal();
+});
+
+function formatNow(){
+    const d = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
+
+/* 工具列「刷新」按鈕 */
+document.querySelector(".table-wrap").addEventListener("click", (e) => {
+    const iconBtn = e.target.closest(".icon-btn");
+    if(iconBtn && iconBtn.title === "刷新"){
+        showToast("刷新成功");
+    }
+});
+
+/* 表格中的「日誌」「更新餘額」按鈕 */
+document.getElementById("walletTableBody").addEventListener("click", (e) => {
+    const target = e.target;
+    if(!target.classList.contains("action-btn")) return;
+    const tr = target.closest("tr");
+    if(!tr) return;
+    const cells = tr.querySelectorAll("td");
+    const action = target.textContent.trim();
+
+    if(action === "日誌"){
+        openLogModal({
+            currency: cells[0].textContent.trim(),
+            network: cells[1].textContent.trim(),
+            address: cells[2].textContent.trim(),
+            balance: cells[3].textContent.trim(),
+            updateTime: cells[5].textContent.trim()
+        });
+    } else if(action === "更新餘額"){
+        cells[5].textContent = formatNow();
+        showToast("刷新成功");
+    }
+});
+</script>
+</body>
+</html>

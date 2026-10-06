@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>後台管理</title>
+<style>
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+    margin:0;
+    background:#f5f6f8;
+    color:#303846;
+    font-family:"Microsoft JhengHei","PingFang TC",Arial,sans-serif;
+    font-size:14px;
+    display:flex;
+}
+
+/* ===== 側邊選單 ===== */
+.sidebar{
+    width:220px;
+    min-height:100vh;
+    background:#1f3042;
+    color:#fff;
+    flex-shrink:0;
+}
+.menu-item{width:100%}
+.menu-title{
+    height:64px;
+    padding:0 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:#30465d;
+    color:#d8dee5;
+    font-size:16px;
+    font-weight:500;
+    cursor:pointer;
+    user-select:none;
+}
+.menu-title:hover{background:#3a526b}
+.arrow{
+    width:8px;
+    height:8px;
+    border-left:2px solid #8795a3;
+    border-top:2px solid #8795a3;
+    transform:rotate(45deg);
+    transition:transform .2s ease;
+}
+.menu-item.active .arrow{
+    transform:rotate(225deg);
+    margin-top:-4px;
+}
+.submenu{
+    display:none;
+    background:#1f3042;
+}
+.menu-item.active .submenu{display:block}
+.submenu-item{
+    min-height:56px;
+    padding:0 18px 0 56px;
+    display:flex;
+    align-items:center;
+    color:#d8dee5;
+    font-size:15px;
+    cursor:pointer;
+    transition:background .15s ease;
+}
+.submenu-item:hover{
+    background:#2b4054;
+    color:#fff;
+}
+.submenu-item.selected{
+    background:#263b4f;
+    color:#fff;
+}
+
+/* 扁平頂層選單項目（無子選單，直接點擊切換頁面） */
+.menu-flat{
+    height:64px;
+    padding:0 28px;
+    display:flex;
+    align-items:center;
+    background:#30465d;
+    color:#d8dee5;
+    font-size:16px;
+    font-weight:500;
+    cursor:pointer;
+    user-select:none;
+}
+.menu-flat:hover{background:#3a526b}
+.menu-flat.selected{background:#263b4f;color:#fff}
+
+/* ===== 右側內容區 ===== */
+.main{
+    flex:1;
+    min-width:0;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+.header{
+    height:60px;
+    background:#fff;
+    border-bottom:1px solid #e5e8ed;
+    display:flex;
+    align-items:center;
+    padding:0 28px;
+    font-size:20px;
+    font-weight:600;
+    flex-shrink:0;
+}
+#pageFrame{
+    flex:1;
+    width:100%;
+    border:0;
+    display:block;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== 側邊選單 ===== -->
+<div class="sidebar" id="sidebar">
+
+    <div class="menu-item active">
+        <div class="menu-title" onclick="toggleMenu(this)">
+            <span>冷熱錢包管理</span>
+            <span class="arrow"></span>
+        </div>
+        <div class="submenu">
+            <div class="submenu-item selected" data-src="pages/hot-wallet.html">熱錢包管理</div>
+            <div class="submenu-item" data-src="pages/cold-wallet.html">冷錢包管理</div>
+            <div class="submenu-item" data-src="pages/cold-to-hot.html">冷轉熱訂單</div>
+            <div class="submenu-item" data-src="pages/cold-review.html">冷錢包審核</div>
+            <div class="submenu-item" data-src="pages/balance-query.html">錢包餘額查詢</div>
+            <div class="submenu-item" data-src="pages/system-order.html">系統流轉訂單</div>
+        </div>
+    </div>
+
+    <div class="menu-item active">
+        <div class="menu-title" onclick="toggleMenu(this)">
+            <span>AML異常資料</span>
+            <span class="arrow"></span>
+        </div>
+        <div class="submenu">
+            <div class="submenu-item" data-src="pages/ofac-list.html">執行制裁名單(OFAC)</div>
+            <div class="submenu-item" data-src="pages/aml-outbound.html">異常資金出賬</div>
+            <div class="submenu-item" data-src="pages/aml-outbound-review.html">異常資金出賬審核</div>
+        </div>
+    </div>
+
+    <div class="menu-item active">
+        <div class="menu-title" onclick="toggleMenu(this)">
+            <span>歸集管理</span>
+            <span class="arrow"></span>
+        </div>
+        <div class="submenu">
+            <div class="submenu-item" data-src="pages/collect-wallets.html">歸集錢包</div>
+            <div class="submenu-item" data-src="pages/collect-management.html">發起歸集管理</div>
+            <div class="submenu-item" data-src="pages/collect-log.html">歸集記錄</div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ===== 右側內容區：由 iframe 載入獨立頁面 ===== -->
+<div class="main">
+    <div class="header" id="pageTitle">熱錢包管理</div>
+    <iframe id="pageFrame" src="pages/hot-wallet.html"></iframe>
+</div>
+
+<script>
+function toggleMenu(title){
+    const menu = title.parentElement;
+    menu.classList.toggle("active");
+}
+
+/* 點擊子選單／扁平頂層項目：切換選中狀態 + 切換 iframe 內容 */
+document.querySelectorAll(".submenu-item, .menu-flat").forEach(item => {
+    item.addEventListener("click", () => {
+        document.querySelectorAll(".submenu-item, .menu-flat").forEach(i => i.classList.remove("selected"));
+        item.classList.add("selected");
+
+        document.getElementById("pageTitle").textContent = item.textContent.trim();
+        document.getElementById("pageFrame").src = item.dataset.src;
+    });
+});
+</script>
+</body>
+</html>

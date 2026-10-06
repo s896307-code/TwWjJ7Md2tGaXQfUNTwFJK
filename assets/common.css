@@ -1,0 +1,529 @@
+/* ============================================================
+   common.css
+   共用元件樣式（給每一個「內容頁」使用，例如 pages/hot-wallet.html）
+   新增頁面時，在 <head> 內加入：
+       <link rel="stylesheet" href="../assets/common.css">
+   即可直接使用 .card / .search / table / .modal-mask / .toast 等樣式
+   ============================================================ */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+    margin:0;
+    background:#f5f6f8;
+    color:#303846;
+    font-family:"Microsoft JhengHei","PingFang TC",Arial,sans-serif;
+    font-size:14px;
+}
+
+.container{padding:24px 28px}
+.card{
+    background:#fff;
+    border:1px solid #e5e8ed;
+    border-radius:4px;
+    box-shadow:0 1px 3px rgba(0,0,0,.03);
+}
+
+/* 空狀態（尚未對應內容的頁面） */
+.empty-state{
+    padding:120px 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    color:#9aa2ac;
+    gap:12px;
+}
+.empty-state svg{width:64px;height:64px;stroke:#c3c9d1}
+.empty-state span{font-size:15px}
+
+/* 搜尋列 */
+.search{
+    padding:16px 20px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px 24px;
+    align-items:center;
+}
+.field{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+label{white-space:nowrap;color:#4b5563}
+input,select{
+    width:180px;
+    height:36px;
+    border:1px solid #d7dce3;
+    border-radius:4px;
+    padding:0 12px;
+    outline:none;
+    background:#fff;
+    color:#303846;
+    appearance:none;
+}
+select{
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%238a919a'/></svg>");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    padding-right:28px;
+}
+input:focus,select:focus{border-color:#009688}
+.spacer{flex:1}
+
+/* ===== 按鈕（主色調整為青綠色系，刪除/拒絕類操作為橙色） ===== */
+button{
+    height:36px;
+    padding:0 18px;
+    border:0;
+    border-radius:4px;
+    cursor:pointer;
+    font-size:14px;
+    white-space:nowrap;
+}
+.btn-primary{background:#009688;color:#fff}
+.btn-primary:hover{background:#00796b}
+.btn-search{background:#009688;color:#fff;display:flex;align-items:center;gap:6px}
+.btn-search:hover{background:#00796b}
+.btn-export{background:#009688;color:#fff;display:flex;align-items:center;gap:6px}
+.btn-export:hover{background:#00796b}
+.btn-reset{background:#fff;color:#555;border:1px solid #d9dee5;display:flex;align-items:center;gap:6px}
+.btn-reset:hover{border-color:#009688;color:#009688}
+.btn-danger{background:#FF5722;color:#fff}
+.btn-danger:hover{background:#E64A19}
+.btn-disabled{background:#f2f3f5;color:#b8bfc7;border:1px solid #e5e8ed;cursor:not-allowed}
+.btn-disabled:hover{background:#f2f3f5}
+
+/* 工具列（列表上方：新增／批次操作按鈕 + 右側 icon 按鈕） */
+.list-toolbar{
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.list-toolbar .spacer{flex:1}
+
+/* 表格 checkbox 欄位 */
+.checkbox-col{width:44px;text-align:center}
+input[type="checkbox"]{
+    appearance:none;
+    -webkit-appearance:none;
+    width:16px;
+    height:16px;
+    border:1.5px solid #c3c9d1;
+    border-radius:3px;
+    background:#fff;
+    cursor:pointer;
+    position:relative;
+    flex-shrink:0;
+    vertical-align:middle;
+    margin:0;
+}
+input[type="checkbox"]:hover{border-color:#009688}
+input[type="checkbox"]:checked{
+    background:#009688;
+    border-color:#009688;
+}
+input[type="checkbox"]:checked::after{
+    content:"";
+    position:absolute;
+    left:4px;top:1px;
+    width:4px;height:8px;
+    border:solid #fff;
+    border-width:0 2px 2px 0;
+    transform:rotate(45deg);
+}
+input[type="checkbox"]:indeterminate{
+    background:#009688;
+    border-color:#009688;
+}
+input[type="checkbox"]:indeterminate::after{
+    content:"";
+    position:absolute;
+    left:3px;top:6.5px;
+    width:8px;height:2px;
+    background:#fff;
+}
+
+/* 無資料列 */
+.no-data td{
+    height:120px;
+    text-align:center;
+    color:#9aa2ac;
+    background:#fff;
+}
+
+/* 表格區塊 */
+.table-wrap{margin-top:16px}
+.toolbar{
+    padding:14px 20px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:10px;
+}
+.icon-btn{
+    width:32px;
+    height:32px;
+    border:1px solid #d9dee5;
+    background:#fff;
+    border-radius:4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color:#606b78;
+}
+.icon-btn:hover{border-color:#009688;color:#009688}
+.icon-btn svg{width:14px;height:14px;stroke:currentColor;fill:none}
+
+/* 表格橫向捲動容器（欄位過多時使用，搭配 .sticky-cell 固定前幾欄） */
+.table-scroll{
+    overflow-x:auto;
+    scrollbar-width:thin;
+    scrollbar-color:#c3c9d1 #f0f1f3;
+}
+.table-scroll::-webkit-scrollbar{height:10px}
+.table-scroll::-webkit-scrollbar-track{background:#f0f1f3}
+.table-scroll::-webkit-scrollbar-thumb{background:#c3c9d1;border-radius:5px}
+.table-scroll::-webkit-scrollbar-thumb:hover{background:#9aa2ac}
+/* 固定版面：強制依照設定的欄寬排版，避免欄位跟固定欄的位移對不齊 */
+.table-scroll table{table-layout:fixed;width:auto}
+.table-scroll th,.table-scroll td{width:150px;overflow:hidden;text-overflow:ellipsis}
+.table-scroll th.sticky-cell,.table-scroll td.sticky-cell{width:unset}
+.table-scroll .col-w-200{width:200px}
+.table-scroll .col-w-260{width:260px}
+.table-scroll .col-w-320{width:320px}
+
+table{width:100%;border-collapse:separate;border-spacing:0}
+th,td{
+    height:52px;
+    padding:0 16px;
+    text-align:left;
+    border-bottom:1px solid #edf0f3;
+    white-space:nowrap;
+}
+th{
+    background:#fafbfc;
+    color:#606b78;
+    font-weight:500;
+    border-top:1px solid #edf0f3;
+}
+td{color:#4a5563}
+tr:hover td{background:#fafbfc}
+
+/* 表頭排序小圖示（僅視覺呈現） */
+.th-inner{display:inline-flex;align-items:center;gap:4px}
+.sort-icon{display:inline-flex;flex-direction:column;line-height:0;color:#c3c9d1;flex-shrink:0}
+.sort-icon svg{width:10px;height:10px}
+
+/* 固定欄位（表格橫向捲動時，前幾欄保持不動）
+   採用「內層 div 做 sticky」而非直接在 td/th 上用 sticky，
+   避免部分瀏覽器在表格儲存格上使用 position:sticky 時，橫向捲動當下背景短暫透明的渲染問題 */
+.sticky-outer{padding:0 !important}
+.sticky-inner{
+    position:sticky;
+    background-color:#fff;
+    height:100%;
+    min-height:52px;
+    display:flex;
+    align-items:center;
+    padding:0 16px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    z-index:2;
+}
+thead .sticky-inner{background-color:#fafbfc;z-index:3}
+tr:hover td .sticky-inner{background-color:#fafbfc}
+.sticky-inner.shadow{box-shadow:4px 0 6px -4px rgba(0,0,0,.18)}
+.sticky-inner.checkbox-inner{justify-content:center;padding:0}
+
+/* 舊版相容（若頁面仍直接使用 sticky-cell class） */
+.sticky-cell{
+    position:sticky;
+    background-color:#fff;
+    z-index:2;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    transform:translateZ(0);
+    will-change:transform;
+    backface-visibility:hidden;
+}
+thead .sticky-cell{z-index:3;background-color:#fafbfc}
+tr:hover td.sticky-cell{background-color:#fafbfc}
+.sticky-shadow{box-shadow:4px 0 6px -4px rgba(0,0,0,.18)}
+
+/* 操作欄按鈕（改為按鈕造型，取代純文字連結） */
+.action-btn{
+    display:inline-flex;
+    align-items:center;
+    height:28px;
+    padding:0 12px;
+    margin-right:8px;
+    border:1px solid #d9dee5;
+    border-radius:4px;
+    background:#fff;
+    color:#495a6b;
+    font-size:13px;
+    cursor:pointer;
+    white-space:nowrap;
+}
+.action-btn:hover{border-color:#009688;color:#009688}
+.action-btn.danger{background:#FF5722;color:#fff;border-color:transparent}
+.action-btn.danger:hover{background:#E64A19}
+
+/* 舊版純文字操作連結（保留相容） */
+.action{color:#009688;cursor:pointer;margin-right:16px}
+.action:hover{text-decoration:underline}
+
+/* ===== 分頁列 ===== */
+.pagination-bar{
+    padding:14px 20px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:10px;
+    color:#606b78;
+    font-size:14px;
+    flex-wrap:wrap;
+}
+.pagination-bar .page-nav,
+.pagination-bar .page-num{
+    min-width:32px;
+    height:32px;
+    padding:0 6px;
+    border:1px solid #d9dee5;
+    background:#fff;
+    border-radius:3px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    color:#606b78;
+}
+.pagination-bar .page-nav:hover,
+.pagination-bar .page-num:hover{border-color:#009688;color:#009688}
+.pagination-bar .page-num.active{background:#009688;color:#fff;border-color:#009688}
+.pagination-bar .page-jump{
+    width:48px;
+    height:32px;
+    text-align:center;
+    padding:0 4px;
+}
+.pagination-bar .page-size{
+    width:auto;
+    height:32px;
+    padding:0 8px 0 10px;
+}
+.pagination-bar .btn-confirm{
+    height:32px;
+    padding:0 14px;
+    background:#009688;
+    color:#fff;
+    border-radius:3px;
+    border:0;
+    cursor:pointer;
+}
+.pagination-bar .btn-confirm:hover{background:#00796b}
+
+/* 舊版分頁（保留相容） */
+.pagination{
+    padding:16px 20px;
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+    gap:8px;
+    color:#606b78;
+}
+.page{
+    min-width:32px;
+    height:32px;
+    border:1px solid #d9dee5;
+    background:#fff;
+    border-radius:3px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.page.active{background:#009688;color:#fff;border-color:#009688}
+
+/* ===== 彈窗 ===== */
+.modal-mask{
+    display:none;
+    position:fixed;
+    top:0;left:0;right:0;bottom:0;
+    background:rgba(0,0,0,.45);
+    z-index:1000;
+    align-items:center;
+    justify-content:center;
+}
+.modal-mask.show{display:flex}
+.modal-box{
+    width:720px;
+    max-width:92vw;
+    max-height:80vh;
+    background:#fff;
+    border-radius:6px;
+    box-shadow:0 8px 30px rgba(0,0,0,.2);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+}
+.modal-header{
+    height:56px;
+    flex-shrink:0;
+    padding:0 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #edf0f3;
+    font-size:16px;
+    font-weight:600;
+    color:#303846;
+}
+.modal-close{
+    width:24px;height:24px;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    color:#9aa2ac;
+    font-size:18px;
+    line-height:1;
+}
+.modal-close:hover{color:#606b78}
+.modal-body{
+    padding:20px 24px;
+    overflow-y:auto;
+}
+.form-row{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:16px;
+}
+.form-row:last-child{margin-bottom:0}
+.form-row label{width:80px;flex-shrink:0;text-align:right;color:#4b5563}
+.form-row input,.form-row select{width:100%}
+.form-row textarea{
+    width:100%;
+    min-height:84px;
+    border:1px solid #d7dce3;
+    border-radius:4px;
+    padding:10px 12px;
+    outline:none;
+    font-family:inherit;
+    font-size:14px;
+    color:#303846;
+    resize:vertical;
+}
+.form-row textarea:focus{border-color:#009688}
+.form-row.align-top label{padding-top:10px}
+.required-label::before{content:"*";color:#f56c6c;margin-right:3px}
+.form-static{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+.form-static label{width:80px;flex-shrink:0;text-align:right;color:#4b5563}
+.form-static span{color:#303846}
+.modal-notice{
+    font-size:12px;
+    color:#f56c6c;
+    line-height:1.7;
+    margin-top:4px;
+}
+.modal-body table{width:100%;border-collapse:collapse}
+.modal-body th,.modal-body td{
+    height:48px;
+    padding:0 14px;
+    text-align:left;
+    border-bottom:1px solid #edf0f3;
+    white-space:nowrap;
+    font-size:14px;
+}
+.modal-body th{background:#fafbfc;color:#606b78;font-weight:500;border-top:1px solid #edf0f3}
+.modal-body td{color:#4a5563}
+.modal-footer{
+    padding:16px 24px 22px;
+    display:flex;
+    justify-content:center;
+    flex-shrink:0;
+}
+.modal-footer button{
+    background:#009688;
+    color:#fff;
+    min-width:88px;
+}
+.modal-footer button:hover{background:#00796b}
+
+/* ===== 開關切換（啟用/禁用） ===== */
+.toggle-switch{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    user-select:none;
+}
+.toggle-switch .toggle-label{font-size:13px;color:#9aa2ac;min-width:28px}
+.toggle-switch.on .toggle-label{color:#5FB878}
+.toggle-switch .toggle-track{
+    width:36px;
+    height:20px;
+    border-radius:10px;
+    background:#dcdfe4;
+    position:relative;
+    transition:background .2s;
+    flex-shrink:0;
+}
+.toggle-switch.on .toggle-track{background:#5FB878}
+.toggle-switch .toggle-thumb{
+    position:absolute;
+    top:2px;left:2px;
+    width:16px;height:16px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 1px 2px rgba(0,0,0,.25);
+    transition:left .2s;
+}
+.toggle-switch.on .toggle-thumb{left:18px}
+
+/* ===== 圓形圖示（幣種等列表用） ===== */
+.coin-icon{
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+    font-size:12px;
+    font-weight:600;
+    flex-shrink:0;
+}
+
+/* ===== Toast 提示 ===== */
+.toast{
+    position:fixed;
+    top:24px;
+    left:50%;
+    transform:translateX(-50%) translateY(-12px);
+    background:#f0f9eb;
+    border:1px solid #c2e7b0;
+    color:#3c8b1a;
+    padding:12px 20px;
+    border-radius:4px;
+    font-size:14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    box-shadow:0 4px 16px rgba(0,0,0,.08);
+    opacity:0;
+    z-index:2000;
+    pointer-events:none;
+    transition:opacity .25s ease, transform .25s ease;
+}
+.toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+.toast svg{width:16px;height:16px;flex-shrink:0}
+.toast.error{
+    background:#fef0f0;
+    border-color:#fbc4c4;
+    color:#f56c6c;
+}

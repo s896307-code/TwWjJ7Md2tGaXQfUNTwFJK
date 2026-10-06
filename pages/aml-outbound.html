@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>異常資金出賬</title>
+<link rel="stylesheet" href="../assets/common.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card search">
+        <div class="field">
+            <label>幣種：</label>
+            <select>
+                <option>全部</option>
+                <option>BTC</option>
+                <option>ETH</option>
+                <option>USDT</option>
+                <option>USDC</option>
+                <option>TRX</option>
+            </select>
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            搜索
+        </button>
+        <button class="btn-reset">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            重置
+        </button>
+    </div>
+
+    <div class="card table-wrap">
+        <div class="toolbar">
+            <div class="icon-btn" title="搜尋">
+                <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="icon-btn" title="刷新" id="refreshBtn">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </div>
+            <div class="icon-btn" title="全螢幕">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>幣種</th>
+                    <th>網絡</th>
+                    <th>當前錢包異常資金資產數量</th>
+                    <th>已處理異常資金資產數量</th>
+                    <th>累計異常資產數量</th>
+                    <th>累計異常資金數量</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="amlBody">
+                <tr data-currency="ETH" data-network="ETH">
+                    <td>ETH</td>
+                    <td>ETH</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td><button class="action-btn" onclick="openOutboundModal(this)">出賬</button><button class="action-btn" onclick="openLogModal(this)">日誌</button></td>
+                </tr>
+                <tr data-currency="TRX" data-network="TRON">
+                    <td>TRX</td>
+                    <td>TRON</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td><button class="action-btn" onclick="openOutboundModal(this)">出賬</button><button class="action-btn" onclick="openLogModal(this)">日誌</button></td>
+                </tr>
+                <tr data-currency="USDC" data-network="ETH">
+                    <td>USDC</td>
+                    <td>ETH</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td><button class="action-btn" onclick="openOutboundModal(this)">出賬</button><button class="action-btn" onclick="openLogModal(this)">日誌</button></td>
+                </tr>
+                <tr data-currency="USDC" data-network="TRON">
+                    <td>USDC</td>
+                    <td>TRON</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td><button class="action-btn" onclick="openOutboundModal(this)">出賬</button><button class="action-btn" onclick="openLogModal(this)">日誌</button></td>
+                </tr>
+                <tr data-currency="USDT" data-network="ETH">
+                    <td>USDT</td>
+                    <td>ETH</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td><button class="action-btn" onclick="openOutboundModal(this)">出賬</button><button class="action-btn" onclick="openLogModal(this)">日誌</button></td>
+                </tr>
+                <tr data-currency="USDT" data-network="TRON">
+                    <td>USDT</td>
+                    <td>TRON</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td><button class="action-btn" onclick="openOutboundModal(this)">出賬</button><button class="action-btn" onclick="openLogModal(this)">日誌</button></td>
+                </tr>
+                <tr data-currency="BTC" data-network="BTC">
+                    <td>BTC</td>
+                    <td>BTC</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td><button class="action-btn" onclick="openOutboundModal(this)">出賬</button><button class="action-btn" onclick="openLogModal(this)">日誌</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ===== 出賬彈窗 ===== -->
+<div class="modal-mask" id="outboundModal">
+    <div class="modal-box" style="width:520px">
+        <div class="modal-header">
+            <span>AML異常資金轉賬</span>
+            <span class="modal-close" onclick="closeOutboundModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="form-static">
+                <label>幣種：</label>
+                <span id="outboundCurrency"></span>
+            </div>
+            <div class="form-static">
+                <label>網絡：</label>
+                <span id="outboundNetwork"></span>
+            </div>
+            <div class="form-row">
+                <label class="required-label">異常資金歸集地址：</label>
+                <select id="outboundSourceAddr">
+                    <option value="">請選擇異常資金出金地址</option>
+                    <option>TEMLAenrqj9kQwE2PRxH6UE6Uq（USDT・TRON・公司錢包・熱）</option>
+                    <option>TXhK2mZq7Yc4sD8fJ1eR6nW3vB9pL0oQaC（TRX・TRON・手續費錢包・熱）</option>
+                    <option>0x7bC4e9A21fD063C8e5B2A1F9D4E7C0B3A6D5F812（ETH・ETH・手續費錢包・熱）</option>
+                    <option>TCompanyWallet7bK1deXqmJqfXhZ3（USDT・TRON・公司錢包・冷）</option>
+                    <option>0x2d335943A6D5F812567f1f971a（USDT・ETH・公司錢包・冷）</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label class="required-label">接收地址：</label>
+                <input type="text" id="outboundAddress" placeholder="請填寫外部接收地址">
+            </div>
+            <div class="form-row">
+                <label class="required-label">金額：</label>
+                <input type="text" id="outboundAmount" placeholder="請輸入轉賬金額">
+            </div>
+            <div class="form-row align-top">
+                <label class="required-label">備注：</label>
+                <textarea id="outboundRemark" placeholder="請輸入通過理由，200字以內" maxlength="200"></textarea>
+            </div>
+            <div class="modal-notice">
+                1. 根據合規要求，所有數字資產存款經 AML 過濾後，風險資金會歸集到異常資金錢包，此金額不會進入交易所。<br>
+                2. 若您有處置需求，請透過發起異常資金轉出任務將異常資金退還給用戶。
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeOutboundModal()" style="background:#fff;color:#555;border:1px solid #d9dee5;margin-right:10px">取消</button>
+            <button onclick="submitOutbound()">確定</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 日誌彈窗 ===== -->
+<div class="modal-mask" id="logModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <span>日誌</span>
+            <span class="modal-close" onclick="closeLogModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <table>
+                <thead>
+                    <tr>
+                        <th>時間</th>
+                        <th>事件</th>
+                        <th>發生金額</th>
+                        <th>操作後餘額</th>
+                        <th>操作人</th>
+                    </tr>
+                </thead>
+                <tbody id="logModalBody">
+                    <tr>
+                        <td colspan="5" style="text-align:center;color:#9aa2ac">暫無數據</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeLogModal()" style="background:#1E9FFF">確認</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Toast 提示 ===== -->
+<div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
+    </svg>
+    <span id="toastMsg">操作成功</span>
+</div>
+
+<script>
+/* ===== Toast 提示邏輯 ===== */
+let toastTimer = null;
+function showToast(msg){
+    const toast = document.getElementById("toast");
+    document.getElementById("toastMsg").textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+/* 工具列「刷新」按鈕 */
+document.getElementById("refreshBtn").addEventListener("click", () => {
+    showToast("刷新成功");
+});
+
+/* ===== 出賬彈窗 ===== */
+let outboundRow = null;
+function openOutboundModal(btn){
+    outboundRow = btn.closest("tr");
+    document.getElementById("outboundCurrency").textContent = outboundRow.dataset.currency;
+    document.getElementById("outboundNetwork").textContent = outboundRow.dataset.network;
+    document.getElementById("outboundSourceAddr").value = "";
+    document.getElementById("outboundAddress").value = "";
+    document.getElementById("outboundAmount").value = "";
+    document.getElementById("outboundRemark").value = "";
+    document.getElementById("outboundModal").classList.add("show");
+}
+function closeOutboundModal(){
+    document.getElementById("outboundModal").classList.remove("show");
+}
+document.getElementById("outboundModal").addEventListener("click", (e) => {
+    if(e.target.id === "outboundModal") closeOutboundModal();
+});
+function submitOutbound(){
+    const sourceAddr = document.getElementById("outboundSourceAddr").value;
+    const address = document.getElementById("outboundAddress").value.trim();
+    const amount = document.getElementById("outboundAmount").value.trim();
+    const remark = document.getElementById("outboundRemark").value.trim();
+    if(!sourceAddr || !address || !amount || !remark){
+        showToast("請完整填寫必填欄位");
+        return;
+    }
+    closeOutboundModal();
+    showToast("轉賬申請已送出");
+}
+
+/* ===== 日誌彈窗 ===== */
+function openLogModal(btn){
+    document.getElementById("logModal").classList.add("show");
+}
+function closeLogModal(){
+    document.getElementById("logModal").classList.remove("show");
+}
+document.getElementById("logModal").addEventListener("click", (e) => {
+    if(e.target.id === "logModal") closeLogModal();
+});
+</script>
+</body>
+</html>

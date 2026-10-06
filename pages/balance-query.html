@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>錢包餘額查詢</title>
+<link rel="stylesheet" href="../assets/common.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card search">
+        <div class="field">
+            <label>幣種：</label>
+            <select>
+                <option>全部</option>
+                <option>USDT</option>
+                <option>TRX</option>
+                <option>ETH</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>網絡類型：</label>
+            <select>
+                <option>全部</option>
+                <option>TRON</option>
+                <option>ETH</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>統計日期：</label>
+            <input type="date">
+            <span>至</span>
+            <input type="date">
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            搜索
+        </button>
+        <button class="btn-reset">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            重置
+        </button>
+    </div>
+
+    <div class="card table-wrap">
+        <div class="toolbar">
+            <div class="icon-btn" title="搜尋">
+                <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="icon-btn" title="刷新" id="refreshBtn">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </div>
+            <div class="icon-btn" title="全螢幕">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            </div>
+        </div>
+
+        <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:0px;width:90px"><span class="th-inner">幣種<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></div></th>
+                    <th class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:90px;width:90px"><span class="th-inner">網絡<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></div></th>
+                    <th class="sticky-outer" style="width:120px"><div class="sticky-inner shadow" style="left:180px;width:120px"><span class="th-inner">統計時間<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></div></th>
+                    <th class="col-w-200"><span class="th-inner">總和/USDT<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th class="col-w-200"><span class="th-inner">冷錢包餘額/USDT<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th class="col-w-200"><span class="th-inner">歸集錢包餘額/USDT<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th class="col-w-200"><span class="th-inner">公司錢包餘額/USDT<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th class="col-w-200"><span class="th-inner">手續費錢包餘額/USDT<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th class="col-w-200"><span class="th-inner">異常資金錢包/USDT<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th class="col-w-200">未歸集資產（用戶）/USDT</th>
+                </tr>
+            </thead>
+            <tbody id="balanceBody">
+                <tr>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:0px;width:90px">USDT</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:90px;width:90px">TRON</div></td>
+                    <td class="sticky-outer" style="width:120px"><div class="sticky-inner shadow" style="left:180px;width:120px">2026-08-24</div></td>
+                    <td>1,284,650.32</td>
+                    <td>1,050,000.00</td>
+                    <td>180,320.50</td>
+                    <td>40,000.00</td>
+                    <td>1,329.82</td>
+                    <td>0.00</td>
+                    <td>13,000.00</td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:0px;width:90px">USDT</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:90px;width:90px">ETH</div></td>
+                    <td class="sticky-outer" style="width:120px"><div class="sticky-inner shadow" style="left:180px;width:120px">2026-08-24</div></td>
+                    <td>623,410.75</td>
+                    <td>500,000.00</td>
+                    <td>98,410.75</td>
+                    <td>25,000.00</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:0px;width:90px">ETH</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:90px;width:90px">ETH</div></td>
+                    <td class="sticky-outer" style="width:120px"><div class="sticky-inner shadow" style="left:180px;width:120px">2026-08-24</div></td>
+                    <td>312.554</td>
+                    <td>280.000</td>
+                    <td>28.554</td>
+                    <td>3.500</td>
+                    <td>0.500</td>
+                    <td>0.000</td>
+                    <td>0.000</td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:0px;width:90px">TRX</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:90px;width:90px">TRON</div></td>
+                    <td class="sticky-outer" style="width:120px"><div class="sticky-inner shadow" style="left:180px;width:120px">2026-08-24</div></td>
+                    <td>184,206.10</td>
+                    <td>150,000.00</td>
+                    <td>32,706.10</td>
+                    <td>1,500.00</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                    <td>0.00</td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:0px;width:90px">USDT</div></td>
+                    <td class="sticky-outer" style="width:90px"><div class="sticky-inner" style="left:90px;width:90px">TRON</div></td>
+                    <td class="sticky-outer" style="width:120px"><div class="sticky-inner shadow" style="left:180px;width:120px">2026-08-23</div></td>
+                    <td>1,260,880.10</td>
+                    <td>1,030,000.00</td>
+                    <td>178,550.10</td>
+                    <td>40,000.00</td>
+                    <td>1,330.00</td>
+                    <td>0.00</td>
+                    <td>11,000.00</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Toast 提示 ===== -->
+<div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
+    </svg>
+    <span id="toastMsg">刷新成功</span>
+</div>
+
+<script>
+/* ===== Toast 提示邏輯 ===== */
+let toastTimer = null;
+function showToast(msg){
+    const toast = document.getElementById("toast");
+    document.getElementById("toastMsg").textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+/* 工具列「刷新」按鈕 */
+document.getElementById("refreshBtn").addEventListener("click", () => {
+    showToast("刷新成功");
+});
+</script>
+</body>
+</html>

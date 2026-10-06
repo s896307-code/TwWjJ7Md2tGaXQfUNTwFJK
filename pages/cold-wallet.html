@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head><meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>冷錢包管理</title>
+<link rel="stylesheet" href="../assets/common.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card search">
+        <div class="field">
+            <label>幣種：</label>
+            <select>
+                <option>全部</option>
+                <option>USDT</option>
+                <option>TRX</option>
+                <option>ETH</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>網絡類型：</label>
+            <select>
+                <option>全部</option>
+                <option>TRON</option>
+                <option>ETH</option>
+            </select>
+        </div>
+
+        <div class="field">
+            <label>地址：</label>
+            <input type="text" placeholder="請輸入地址">
+        </div>
+
+        <div class="spacer"></div>
+
+        <button class="btn-search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            搜索
+        </button>
+        <button class="btn-reset">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            重置
+        </button>
+    </div>
+
+    <div class="card table-wrap">
+        <div class="list-toolbar">
+            <button class="btn-primary" onclick="openAddModal()">添加冷錢包</button>
+            <button class="btn-disabled" disabled>批量轉賬</button>
+            <div class="spacer"></div>
+            <div class="icon-btn" title="搜尋">
+                <svg viewBox="0 0 24 24" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="icon-btn" title="刷新" id="refreshBtn">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            </div>
+            <div class="icon-btn" title="全螢幕">
+                <svg viewBox="0 0 24 24" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+            </div>
+        </div>
+
+        <div class="table-scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th class="sticky-outer checkbox-col" style="width:44px"><div class="sticky-inner checkbox-inner" style="left:0px;width:44px"><input type="checkbox" id="selectAll"></div></th>
+                    <th class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:44px;width:100px"><span class="th-inner">幣種<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></div></th>
+                    <th class="sticky-outer" style="width:100px"><div class="sticky-inner shadow" style="left:144px;width:100px"><span class="th-inner">網絡<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></div></th>
+                    <th class="col-w-260"><span class="th-inner">地址<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th><span class="th-inner">餘額/USDT<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th>備注</th>
+                    <th><span class="th-inner">餘額更新時間<span class="sort-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5-5 5 5H7z"/><path d="M7 14l5 5 5-5H7z"/></svg></span></span></th>
+                    <th class="col-w-200">操作</th>
+                </tr>
+            </thead>
+            <tbody id="coldWalletBody">
+                <tr>
+                    <td class="sticky-outer checkbox-col" style="width:44px"><div class="sticky-inner checkbox-inner" style="left:0px;width:44px"><input type="checkbox"></div></td>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:44px;width:100px">USDT</div></td>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner shadow" style="left:144px;width:100px">TRON</div></td>
+                    <td>TEMLAenrqj...PRxH6UE6Uq</td>
+                    <td>1,050,000.00</td>
+                    <td>主要冷儲存</td>
+                    <td>2026-08-24 08:00:00</td>
+                    <td><button class="action-btn">編輯</button><button class="action-btn danger">刪除</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer checkbox-col" style="width:44px"><div class="sticky-inner checkbox-inner" style="left:0px;width:44px"><input type="checkbox"></div></td>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:44px;width:100px">ETH</div></td>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner shadow" style="left:144px;width:100px">ETH</div></td>
+                    <td>0x86a25497...2b069edd7f</td>
+                    <td>280.000</td>
+                    <td>-</td>
+                    <td>2026-08-23 22:30:00</td>
+                    <td><button class="action-btn">編輯</button><button class="action-btn danger">刪除</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer checkbox-col" style="width:44px"><div class="sticky-inner checkbox-inner" style="left:0px;width:44px"><input type="checkbox"></div></td>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:44px;width:100px">USDT</div></td>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner shadow" style="left:144px;width:100px">ETH</div></td>
+                    <td>0x2d335943...567f1f971a</td>
+                    <td>500,000.00</td>
+                    <td>備援冷錢包</td>
+                    <td>2026-08-22 10:15:00</td>
+                    <td><button class="action-btn">編輯</button><button class="action-btn danger">刪除</button></td>
+                </tr>
+                <tr>
+                    <td class="sticky-outer checkbox-col" style="width:44px"><div class="sticky-inner checkbox-inner" style="left:0px;width:44px"><input type="checkbox"></div></td>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:44px;width:100px">TRX</div></td>
+                    <td class="sticky-outer" style="width:100px"><div class="sticky-inner shadow" style="left:144px;width:100px">TRON</div></td>
+                    <td>TEMLAenrqj...PRxH6UE6Uq</td>
+                    <td>150,000.00</td>
+                    <td>-</td>
+                    <td>2026-08-20 17:45:00</td>
+                    <td><button class="action-btn">編輯</button><button class="action-btn danger">刪除</button></td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 新增冷錢包彈窗 ===== -->
+<div class="modal-mask" id="addModal">
+    <div class="modal-box" style="width:480px">
+        <div class="modal-header">
+            <span>添加冷錢包</span>
+            <span class="modal-close" onclick="closeAddModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="form-row">
+                <label>幣種</label>
+                <select id="addCurrency">
+                    <option>USDT</option>
+                    <option>TRX</option>
+                    <option>ETH</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label>網絡</label>
+                <select id="addNetwork">
+                    <option>TRON</option>
+                    <option>ETH</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label>地址</label>
+                <input type="text" id="addAddress" placeholder="請輸入冷錢包地址">
+            </div>
+            <div class="form-row">
+                <label>備注</label>
+                <input type="text" id="addRemark" placeholder="選填">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeAddModal()" style="background:#fff;color:#555;border:1px solid #d9dee5;margin-right:10px">取消</button>
+            <button onclick="submitAddWallet()">確定</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 刪除確認彈窗 ===== -->
+<div class="modal-mask" id="confirmDeleteModal">
+    <div class="modal-box" style="width:400px">
+        <div class="modal-header">
+            <span>提示</span>
+            <span class="modal-close" onclick="closeConfirmDelete()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <p style="margin:0;color:#4a5563;font-size:15px">確定要刪除這筆冷錢包資料嗎？</p>
+        </div>
+        <div class="modal-footer">
+            <button onclick="closeConfirmDelete()" style="background:#fff;color:#555;border:1px solid #d9dee5;margin-right:10px">取消</button>
+            <button onclick="confirmDelete()" style="background:#f56c6c">確定刪除</button>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Toast 提示 ===== -->
+<div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/>
+    </svg>
+    <span id="toastMsg">刷新成功</span>
+</div>
+
+<script>
+/* ===== Toast 提示邏輯 ===== */
+let toastTimer = null;
+function showToast(msg){
+    const toast = document.getElementById("toast");
+    document.getElementById("toastMsg").textContent = msg;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+function formatNow(){
+    const d = new Date();
+    const pad = n => String(n).padStart(2, "0");
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+}
+
+/* 工具列「刷新」按鈕 */
+document.getElementById("refreshBtn").addEventListener("click", () => {
+    showToast("刷新成功");
+});
+
+/* ===== 新增冷錢包彈窗 ===== */
+function openAddModal(){
+    document.getElementById("addModal").classList.add("show");
+}
+function closeAddModal(){
+    document.getElementById("addModal").classList.remove("show");
+    document.getElementById("addAddress").value = "";
+    document.getElementById("addRemark").value = "";
+}
+document.getElementById("addModal").addEventListener("click", (e) => {
+    if(e.target.id === "addModal") closeAddModal();
+});
+
+function submitAddWallet(){
+    const currency = document.getElementById("addCurrency").value;
+    const network = document.getElementById("addNetwork").value;
+    const address = document.getElementById("addAddress").value.trim();
+    const remark = document.getElementById("addRemark").value.trim();
+
+    if(!address){
+        showToast("請輸入冷錢包地址");
+        return;
+    }
+
+    /* 移除「暫無數據」列 */
+    const noDataRow = document.getElementById("noDataRow");
+    if(noDataRow) noDataRow.remove();
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+        <td class="sticky-outer checkbox-col" style="width:44px"><div class="sticky-inner checkbox-inner" style="left:0px;width:44px"><input type="checkbox"></div></td>
+        <td class="sticky-outer" style="width:100px"><div class="sticky-inner" style="left:44px;width:100px">${currency}</div></td>
+        <td class="sticky-outer" style="width:100px"><div class="sticky-inner shadow" style="left:144px;width:100px">${network}</div></td>
+        <td>${address}</td>
+        <td>0</td>
+        <td>${remark || "-"}</td>
+        <td>${formatNow()}</td>
+        <td><button class="action-btn">編輯</button><button class="action-btn danger">刪除</button></td>`;
+    document.getElementById("coldWalletBody").appendChild(tr);
+
+    closeAddModal();
+    showToast("新增成功");
+}
+
+/* 全選 checkbox */
+document.getElementById("selectAll").addEventListener("change", (e) => {
+    document.querySelectorAll("#coldWalletBody input[type=checkbox]").forEach(cb => {
+        cb.checked = e.target.checked;
+    });
+});
+
+/* 反向同步：使用者自行勾選/取消各列時，同步更新最上方的全選 checkbox 狀態 */
+function syncSelectAllState(){
+    const rowCheckboxes = document.querySelectorAll("#coldWalletBody input[type=checkbox]");
+    const selectAll = document.getElementById("selectAll");
+    if(rowCheckboxes.length === 0){
+        selectAll.checked = false;
+        selectAll.indeterminate = false;
+        return;
+    }
+    const checkedCount = document.querySelectorAll("#coldWalletBody input[type=checkbox]:checked").length;
+    selectAll.checked = checkedCount === rowCheckboxes.length;
+    selectAll.indeterminate = checkedCount > 0 && checkedCount < rowCheckboxes.length;
+}
+document.getElementById("coldWalletBody").addEventListener("change", (e) => {
+    if(e.target.type === "checkbox") syncSelectAllState();
+});
+
+/* ===== 刪除確認彈窗 ===== */
+let pendingDeleteRow = null;
+
+function openConfirmDelete(tr){
+    pendingDeleteRow = tr;
+    document.getElementById("confirmDeleteModal").classList.add("show");
+}
+function closeConfirmDelete(){
+    pendingDeleteRow = null;
+    document.getElementById("confirmDeleteModal").classList.remove("show");
+}
+document.getElementById("confirmDeleteModal").addEventListener("click", (e) => {
+    if(e.target.id === "confirmDeleteModal") closeConfirmDelete();
+});
+function confirmDelete(){
+    if(pendingDeleteRow){
+        pendingDeleteRow.remove();
+        if(!document.querySelector("#coldWalletBody tr")){
+            document.getElementById("coldWalletBody").innerHTML =
+                `<tr class="no-data" id="noDataRow"><td colspan="8">暫無數據</td></tr>`;
+        }
+        syncSelectAllState();
+        showToast("刪除成功");
+    }
+    closeConfirmDelete();
+}
+
+/* 表格中的「編輯」「刪除」按鈕（事件代理） */
+document.getElementById("coldWalletBody").addEventListener("click", (e) => {
+    const target = e.target;
+    if(!target.classList.contains("action-btn")) return;
+    const tr = target.closest("tr");
+    const action = target.textContent.trim();
+
+    if(action === "刪除"){
+        openConfirmDelete(tr);
+    } else if(action === "編輯"){
+        showToast("編輯功能尚未串接");
+    }
+});
+</script>
+</body>
+</html>
